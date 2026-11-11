@@ -380,7 +380,15 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
   .nav-langs button[aria-pressed="true"] { color: var(--ink); font-weight: 600; }
 }
 
-.hero { display: grid; }
+html[data-text="large"] .section-lead,
+html[data-text="large"] .lead,
+html[data-text="large"] .course-lead,
+html[data-text="large"] .intro-points,
+html[data-text="large"] .gather-card p,
+html[data-text="large"] .week .body {
+  font-size: 17px;
+  line-height: 1.65;
+}
 .hero-photo { position: relative; background: #1c1c1c; }
 .hero-photo img {
   display: block;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useContactDialog } from "@/components/ContactDialog";
 import { LangSwitch, useI18n } from "@/components/Language";
 
@@ -44,6 +44,7 @@ export default function SiteNav() {
           ),
         )}
         <LangSwitch variant="menu" />
+        <TextSize />
       </nav>
       <LangSwitch />
       <button
@@ -55,6 +56,35 @@ export default function SiteNav() {
         onClick={() => setOpen((value) => !value)}
       >
         <span className="nav-bars" />
+      </button>
+    </div>
+  );
+}
+
+function TextSize() {
+  const { t } = useI18n();
+  const [size, setSize] = useState("base");
+
+  useEffect(() => {
+    if (window.localStorage.getItem("bailamos-text") === "large") setSize("large");
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.text = size === "large" ? "large" : "";
+  }, [size]);
+
+  function choose(next) {
+    setSize(next);
+    window.localStorage.setItem("bailamos-text", next);
+  }
+
+  return (
+    <div className="nav-langs" role="group" aria-label={t("textLarge")}>
+      <button type="button" aria-pressed={size === "base"} onClick={() => choose("base")}>
+        {t("textBase")}
+      </button>
+      <button type="button" aria-pressed={size === "large"} onClick={() => choose("large")}>
+        {t("textLarge")}
       </button>
     </div>
   );
