@@ -66,11 +66,13 @@ function TextSize() {
   const [size, setSize] = useState("base");
 
   useEffect(() => {
-    if (window.localStorage.getItem("bailamos-text") === "large") setSize("large");
+    const saved = window.localStorage.getItem("bailamos-text");
+    if (saved === "large" || saved === "mid") setSize("mid");
+    if (saved === "big") setSize("big");
   }, []);
 
   useEffect(() => {
-    document.documentElement.dataset.text = size === "large" ? "large" : "";
+    document.documentElement.dataset.text = size === "base" ? "" : size;
   }, [size]);
 
   function choose(next) {
@@ -79,11 +81,15 @@ function TextSize() {
   }
 
   return (
-    <div className="nav-langs" role="group" aria-label={t("textLarge")}>
+    <div className="nav-langs" role="group" aria-label={t("textSize")}>
+      <span>{t("textSize")}</span>
       <button type="button" aria-pressed={size === "base"} onClick={() => choose("base")}>
         {t("textBase")}
       </button>
-      <button type="button" aria-pressed={size === "large"} onClick={() => choose("large")}>
+      <button type="button" aria-pressed={size === "mid"} onClick={() => choose("mid")}>
+        {t("textMid")}
+      </button>
+      <button type="button" aria-pressed={size === "big"} onClick={() => choose("big")}>
         {t("textLarge")}
       </button>
     </div>
