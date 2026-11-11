@@ -17,6 +17,15 @@
 
 html { -webkit-text-size-adjust: 100%; }
 
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button:focus,
+a:focus { outline: none; }
+button:focus-visible,
+a:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+
 body {
   margin: 0;
   background: var(--bg);
