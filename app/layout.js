@@ -1,4 +1,5 @@
 import { LanguageProvider } from "@/components/Language";
+import { ContactProvider } from "@/components/ContactDialog";
 import SiteNav from "@/components/SiteNav";
 import "./globals.css";
 
@@ -20,13 +21,15 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <LanguageProvider>
-          <header className="topbar">
-            <a className="logo" href="/">
-              BAILAMOS
-            </a>
-            <SiteNav />
-          </header>
-          {children}
+          <ContactProvider>
+            <header className="topbar">
+              <a className="logo" href="/">
+                BAILAMOS
+              </a>
+              <SiteNav />
+            </header>
+            {children}
+          </ContactProvider>
         </LanguageProvider>
       </body>
     </html>

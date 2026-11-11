@@ -6,7 +6,7 @@ import { won } from "@/lib/i18n";
 
 const nameKey = { elly: "optElly", jiwoon: "optJiwoon", together: "optBoth" };
 
-export default function PrivateLessons({ lessons, apply }) {
+export default function PrivateLessons({ lessons }) {
   const { lang, t } = useI18n();
   const [openId, setOpenId] = useState(null);
 
@@ -52,13 +52,6 @@ export default function PrivateLessons({ lessons, apply }) {
           <p>{t("rental")}</p>
         </div>
       ) : null}
-      <div className="lesson-notes">
-        <p>
-          <a className="apply" href={apply.href} target="_blank" rel="noreferrer">
-            {t("privateApply")}
-          </a>
-        </p>
-      </div>
     </>
   );
 }

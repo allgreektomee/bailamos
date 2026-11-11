@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useContactDialog } from "@/components/ContactDialog";
 import PrivateLessons from "@/components/PrivateLessons";
 import { useI18n } from "@/components/Language";
 import { getCourse } from "@/lib/curriculum";
 import { dayName, localizeCourse } from "@/lib/i18n";
-import { privateApply } from "@/lib/links";
 import { privateLessons } from "@/lib/teachers";
 
 function periodText(course, t) {
@@ -15,12 +15,18 @@ function periodText(course, t) {
   return t("openBatch");
 }
 
-function ApplyLink({ course }) {
-  if (!course.apply) return null;
+function Inquire() {
+  const { t } = useI18n();
+  const { openContact } = useContactDialog();
   return (
-    <a className="apply" href={course.apply.href} target="_blank" rel="noreferrer">
-      {course.apply.label}
-    </a>
+    <div className="inquire">
+      <button type="button" className="inquire-btn inquire-line" onClick={openContact}>
+        {t("apply")}
+      </button>
+      <button type="button" className="inquire-btn" onClick={openContact}>
+        {t("inquire")}
+      </button>
+    </div>
   );
 }
 
@@ -127,14 +133,12 @@ export default function CourseDetail({ courseId, dateQuery }) {
         </dl>
         {course.warn ? <div className="warn">{course.warn}</div> : null}
       </div>
-      {course.private ? (
-        <PrivateLessons lessons={privateLessons} apply={privateApply} />
-      ) : course.groups || course.weeks.length ? (
+      {course.private ? <PrivateLessons lessons={privateLessons} /> : course.groups || course.weeks.length ? (
         <WeekList course={course} weekUnit={weekUnit} />
       ) : (
         <p className="note">{t("weeksLater")}</p>
       )}
-      {course.private ? null : <ApplyLink course={course} />}
+      <Inquire />
     </article>
   );
 }
