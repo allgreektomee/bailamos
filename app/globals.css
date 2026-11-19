@@ -1148,6 +1148,7 @@ fieldset.apply-field { display: block; }
 }
 .admin-filter-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .admin-search { width: 100%; }
+.admin-search:disabled { opacity: 0.55; cursor: default; }
 .admin-more { min-height: 24px; padding: 8px 0 0; color: var(--muted); text-align: center; font-size: 13px; }
 .admin-pager { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; }
 .admin-pager span { color: var(--muted); font-size: 14px; }

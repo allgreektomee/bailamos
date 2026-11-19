@@ -22,7 +22,7 @@ function defaultFilters() {
   return { course: "", from, to, role: "", batch: "", query: "" };
 }
 
-function AdminFilters({ draft, onChange, onSearch, onReset, filtering }) {
+function AdminFilters({ draft, onChange, onSearch, onReset, filtering, searching }) {
   return (
     <form className="admin-filters" onSubmit={onSearch}>
       <label>
@@ -71,7 +71,9 @@ function AdminFilters({ draft, onChange, onSearch, onReset, filtering }) {
         />
       </label>
       <div className="admin-filter-actions">
-        <button className="inquire-btn admin-search" type="submit">검색하기</button>
+        <button className="inquire-btn admin-search" type="submit" disabled={searching} aria-busy={searching}>
+          {searching ? "검색중" : "검색하기"}
+        </button>
         {filtering ? (
           <button type="button" className="admin-out" onClick={onReset}>
             필터 지우기
@@ -109,6 +111,7 @@ export default function AdminGate() {
   const [filters, setFilters] = useState(defaultFilters);
   const [mobile, setMobile] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [searching, setSearching] = useState(false);
   const requestId = useRef(0);
   const loadingMoreRef = useRef(false);
   const moreRef = useRef(null);
@@ -235,10 +238,15 @@ export default function AdminGate() {
     setDraft((current) => ({ ...current, [key]: value }));
   }
 
-  function search(event) {
+  async function search(event) {
     event.preventDefault();
     setFilters(draft);
-    load(draft, 1);
+    setSearching(true);
+    try {
+      await load(draft, 1);
+    } finally {
+      setSearching(false);
+    }
   }
 
   if (!ready) {
@@ -288,6 +296,7 @@ export default function AdminGate() {
           load(next, 1);
         }}
         filtering={filtering}
+        searching={searching}
       />
       <p className="admin-stats">
         <span>리더 <b>{counts.leader}</b>명</span>
