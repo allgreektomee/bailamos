@@ -95,6 +95,13 @@ function BrandIcon({ name }) {
 }
 
 
+export function openOnPhone(event) {
+  const phone = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  if (!phone) return;
+  event.preventDefault();
+  window.location.assign(event.currentTarget.dataset.phoneHref || event.currentTarget.href);
+}
+
 export { BrandIcon };
 
 export function ContactBoards() {
@@ -117,7 +124,14 @@ export function ContactBoards() {
         <p className="contact-label">{t("channels")}</p>
         <div className="contact-grid two">
           {channels.map((item) => (
-            <a key={item.name} href={item.href} target="_blank" rel="noreferrer">
+            <a
+              key={item.name}
+              href={item.href}
+              data-phone-href={item.phoneHref}
+              target="_blank"
+              rel="noreferrer"
+              onClick={openOnPhone}
+            >
               <BrandIcon name={item.icon} />
               {item.icon === "naver" ? t("naverCafe") : item.name}
             </a>

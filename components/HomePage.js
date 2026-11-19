@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { BrandIcon, ContactBoards } from "@/components/ContactLinks";
+import { BrandIcon, ContactBoards, openOnPhone } from "@/components/ContactLinks";
 import { useI18n } from "@/components/Language";
 import { classes, weekPlan, WEEK_ORDER } from "@/lib/curriculum";
 import { dayLetter, dayName, localizeCourse, weekLabel } from "@/lib/i18n";
-import { maps, studioAddress, applyHref, facebookChat } from "@/lib/links";
+import { maps, studioAddress, applyHref, facebookChat, facebookChatPhone, inmuFacebook, inmuFacebookPhone } from "@/lib/links";
 
 function CourseList({ items, kicker, dateQuery, lang, columns }) {
   return (
@@ -142,7 +142,7 @@ export default function HomePage({ dateQuery }) {
           <li className="gather-card" id="inmudang">
             <div className="gather-title">
               <h3>{t("inmuName")}</h3>
-              <a className="gather-fb" href="https://www.facebook.com/groups/418752420053042" target="_blank" rel="noreferrer">
+              <a className="gather-fb" href={inmuFacebook} data-phone-href={inmuFacebookPhone} target="_blank" rel="noreferrer" onClick={openOnPhone}>
                 <BrandIcon name="facebook" />
                 <span>Facebook</span>
               </a>
@@ -231,7 +231,7 @@ export default function HomePage({ dateQuery }) {
       </section>
 
       <footer className="site-footer">Bailamos Tango · Studio Elly</footer>
-      <a className="fb-chat" href={facebookChat} target="_blank" rel="noreferrer" aria-label={t("fbChat")}>
+      <a className="fb-chat" href={facebookChat} data-phone-href={facebookChatPhone} target="_blank" rel="noreferrer" aria-label={t("fbChat")} onClick={openOnPhone}>
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path
             fill="currentColor"
