@@ -1148,6 +1148,10 @@ fieldset.apply-field { display: block; }
 }
 .admin-filter-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .admin-search { width: 100%; }
+.admin-more { min-height: 24px; padding: 8px 0 0; color: var(--muted); text-align: center; font-size: 13px; }
+.admin-pager { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; }
+.admin-pager span { color: var(--muted); font-size: 14px; }
+.admin-pager button:disabled { opacity: 0.4; cursor: default; }
 .admin-stats { display: flex; gap: 18px; margin: 18px 0 0; font-size: 14px; }
 .admin-stats b { font-size: 22px; font-weight: 700; margin: 0 2px; }
 .admin-list { display: grid; gap: 12px; margin: 18px 0 0; padding: 0; list-style: none; }
@@ -1172,6 +1176,9 @@ fieldset.apply-field { display: block; }
 }
 .admin-table td:last-child { white-space: normal; min-width: 180px; }
 .admin-table th { font-size: 12px; color: var(--muted); font-weight: 600; }
+@media (max-width: 799px) {
+  .admin-pager { display: none; }
+}
 @media (min-width: 800px) {
   .admin-list { display: none; }
   .admin-table-wrap { display: block; }

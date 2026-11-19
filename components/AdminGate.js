@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { countRoles, courseLabel, courseOptions, filterApplications } from "@/lib/adminFilter";
+import { useEffect, useRef, useState } from "react";
+import { courseLabel, courseOptions, pageSize } from "@/lib/adminFilter";
 
 function seoulParts(date = new Date()) {
   const parts = new Intl.DateTimeFormat("en-US", {
@@ -22,14 +22,14 @@ function defaultFilters() {
   return { course: "", from, to, role: "", batch: "", query: "" };
 }
 
-function AdminFilters({ rows, draft, onChange, onSearch, onReset, filtering }) {
+function AdminFilters({ draft, onChange, onSearch, onReset, filtering }) {
   return (
     <form className="admin-filters" onSubmit={onSearch}>
       <label>
         과정
         <select value={draft.course} onChange={(event) => onChange("course", event.target.value)}>
           <option value="">전체</option>
-          {courseOptions(rows).map((value) => (
+          {courseOptions().map((value) => (
             <option key={value} value={value}>{value}</option>
           ))}
         </select>
@@ -99,31 +99,100 @@ export default function AdminGate() {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
   const [rows, setRows] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
+  const [counts, setCounts] = useState({ leader: 0, follower: 0 });
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
   const [draft, setDraft] = useState(defaultFilters);
   const [filters, setFilters] = useState(defaultFilters);
+  const [mobile, setMobile] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const requestId = useRef(0);
+  const loadingMoreRef = useRef(false);
+  const moreRef = useRef(null);
+  const wasMobile = useRef(false);
 
-  const filtered = filterApplications(rows, filters);
   const filtering = Object.values(filters).some(Boolean);
-  const counts = countRoles(filtered);
+  const windowFrom = (page - 1) * pageSize + 1;
+  const shownFrom = total === 0 ? 0 : mobile ? 1 : windowFrom;
+  const shownTo = total === 0 ? 0 : Math.min(total, mobile ? rows.length : windowFrom + rows.length - 1);
+  const exposure = total === 0
+    ? "총 0명"
+    : shownFrom === shownTo
+      ? `총 ${total}명 중 ${shownTo}명`
+      : `총 ${total}명 중 ${shownFrom}–${shownTo}명`;
 
   useEffect(() => {
-    load();
+    load(defaultFilters(), 1);
   }, []);
 
-  async function load() {
-    const response = await fetch("/api/admin/rows");
-    if (response.status === 401) {
-      setAuthed(false);
-      setReady(true);
-      return;
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 799px)");
+    const sync = () => setMobile(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    if (!ready || !authed) return;
+    if (wasMobile.current && !mobile) load(filters, 1);
+    wasMobile.current = mobile;
+  }, [mobile, ready, authed, filters]);
+
+  useEffect(() => {
+    const node = moreRef.current;
+    if (!node || !mobile || page >= pages) return undefined;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) load(filters, page + 1, true);
+    }, { rootMargin: "240px" });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [mobile, page, pages, filters, rows.length]);
+
+  async function load(nextFilters, nextPage, append = false) {
+    if (append && loadingMoreRef.current) return;
+    const id = requestId.current + 1;
+    requestId.current = id;
+    if (append) {
+      loadingMoreRef.current = true;
+      setLoadingMore(true);
     }
-    const data = await response.json().catch(() => ({}));
-    setAuthed(true);
-    setRows(Array.isArray(data.rows) ? data.rows : []);
-    setError(data.ok ? "" : data.error || "unread");
-    setReady(true);
+    const params = new URLSearchParams({ page: String(nextPage), limit: String(pageSize) });
+    for (const [key, value] of Object.entries(nextFilters)) {
+      if (value) params.set(key, value);
+    }
+    try {
+      const response = await fetch(`/api/admin/rows?${params}`);
+      if (id !== requestId.current) return;
+      if (response.status === 401) {
+        setAuthed(false);
+        setReady(true);
+        return;
+      }
+      const data = await response.json().catch(() => ({}));
+      if (id !== requestId.current) return;
+      const incoming = Array.isArray(data.rows) ? data.rows : [];
+      setAuthed(true);
+      setRows((current) => (append ? [...current, ...incoming] : incoming));
+      setTotal(Number(data.total) || 0);
+      setPage(Number(data.page) || nextPage);
+      setPages(Number(data.pages) || 1);
+      setCounts({ leader: Number(data.leader) || 0, follower: Number(data.follower) || 0 });
+      setError(data.ok ? "" : data.error || "unread");
+      setReady(true);
+    } catch {
+      if (id !== requestId.current) return;
+      setError("unread");
+      setReady(true);
+    } finally {
+      if (id === requestId.current) {
+        loadingMoreRef.current = false;
+        setLoadingMore(false);
+      }
+    }
   }
 
   async function login(event) {
@@ -142,13 +211,20 @@ export default function AdminGate() {
     }
     setPassword("");
     setReady(false);
-    await load();
+    const next = defaultFilters();
+    setDraft(next);
+    setFilters(next);
+    await load(next, 1);
   }
 
   async function logout() {
     await fetch("/api/admin/logout", { method: "POST" });
     setAuthed(false);
     setRows([]);
+    setTotal(0);
+    setPage(1);
+    setPages(1);
+    setCounts({ leader: 0, follower: 0 });
     const next = defaultFilters();
     setDraft(next);
     setFilters(next);
@@ -162,6 +238,7 @@ export default function AdminGate() {
   function search(event) {
     event.preventDefault();
     setFilters(draft);
+    load(draft, 1);
   }
 
   if (!ready) {
@@ -199,9 +276,8 @@ export default function AdminGate() {
           나가기
         </button>
       </div>
-      <p className="admin-note">{filtering ? `${filtered.length}건 / ${rows.length}건` : `${rows.length}건`}</p>
+      <p className="admin-note">{!mobile && pages > 1 ? `${exposure} · ${page}/${pages}쪽` : exposure}</p>
       <AdminFilters
-        rows={rows}
         draft={draft}
         onChange={setDraftField}
         onSearch={search}
@@ -209,6 +285,7 @@ export default function AdminGate() {
           const next = defaultFilters();
           setDraft(next);
           setFilters(next);
+          load(next, 1);
         }}
         filtering={filtering}
       />
@@ -220,10 +297,9 @@ export default function AdminGate() {
         <p className="apply-error">시트를 아직 읽지 못했습니다. 스크립트에 읽기 기능을 넣고 같은 주소로 다시 배포해야 합니다.</p>
       ) : null}
       {error === "unconfigured" ? <p className="apply-error">시트 읽기 설정이 없습니다.</p> : null}
-      {rows.length === 0 && !error ? <p className="admin-note">접수된 신청이 없습니다.</p> : null}
-      {rows.length > 0 && filtered.length === 0 ? <p className="admin-note">조건에 맞는 신청이 없습니다.</p> : null}
+      {total === 0 && !error ? <p className="admin-note">조건에 맞는 신청이 없습니다.</p> : null}
       <ul className="admin-list">
-        {filtered.map((row, index) => (
+        {rows.map((row, index) => (
           <li className="admin-card" key={`${row.at}-${index}`}>
             <div className="admin-card-top">
               <strong>{row.name || "이름 없음"}</strong>
@@ -247,6 +323,9 @@ export default function AdminGate() {
             </dl>
           </li>
         ))}
+        {mobile && page < pages ? (
+          <li ref={moreRef} className="admin-more">{loadingMore ? "불러오는 중" : ""}</li>
+        ) : null}
       </ul>
       <div className="admin-table-wrap">
         <table className="admin-table">
@@ -258,7 +337,7 @@ export default function AdminGate() {
             </tr>
           </thead>
           <tbody>
-            {filtered.map((row, index) => (
+            {rows.map((row, index) => (
               <tr key={`${row.at}-${index}`}>
                 {columns.map(([key]) => (
                   <td key={key}>{key === "course" ? courseLabel(row.course) : row[key] || ""}</td>
@@ -268,6 +347,17 @@ export default function AdminGate() {
           </tbody>
         </table>
       </div>
+      {!mobile && pages > 1 ? (
+        <div className="admin-pager">
+          <button type="button" className="admin-out" disabled={page <= 1} onClick={() => load(filters, page - 1)}>
+            이전
+          </button>
+          <span>{page} / {pages}</span>
+          <button type="button" className="admin-out" disabled={page >= pages} onClick={() => load(filters, page + 1)}>
+            다음
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
