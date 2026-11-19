@@ -827,6 +827,14 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
 .gather-card .gather-hours { color: var(--ink); }
 .gather-copy { white-space: pre-line; }
 .gather-pass { text-align: right; }
+.gather-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 18px 0 4px;
+  background: #111;
+  aspect-ratio: 16 / 9;
+}
 .gather-lineup { margin: 16px 0 0; padding: 0; list-style: none; }
 .gather-lineup li {
   display: flex;
@@ -931,10 +939,11 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: 72px 64px;
-    text-align: left;
+    text-align: center;
     background: var(--soft);
   }
   .hero-copy h1 { font-size: 46px; }
-  .hero-copy .sub { margin: 18px 0 0; font-size: 16px; }
+  .hero-copy .sub { margin: 18px auto 0; font-size: 16px; }
 }

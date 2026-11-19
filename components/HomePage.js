@@ -120,6 +120,16 @@ export default function HomePage({ dateQuery }) {
             </p>
             <p className="gather-copy">{t("practicaLead")}</p>
             <p className="gather-pass">{t("practicaPass")}</p>
+            <video
+              className="gather-video"
+              controls
+              playsInline
+              preload="none"
+              poster="/videos/practica-2026-10-25.jpg"
+              aria-label="2026.10.25 쁘락"
+            >
+              <source src="/videos/practica-2026-10-25.mp4" type="video/mp4" />
+            </video>
           </li>
           <li className="gather-card" id="inmudang">
             <div className="gather-title">
