@@ -5,7 +5,7 @@ import { BrandIcon, ContactBoards } from "@/components/ContactLinks";
 import { useI18n } from "@/components/Language";
 import { classes, weekPlan, WEEK_ORDER } from "@/lib/curriculum";
 import { dayLetter, dayName, localizeCourse, weekLabel } from "@/lib/i18n";
-import { maps, studioAddress } from "@/lib/links";
+import { maps, studioAddress, applyHref, facebookChat } from "@/lib/links";
 
 function CourseList({ items, kicker, dateQuery, lang, columns }) {
   return (
@@ -42,6 +42,7 @@ function CourseList({ items, kicker, dateQuery, lang, columns }) {
 
 export default function HomePage({ dateQuery }) {
   const { lang, t } = useI18n();
+  const practicaApply = applyHref("practica");
   const regular = classes.filter((course) => course.track !== "special");
   const specials = classes.filter((course) => course.track === "special");
 
@@ -102,6 +103,7 @@ export default function HomePage({ dateQuery }) {
           <h2>{t("specials")}</h2>
           <i />
         </div>
+        <p className="section-lead">{t("specialsLead")}</p>
         <CourseList items={specials} kicker={t("specials")} dateQuery={dateQuery} lang={lang} />
       </section>
 
@@ -111,9 +113,15 @@ export default function HomePage({ dateQuery }) {
           <h2>{t("gather")}</h2>
           <i />
         </div>
+        <p className="section-lead">{t("gatherLead")}</p>
         <ul className="gather-grid">
           <li className="gather-card" id="practica">
-            <h3>{t("practicaName")}</h3>
+            <div className="gather-title">
+              <h3>{t("practicaName")}</h3>
+              <a className="gather-apply" href={practicaApply}>
+                {t("apply")}
+              </a>
+            </div>
             <p className="gather-hours">
               <span>{t("inmuHours")}</span>
               {t("practicaDay")} · 16:00–19:00 · {t("practicaPlace")}
@@ -223,6 +231,14 @@ export default function HomePage({ dateQuery }) {
       </section>
 
       <footer className="site-footer">Bailamos Tango · Studio Elly</footer>
+      <a className="fb-chat" href={facebookChat} target="_blank" rel="noreferrer" aria-label={t("fbChat")}>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.14.26.35.27.57l.05 1.78c.02.46.5.76.93.58l1.99-.88c.17-.08.36-.1.55-.06.98.27 2.03.42 3.12.42 5.64 0 10-4.13 10-9.7C22 6.13 17.64 2 12 2zm6.03 7.55-2.93 4.65c-.47.74-1.46.92-2.14.39l-2.33-1.75a.6.6 0 0 0-.72 0l-3.15 2.39c-.41.31-.95-.17-.68-.62l2.93-4.65c.47-.74 1.46-.92 2.14-.39l2.33 1.75a.6.6 0 0 0 .72 0l3.15-2.39c.41-.31.95.17.68.62z"
+          />
+        </svg>
+      </a>
     </>
   );
 }

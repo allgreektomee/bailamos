@@ -15,6 +15,7 @@ export default function SiteNav() {
     { href: "/#week", label: t("navWeek") },
     { href: "/classes/private", label: t("navPrivate") },
     { href: "/#visit", label: t("navVisit") },
+    { href: "/apply", label: t("apply") },
     { href: "/#contact", label: t("navContact") },
   ];
 

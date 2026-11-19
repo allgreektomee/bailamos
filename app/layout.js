@@ -23,8 +23,8 @@ export default function RootLayout({ children }) {
         <LanguageProvider>
           <ContactProvider>
             <header className="topbar">
-              <a className="logo" href="/">
-                BAILAMOS
+              <a className="logo" href="/" aria-label="BAILAMOS TANGO">
+                <img src="/wordmark.png" alt="" />
               </a>
               <SiteNav />
             </header>

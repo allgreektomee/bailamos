@@ -6,6 +6,7 @@ import PrivateLessons from "@/components/PrivateLessons";
 import { useI18n } from "@/components/Language";
 import { getCourse } from "@/lib/curriculum";
 import { dayName, localizeCourse } from "@/lib/i18n";
+import { applyHref } from "@/lib/links";
 import { privateLessons } from "@/lib/teachers";
 
 function periodText(course, t) {
@@ -15,14 +16,22 @@ function periodText(course, t) {
   return t("openBatch");
 }
 
-function Inquire() {
+function Inquire({ courseId }) {
   const { t } = useI18n();
   const { openContact } = useContactDialog();
+  const href = applyHref(courseId);
+  const apply = href ? (
+    <a className="inquire-btn inquire-line" href={href}>
+      {t("apply")}
+    </a>
+  ) : (
+    <button type="button" className="inquire-btn inquire-line" onClick={openContact}>
+      {t("apply")}
+    </button>
+  );
   return (
     <div className="inquire">
-      <button type="button" className="inquire-btn inquire-line" onClick={openContact}>
-        {t("apply")}
-      </button>
+      {apply}
       <button type="button" className="inquire-btn" onClick={openContact}>
         {t("inquire")}
       </button>
@@ -138,7 +147,7 @@ export default function CourseDetail({ courseId, dateQuery }) {
       ) : (
         <p className="note">{t("weeksLater")}</p>
       )}
-      <Inquire />
+      <Inquire courseId={course.id} />
     </article>
   );
 }
