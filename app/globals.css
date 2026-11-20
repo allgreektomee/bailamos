@@ -544,24 +544,6 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.fb-chat {
-  position: fixed;
-  left: 18px;
-  bottom: 18px;
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: #0866ff;
-  color: #fff;
-  box-shadow: 0 8px 20px rgba(8, 102, 255, 0.32);
-  text-decoration: none;
-}
-.fb-chat svg { width: 30px; height: 30px; display: block; }
-.fb-chat:hover { background: #0654d4; text-decoration: none; }
 .site-footer {
   margin-top: 64px;
   padding: 28px 20px 40px;
