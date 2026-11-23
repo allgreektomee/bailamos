@@ -367,19 +367,44 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    padding: 6px 0 10px;
+    padding: 14px 16px 10px;
     background: #fff;
     border-bottom: 1px solid var(--line);
     box-shadow: 0 12px 24px rgba(35, 31, 29, 0.06);
   }
-  .topbar nav.open { display: flex; }
+  /* 메뉴는 두 줄(2열) 카드로. 마지막 두 개(신청하기·문의)는 강조 버튼. */
+  .topbar nav.open {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
   .topbar nav a,
-  .topbar nav .nav-contact { padding: 14px 20px; font-size: 16px; text-align: left; }
+  .topbar nav .nav-contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 10px 8px;
+    border-radius: 12px;
+    background: var(--soft);
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+  }
+  .topbar nav a:hover,
+  .topbar nav .nav-contact:hover { text-decoration: none; }
+  /* 7번째(블로그)는 짝이 없으니 한 줄 전체 */
+  .topbar nav a:nth-of-type(7) { grid-column: 1 / -1; }
+  .topbar nav a[href="/apply"] { background: var(--accent); color: #fff; }
+  .topbar nav .nav-contact { background: #fff; border: 1px solid var(--accent); color: var(--accent); }
   .nav-langs {
     display: flex;
+    grid-column: 1 / -1;
     flex-wrap: wrap;
     align-items: center;
     gap: 4px 8px;
+    margin: 4px -16px 0;
     padding: 10px 16px 6px;
     border-top: 1px solid var(--line);
   }
