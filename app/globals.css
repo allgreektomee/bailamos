@@ -1225,3 +1225,62 @@ fieldset.apply-field { display: block; }
   cursor: pointer;
 }
 .event-pop-actions button + button { border-left: 1px solid rgba(255, 255, 255, 0.14); }
+
+/* 주간 / 월간 탭 */
+.sched-tabs {
+  display: flex;
+  max-width: 480px;
+  margin: 28px auto 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+  background: #fff;
+}
+.sched-tabs button {
+  flex: 1;
+  padding: 9px 0;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.sched-tabs button[aria-selected="true"] { background: var(--ink); color: #fff; }
+.month-view { max-width: 480px; margin: 22px auto 0; }
+.month-nav { display: flex; align-items: center; justify-content: space-between; padding: 0 4px 12px; }
+.month-nav strong { font-family: var(--display); font-size: 16px; font-weight: 400; }
+.month-nav button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.month-nav button:disabled { opacity: 0.3; cursor: default; }
+.month-list { list-style: none; margin: 0; padding: 0; }
+.month-day {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 4px 18px;
+  align-items: start;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.month-date { text-align: center; line-height: 1.15; }
+.month-date b { display: block; font-family: var(--display); font-size: 19px; font-weight: 400; }
+.month-date span { font-size: 11px; color: var(--muted); }
+/* 일요일은 빨강, 토요일은 파랑. 오늘 표시(accent)가 가장 우선한다. */
+.month-day.sun .month-date b,
+.month-day.sun .month-date span { color: #d64545; }
+.month-day.sat .month-date b,
+.month-day.sat .month-date span { color: #3b6fd4; }
+.month-day.past { opacity: 0.45; }
+.month-day.today .month-date b { color: var(--accent); }
+.month-day.today .month-date span { color: var(--accent); font-weight: 700; }
+.month-empty { margin: 36px 0; text-align: center; color: var(--muted); font-size: 14px; }

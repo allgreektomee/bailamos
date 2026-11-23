@@ -4,8 +4,9 @@ import Link from "next/link";
 import { BrandIcon, ContactBoards, openOnPhone } from "@/components/ContactLinks";
 import EventPopup from "@/components/EventPopup";
 import { useI18n } from "@/components/Language";
-import { classes, weekPlan, WEEK_ORDER } from "@/lib/curriculum";
-import { dayLetter, dayName, localizeCourse, weekLabel } from "@/lib/i18n";
+import ScheduleTabs from "@/components/ScheduleTabs";
+import { classes } from "@/lib/curriculum";
+import { dayName, localizeCourse } from "@/lib/i18n";
 import { maps, studioAddress, applyHref, inmuFacebook, inmuFacebookPhone } from "@/lib/links";
 
 function CourseList({ items, kicker, dateQuery, lang, columns }) {
@@ -181,33 +182,7 @@ export default function HomePage({ dateQuery }) {
           <i />
         </div>
         <p className="section-lead">{t("weekLead")}</p>
-        <ul className="week-schedule">
-          {WEEK_ORDER.filter((day) => weekPlan.some((item) => item.day === day)).map((day) => (
-            <li key={day} className="week-day">
-              <b>{dayLetter(lang, day)}</b>
-              <div className="week-slots">
-                {weekPlan
-                  .filter((item) => item.day === day)
-                  .map((item) => {
-                    const href = item.id ? `/classes/${item.id}${dateQuery}` : item.href;
-                    const body = (
-                      <>
-                        <span>{item.time}</span>
-                        <strong>{weekLabel(item, lang)}</strong>
-                      </>
-                    );
-                    return href ? (
-                      <Link key={item.name} href={href}>
-                        {body}
-                      </Link>
-                    ) : (
-                      <div key={item.name}>{body}</div>
-                    );
-                  })}
-              </div>
-            </li>
-          ))}
-        </ul>
+        <ScheduleTabs dateQuery={dateQuery} />
       </section>
 
       <section className="section" id="contact">

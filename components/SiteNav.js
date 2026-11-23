@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { openOnPhone } from "@/components/ContactLinks";
 import { useContactDialog } from "@/components/ContactDialog";
 import { LangSwitch, useI18n } from "@/components/Language";
+import { blog } from "@/lib/links";
 
 export default function SiteNav() {
   const { t } = useI18n();
@@ -15,6 +17,7 @@ export default function SiteNav() {
     { href: "/#week", label: t("navWeek") },
     { href: "/classes/private", label: t("navPrivate") },
     { href: "/#visit", label: t("navVisit") },
+    { href: blog.href, phoneHref: blog.phoneHref, label: t("navBlog"), external: true },
     { href: "/apply", label: t("apply") },
     { href: "/#contact", label: t("navContact") },
   ];
@@ -38,6 +41,20 @@ export default function SiteNav() {
             >
               {link.label}
             </button>
+          ) : link.external ? (
+            <a
+              key={link.href}
+              href={link.href}
+              data-phone-href={link.phoneHref}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(event) => {
+                setOpen(false);
+                openOnPhone(event);
+              }}
+            >
+              {link.label}
+            </a>
           ) : (
             <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
               {link.label}
