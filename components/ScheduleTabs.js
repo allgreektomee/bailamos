@@ -3,14 +3,13 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useI18n } from "@/components/Language";
-import { WEEK_ORDER, monthEvents, resolveToday, weekPlan } from "@/lib/curriculum";
+import { WEEK_ORDER, lastCalendarMonth, monthEvents, resolveToday, weekPlan } from "@/lib/curriculum";
 import { dayLetter, weekLabel } from "@/lib/i18n";
 
 const LOCALES = { ko: "ko-KR", zh: "zh-CN", ja: "ja-JP", es: "es-ES" };
 
-/** 이번 달 기준으로 몇 달 앞뒤까지 넘겨 볼 수 있는지. */
+/** 이번 달 기준으로 지난 달을 몇 달 앞까지 볼 수 있는지. 뒤쪽은 lib/curriculum.js 의 lastCalendarMonth 까지. */
 const BACK = 1;
-const FORWARD = 3;
 
 function Slot({ href, time, label }) {
   const body = (
@@ -75,7 +74,7 @@ function MonthView({ lang, t, today, dateQuery }) {
           ‹
         </button>
         <strong>{label}</strong>
-        <button type="button" aria-label={t("monthNext")} disabled={offset >= FORWARD} onClick={() => setOffset(offset + 1)}>
+        <button type="button" aria-label={t("monthNext")} disabled={index >= lastCalendarMonth} onClick={() => setOffset(offset + 1)}>
           ›
         </button>
       </div>
@@ -98,7 +97,7 @@ function MonthView({ lang, t, today, dateQuery }) {
                     key={`${item.date}-${item.name}`}
                     href={item.id ? `/classes/${item.id}${dateQuery}` : item.href}
                     time={item.time}
-                    label={`${weekLabel(item, lang)}${item.place ? ` @ ${item.place}` : ""}`}
+                    label={`${weekLabel(item, lang)}${item.weekNo ? ` · ${t("weekUnit")(item.weekNo)}` : ""}${item.place ? ` @ ${item.place}` : ""}`}
                   />
                 ))}
               </div>
