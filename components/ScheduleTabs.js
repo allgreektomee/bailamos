@@ -26,7 +26,7 @@ function WeekView({ lang, dateQuery }) {
   return (
     <ul className="week-schedule">
       {WEEK_ORDER.filter((day) => weekPlan.some((item) => item.day === day)).map((day) => (
-        <li key={day} className="week-day">
+        <li key={day} className={`week-day${day === "일" ? " sun" : day === "토" ? " sat" : ""}`}>
           <b>{dayLetter(lang, day)}</b>
           <div className="week-slots">
             {weekPlan
