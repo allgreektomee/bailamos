@@ -11,9 +11,7 @@ const event = {
   // 이 시각(서울)이 지나면 팝업을 더 이상 띄우지 않는다.
   until: "2026-12-04T20:30:00+09:00",
   rows: [
-    ["Date", "12.04 FRI · 8PM–1AM"],
-    ["Place", "ANDANTE Tango Andante"],
-    ["Special Performance", "Jiwoon & Elly"],
+    // 날짜·장소·스페셜 공연은 포스터에 이미 있어서 표에서는 뺐다.
     ["DJ", "Carlos (Churri Lee)"],
     ["Dress code", "RED & GREEN"],
     ["Fee", "13,000won"],
