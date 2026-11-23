@@ -41,7 +41,6 @@ export function LangSwitch({ variant = "compact" }) {
   const { lang, setLang } = useI18n();
   const [open, setOpen] = useState(false);
   const rootRef = useRef(null);
-  const current = LANGS.find((item) => item.id === lang) || LANGS[0];
 
   useEffect(() => {
     if (variant === "menu" || !open) return;
@@ -69,30 +68,59 @@ export function LangSwitch({ variant = "compact" }) {
     );
   }
 
+  const others = LANGS.filter((item) => item.id !== "en" && item.id !== "ko");
+  const otherCurrent = others.find((item) => item.id === lang);
+
   return (
     <div className={`lang-switch${open ? " open" : ""}`} ref={rootRef}>
+      <button
+        type="button"
+        className={lang === "en" ? "lang-current" : ""}
+        aria-pressed={lang === "en"}
+        aria-label="English"
+        onClick={() => {
+          setLang("en");
+          setOpen(false);
+        }}
+      >
+        EN
+      </button>
+      <button
+        type="button"
+        className={lang === "ko" ? "lang-current" : ""}
+        aria-pressed={lang === "ko"}
+        aria-label="한국어"
+        onClick={() => {
+          setLang("ko");
+          setOpen(false);
+        }}
+      >
+        한
+      </button>
       {open
-        ? LANGS.filter((item) => item.id !== lang).map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => {
-                setLang(item.id);
-                setOpen(false);
-              }}
-            >
-              {item.short}
-            </button>
-          ))
+        ? others
+            .filter((item) => item.id !== lang)
+            .map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => {
+                  setLang(item.id);
+                  setOpen(false);
+                }}
+              >
+                {item.short}
+              </button>
+            ))
         : null}
       <button
         type="button"
-        className="lang-current"
+        className={otherCurrent ? "lang-current" : ""}
         aria-expanded={open}
-        aria-label={current.label}
+        aria-label={otherCurrent ? otherCurrent.label : "Language"}
         onClick={() => setOpen((value) => !value)}
       >
-        {current.short}
+        {otherCurrent ? otherCurrent.short : "···"}
       </button>
     </div>
   );

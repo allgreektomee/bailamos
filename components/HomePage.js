@@ -7,7 +7,7 @@ import { useI18n } from "@/components/Language";
 import ScheduleTabs from "@/components/ScheduleTabs";
 import { classes } from "@/lib/curriculum";
 import { dayName, localizeCourse } from "@/lib/i18n";
-import { maps, studioAddress, applyHref, inmuFacebook, inmuFacebookPhone } from "@/lib/links";
+import { maps, applyHref, inmuFacebook, inmuFacebookPhone } from "@/lib/links";
 
 function CourseList({ items, kicker, dateQuery, lang, columns }) {
   return (
@@ -137,7 +137,7 @@ export default function HomePage({ dateQuery }) {
               playsInline
               preload="none"
               poster="/videos/practica-2026-10-25.jpg"
-              aria-label="2026.10.25 쁘락"
+              aria-label={t("practicaVideo")}
             >
               <source src="/videos/practica-2026-10-25.mp4" type="video/mp4" />
             </video>
@@ -195,7 +195,7 @@ export default function HomePage({ dateQuery }) {
         <ContactBoards />
         <div className="visit" id="visit">
           <h3>{t("visit")}</h3>
-          <p>{studioAddress}</p>
+          <p>{t("address")}</p>
           <div className="contact-row">
             {maps.map((item) => (
               <a key={item.name} href={item.href} target="_blank" rel="noreferrer">
