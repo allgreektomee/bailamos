@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { BrandIcon, ContactBoards, openOnPhone } from "@/components/ContactLinks";
+import EventPopup from "@/components/EventPopup";
 import { useI18n } from "@/components/Language";
 import { classes, weekPlan, WEEK_ORDER } from "@/lib/curriculum";
 import { dayLetter, dayName, localizeCourse, weekLabel } from "@/lib/i18n";
@@ -48,6 +49,7 @@ export default function HomePage({ dateQuery }) {
 
   return (
     <>
+      <EventPopup />
       <section className="hero">
         <div className="hero-photo">
           <img src="/hero.jpg" alt={t("heroAlt")} />

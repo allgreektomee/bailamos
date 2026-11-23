@@ -133,7 +133,7 @@ export function ContactBoards() {
               onClick={openOnPhone}
             >
               <BrandIcon name={item.icon} />
-              {item.icon === "naver" ? t("naverCafe") : item.name}
+              {item.labelKey ? t(item.labelKey) : item.name}
             </a>
           ))}
         </div>
