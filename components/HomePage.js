@@ -109,8 +109,34 @@ function Stairs({ items, dateQuery, lang }) {
   );
 }
 
+/** 모바일 특강: 정규 수업처럼 2칸 박스. 상태(진행중·모집중·준비중)는 오른쪽 위. */
+function SpecialBoxes({ items, dateQuery, lang }) {
+  const { t } = useI18n();
+  return (
+    <div className="stairs stairs-specials">
+      <ul className="stairs-steps">
+        {items.map((item) => {
+          const course = localizeCourse(item, lang);
+          return (
+            <li key={course.id}>
+              <Link href={`/classes/${course.id}${dateQuery}`} className="stair">
+                <span className="stair-head">
+                  <StatusTag status={course.status} />
+                </span>
+                <span className="stair-name">{course.name}</span>
+                <span className="stair-sub">{t("specialSubs")[course.id]}</span>
+                <span className="stair-lead">{t("specialLeads")[course.id]}</span>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 /** 모바일에서는 cover 한 장을 깔고, 아래에 강좌를 한 줄씩 모아서 한눈에 보여 준다. (PC 는 기존 카드) */
-function CourseList({ items, kicker, dateQuery, lang, columns, cover }) {
+function CourseList({ items, kicker, dateQuery, lang, columns, cover, boxes }) {
   return (
     <>
     {cover ? (
@@ -119,7 +145,8 @@ function CourseList({ items, kicker, dateQuery, lang, columns, cover }) {
       </div>
     ) : null}
     {columns === 3 ? <Stairs items={items} dateQuery={dateQuery} lang={lang} /> : null}
-    <ul className={columns === 3 ? "course-grid course-grid-3" : "course-grid"}>
+    {boxes ? <SpecialBoxes items={items} dateQuery={dateQuery} lang={lang} /> : null}
+    <ul className={columns === 3 ? "course-grid course-grid-3" : boxes ? "course-grid course-grid-boxes" : "course-grid"}>
       {items.map((item, index) => {
         const course = localizeCourse(item, lang);
         return (
@@ -217,7 +244,7 @@ export default function HomePage({ dateQuery }) {
           <i />
         </div>
         <p className="section-lead">{t("specialsLead")}</p>
-        <CourseList items={specials} kicker={t("specials")} dateQuery={dateQuery} lang={lang} cover={{ src: "/photos/elly-floral.jpg", position: "center 30%" }} />
+        <CourseList items={specials} kicker={t("specials")} dateQuery={dateQuery} lang={lang} boxes cover={{ src: "/photos/elly-floral.jpg", position: "center 30%" }} />
       </section>
 
       <section className="section" id="gather">

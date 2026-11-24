@@ -573,8 +573,11 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
 .stairs { display: none; }
 @media (max-width: 799px) {
   /* 정규 수업은 계단으로 보여 주므로 일반 목록은 감춘다 (특강은 목록 그대로) */
-  .course-grid-3 { display: none; }
-  .stairs { display: block; margin-top: 14px; }
+  .course-grid-3, .course-grid-boxes { display: none; }
+  .stairs { display: block; margin-top: 14px; margin-bottom: 34px; }
+  .stairs-specials { margin-bottom: 0; }
+  /* 특강은 5개라 마지막 한 개는 한 줄 전체 */
+  .stairs-specials .stairs-steps li:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .stairs-hint { margin: 22px 0 20px; text-align: center; white-space: pre-line; line-height: 1.55; font-size: 12.5px; color: var(--muted); }
   /* 두 칸씩: 초급 · 초중급 / 중급 · 중상급, 상급은 한 칸 전체 */
   .stairs-steps {
