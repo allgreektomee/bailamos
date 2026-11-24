@@ -9,8 +9,114 @@ import { classes } from "@/lib/curriculum";
 import { dayName, localizeCourse } from "@/lib/i18n";
 import { maps, applyHref, inmuFacebook, inmuFacebookPhone } from "@/lib/links";
 
-function CourseList({ items, kicker, dateQuery, lang, columns }) {
+/** 모바일 전용 계단 (테크트리): 초급 → 상급을 한 칸씩 오른쪽 아래로 올라가고, 인텐시브는 전 단계를 아우르는 긴 막대. */
+/** 단계 표시: 탱고 구두 👠 5켤레 중 몇 개가 켜졌는지(색은 CSS 에서 보라색으로). 인텐시브는 전 단계라 5개 모두. */
+const STEP_ICON = "👠";
+const STAIR_LEVEL = {
+  beginner: 1,
+  "beginner-intermediate": 2,
+  intermediate: 3,
+  "upper-intermediate": 4,
+  advanced: 5,
+  intensive: 5,
+};
+
+function StatusTag({ status }) {
+  const { t } = useI18n();
+  if (!status) return null;
+  return <span className={`stair-status stair-status-${status}`}>{t("statusLabels")[status]}</span>;
+}
+
+function StepMark({ id }) {
+  const level = STAIR_LEVEL[id] || 0;
   return (
+    <span className="stair-lv" role="img" aria-label={`${level}/5`}>
+      {[1, 2, 3, 4, 5].map((n) => (
+        <i key={n} className={n <= level ? "on" : ""}>
+          {STEP_ICON}
+        </i>
+      ))}
+    </span>
+  );
+}
+const STAIRS = ["beginner", "beginner-intermediate", "intermediate", "upper-intermediate", "advanced"];
+
+function Stairs({ items, dateQuery, lang }) {
+  const { t } = useI18n();
+  const byId = (id) => {
+    const found = items.find((item) => item.id === id);
+    return found ? localizeCourse(found, lang) : null;
+  };
+  const when = (course) =>
+    course.day
+      ? `${dayName(lang, course.day)} ${course.time}`
+      : course.id === "advanced"
+        ? t("stairThemes")
+        : "";
+  const weeks = (course) =>
+    course.weeks?.length === 8 ? t("weeksOf")(8) : "";
+  const href = (course) => `/classes/${course.id}${dateQuery}`;
+  const intensive = byId("intensive");
+  const priv = byId("private");
+
+  return (
+    <div className="stairs">
+      <p className="stairs-hint">{t("stairHint")}</p>
+      <ol className="stairs-steps">
+        {STAIRS.map((id, index) => {
+          const course = byId(id);
+          if (!course) return null;
+          const sub = [when(course), weeks(course)].filter(Boolean).join(" · ");
+          return (
+            <li key={id} style={{ "--step": index }}>
+              <Link href={href(course)} className={`stair stair-${index + 1}`}>
+                <span className="stair-head">
+                  <StepMark id={id} />
+                  <StatusTag status={course.status} />
+                </span>
+                <span className="stair-name">{course.name}</span>
+                {sub ? <span className="stair-sub">{sub}</span> : null}
+                <span className="stair-lead">{t("stairLeads")[id]}</span>
+              </Link>
+            </li>
+          );
+        })}
+        {intensive ? (
+          <li>
+            <Link href={href(intensive)} className="stair stair-wide">
+              <span className="stair-head">
+                <StatusTag status={intensive.status} />
+              </span>
+              <span className="stair-name">{intensive.name}</span>
+              <span className="stair-sub">
+                {when(intensive)} · {t("weeksOf")(24)}
+              </span>
+              <span className="stair-lead">{t("stairIntensiveNote")}</span>
+            </Link>
+          </li>
+        ) : null}
+      </ol>
+      {priv ? (
+        <Link href={href(priv)} className="stair stair-solo">
+          <span className="stair-name">{priv.name}</span>
+          <span className="stair-sub">{priv.lead}</span>
+          <span className="stair-lead">{t("stairAskName")}</span>
+        </Link>
+      ) : null}
+    </div>
+  );
+}
+
+/** 모바일에서는 cover 한 장을 깔고, 아래에 강좌를 한 줄씩 모아서 한눈에 보여 준다. (PC 는 기존 카드) */
+function CourseList({ items, kicker, dateQuery, lang, columns, cover }) {
+  return (
+    <>
+    {cover ? (
+      <div className="course-cover">
+        <img src={cover.src} alt="" style={{ objectPosition: cover.position || "center" }} />
+      </div>
+    ) : null}
+    {columns === 3 ? <Stairs items={items} dateQuery={dateQuery} lang={lang} /> : null}
     <ul className={columns === 3 ? "course-grid course-grid-3" : "course-grid"}>
       {items.map((item, index) => {
         const course = localizeCourse(item, lang);
@@ -25,7 +131,8 @@ function CourseList({ items, kicker, dateQuery, lang, columns }) {
                 )}
               </div>
               <p className="course-kicker">
-                {String(index + 1).padStart(2, "0")} · {kicker}
+                <span className="course-no">{String(index + 1).padStart(2, "0")}</span>
+                <span className="course-kind"> · {kicker}</span>
               </p>
               <p className="course-name">{course.name}</p>
               {course.track === "special" || !course.day ? null : (
@@ -39,6 +146,7 @@ function CourseList({ items, kicker, dateQuery, lang, columns }) {
         );
       })}
     </ul>
+    </>
   );
 }
 
@@ -97,7 +205,7 @@ export default function HomePage({ dateQuery }) {
           <i />
         </div>
         <p className="section-lead">{t("coursesLead")}</p>
-        <CourseList items={regular} kicker={t("regular")} dateQuery={dateQuery} lang={lang} columns={3} />
+        <CourseList items={regular} kicker={t("regular")} dateQuery={dateQuery} lang={lang} columns={3} cover={{ src: "/teachers/couple.jpg?v=2", position: "center 28%" }} />
       </section>
 
       <section className="section" id="specials">
@@ -107,7 +215,7 @@ export default function HomePage({ dateQuery }) {
           <i />
         </div>
         <p className="section-lead">{t("specialsLead")}</p>
-        <CourseList items={specials} kicker={t("specials")} dateQuery={dateQuery} lang={lang} />
+        <CourseList items={specials} kicker={t("specials")} dateQuery={dateQuery} lang={lang} cover={{ src: "/photos/elly-floral.jpg", position: "center 30%" }} />
       </section>
 
       <section className="section" id="gather">
