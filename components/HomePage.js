@@ -111,7 +111,7 @@ function Stairs({ items, dateQuery, lang }) {
 }
 
 /** 특강별 대표 이모지 (맨 위 줄) */
-const SPECIAL_ICON = { walk: "👣", ocho: "⚖️", "special-intermediate": "🔗", giro: "🌀", "special-advanced": "🔥" };
+const SPECIAL_ICON = { walk: "👣", ocho: "⚖️", "special-intermediate": "🔗", giro: "🌀", "special-advanced": "🔥", milonga: "🥁", vals: "🎻" };
 
 /** 제목 속 괄호(스페인어 용어)는 모바일 박스에서 한 줄 아래 작게 보여 준다. */
 function splitName(name = "") {
