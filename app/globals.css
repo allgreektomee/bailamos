@@ -549,6 +549,7 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
 }
 .open-notice-text { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; min-width: 0; font-size: 13px; }
 .open-notice-text b { font-weight: 400; }
+.open-notice-text .topic-tag { margin-left: 0; padding: 1px 8px 2px; font-size: 11px; letter-spacing: 0.02em; }
 .open-notice-emoji { filter: saturate(0.7) brightness(1.1); }
 .open-notice-text em { font-style: normal; font-size: 12.5px; color: var(--muted); }
 .open-notice-none { width: 100%; border: 0; border-bottom: 1px solid var(--line); background: none; font: inherit; text-align: left; cursor: pointer; }
@@ -630,7 +631,29 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   font-size: 16px;
   font-weight: 600;
 }
-.course-card:hover .course-name { text-decoration: underline; text-underline-offset: 4px; }
+/* 제목 속 괄호 안 주제(회차마다 바뀌는 특강 내용)는 보라 알약 태그로 떼어 눈에 띄게 */
+.course-card:hover .course-name-base { text-decoration: underline; text-underline-offset: 4px; }
+.topic-tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-left: 6px;
+  padding: 2px 9px 3px;
+  border: 1px solid #ddd0ff;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  vertical-align: 1px;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+.course-name .topic-tag { display: flex; margin: 7px 0 0; }
 .course-when, .course-lead { margin: 4px 0 0; font-size: 13px; color: var(--muted); line-height: 1.45; }
 .course-lead {
   display: -webkit-box;
@@ -647,15 +670,13 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   .stairs-specials { margin-bottom: 0; }
   .stairs-specials .stair { padding-top: 16px; }
   .stair-emoji { font-size: 14px; line-height: 1; filter: saturate(0.75) brightness(1.08); }
-  /* 긴 특강 제목은 괄호 부분(스페인어 용어)을 아래 줄에 작게 */
-  .stair-name-terms {
-    display: block;
-    margin-top: 1px;
-    font-style: normal;
+  /* 특강 제목의 괄호 안 주제는 제목 아래 보라 알약 태그로 크게 */
+  .stair-name .topic-tag {
+    display: flex;
+    margin: 5px 0 0;
+    padding: 3px 9px 3px;
     font-size: 11.5px;
-    font-weight: 500;
     letter-spacing: 0.01em;
-    color: var(--muted);
   }
   .stairs-hint { margin: 22px 0 20px; text-align: center; white-space: pre-line; line-height: 1.55; font-size: 12.5px; color: var(--muted); }
   /* 두 칸씩: 초급 · 초중급 / 중급 · 중상급, 상급은 한 칸 전체 */
@@ -817,6 +838,14 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   font-family: var(--display);
   font-size: 36px;
   font-weight: 400;
+}
+.detail h1 .topic-tag {
+  display: flex;
+  margin: 12px 0 0;
+  padding: 5px 14px 6px;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.03em;
 }
 .teacher-grid, .lesson-grid {
   display: grid;
@@ -1566,10 +1595,6 @@ fieldset.apply-field { display: block; }
 .blog-list { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 14px; }
 .blog-card { display: block; color: inherit; text-decoration: none; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff; }
 .blog-card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background: #e6e6e6; }
-.blog-more { margin: 26px 0 0; text-align: center; }
-.blog-more button { padding: 12px 34px; border: 1px solid var(--line); border-radius: 6px; background: #fff; color: var(--ink); font: inherit; font-size: 14px; cursor: pointer; }
-.blog-more button:disabled { color: var(--muted); cursor: default; }
-.blog-more-error { display: block; margin-top: 8px; font-size: 12px; color: var(--muted); }
 .blog-card-body { display: grid; gap: 6px; padding: 14px 16px 16px; }
 .blog-card-body time, .blog-post time { font-size: 12px; letter-spacing: .06em; color: var(--muted); }
 .blog-card-body strong { font-size: 16px; font-weight: 500; line-height: 1.45; }
