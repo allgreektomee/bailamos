@@ -10,8 +10,8 @@ import { dayName, localizeCourse } from "@/lib/i18n";
 import { maps, applyHref, inmuFacebook, inmuFacebookPhone } from "@/lib/links";
 
 /** 모바일 전용 계단 (테크트리): 초급 → 상급을 한 칸씩 오른쪽 아래로 올라가고, 인텐시브는 전 단계를 아우르는 긴 막대. */
-/** 단계 표시: 탱고 구두 👠 5켤레 중 몇 개가 켜졌는지(색은 CSS 에서 보라색으로). 인텐시브는 전 단계라 5개 모두. */
-const STEP_ICON = "👠";
+/** 단계 표시: 탱고의 장미 🌹 5송이 중 몇 송이가 피었는지(색은 CSS 에서 보라색으로). 인텐시브는 전 단계라 5개 모두. */
+const STEP_ICON = "🌹";
 const STAIR_LEVEL = {
   beginner: 1,
   "beginner-intermediate": 2,
