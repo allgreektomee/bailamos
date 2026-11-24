@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useI18n } from "@/components/Language";
 import { classes, getCourse } from "@/lib/curriculum";
 import { dayName, localizeCourse } from "@/lib/i18n";
-import { applyBatches, applyCourses, applyCourseById, applyPrices, fixedBatch, hasBatch, applyRoles, applySources, depositAccount } from "@/lib/apply";
+import { applyBatches, applyCourses, applyCourseById, applyPrices, hasBatch, applyRoles, applySources, depositAccount } from "@/lib/apply";
 import { contacts } from "@/lib/links";
 
 const roleKey = { 리더: "roleLeader", 팔로워: "roleFollower" };
@@ -106,7 +106,7 @@ export default function ApplyForm({ initialCourse }) {
         body: JSON.stringify({
           course,
           role,
-          batch: hasBatch(course) ? batch : fixedBatch(course),
+          batch: hasBatch(course) ? batch : "",
           name,
           depositor,
           phone,
@@ -184,10 +184,6 @@ export default function ApplyForm({ initialCourse }) {
                 ) : applyPrices[course].term ? (
                   <span className="is-on">
                     {t("applyPriceTerm")} {applyPrices[course].term}
-                  </span>
-                ) : !applyPrices[course].cohort ? (
-                  <span className="is-on">
-                    {t("applyPriceOpen")} {applyPrices[course].open}
                   </span>
                 ) : (
                   <>
