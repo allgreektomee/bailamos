@@ -281,6 +281,7 @@ export default function HomePage({ dateQuery, latestPost }) {
           </h1>
           <p className="hero-honor">{t("honor")}</p>
           <p className="sub">{t("sub")}</p>
+          <p className="sub-cta">{t("subCta")}</p>
         </div>
       </section>
 
