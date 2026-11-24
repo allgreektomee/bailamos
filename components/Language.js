@@ -69,7 +69,10 @@ export function LangSwitch({ variant = "compact" }) {
   }
 
   // 닫혀 있을 땐 EN · 한 만 보이고, 어느 쪽을 눌러도 전체 언어가 펼쳐진다. 펼쳐진 뒤엔 누른 언어로 바뀐다.
-  const shown = open ? LANGS : LANGS.filter((item) => item.id === "en" || item.id === "ko");
+  // (中 · 日 · ES 를 쓰는 중이면 닫힌 상태에서도 그 언어가 함께 보인다)
+  const shown = open
+    ? LANGS
+    : LANGS.filter((item) => item.id === "en" || item.id === "ko" || item.id === lang);
 
   return (
     <div className={`lang-switch${open ? " open" : ""}`} ref={rootRef}>
