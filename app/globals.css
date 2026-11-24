@@ -1121,6 +1121,19 @@ a.inquire-btn { text-decoration: none; }
 .lesson-pack { margin: 16px 0 0; font-size: 15px; font-weight: 700; }
 .lesson-notes { max-width: 640px; margin: 22px auto 0; text-align: center; }
 .lesson-notes p { margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+/* 개인레슨 3칸: 작게. 모바일에서는 닫힌 상태에서 "금액 보기"를 오른쪽에 둔다 */
+.lesson-grid { gap: 8px; margin-top: 20px; }
+.lesson-card { padding: 14px 16px; border-radius: 6px; }
+.lesson-card h3 { font-size: 15px; font-weight: 500; }
+.lesson-count { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+.lesson-card .teacher-more { margin-top: 8px; font-size: 12.5px; font-weight: 500; color: var(--muted); }
+.lesson-price { margin-top: 10px; font-size: 26px; }
+.lesson-pack { margin-top: 10px; font-size: 14px; }
+@media (max-width: 799px) {
+  .lesson-card:not(.open) { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 12px; }
+  .lesson-card:not(.open) h3, .lesson-card:not(.open) .lesson-count { grid-column: 1; }
+  .lesson-card:not(.open) .teacher-more { grid-column: 2; grid-row: 1 / 4; margin: 0; }
+}
 
 .profile .lead { margin-top: 12px; color: var(--muted); }
 .profile-copy { margin: 14px 0 0; font-size: 16px; line-height: 1.7; }
