@@ -193,6 +193,7 @@ function OpenNotice({ lang }) {
       <p className="open-notice-title">
         <span className="open-notice-emoji" aria-hidden="true">💜</span> {t("noticeTitle")}
       </p>
+      <p className="open-notice-kicker">{t("noticeKicker")}</p>
       <ul>
         {open.map((item) => {
           const course = localizeCourse(item, lang);
