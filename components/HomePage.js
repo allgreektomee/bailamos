@@ -234,7 +234,7 @@ function OpenNotice({ lang }) {
   );
 }
 
-export default function HomePage({ dateQuery }) {
+export default function HomePage({ dateQuery, latestPost }) {
   const { lang, t } = useI18n();
   const practicaApply = applyHref("practica");
   const regular = classes.filter((course) => course.track !== "special");
@@ -378,6 +378,33 @@ export default function HomePage({ dateQuery }) {
         <p className="section-lead">{t("weekLead")}</p>
         <ScheduleTabs dateQuery={dateQuery} />
       </section>
+
+      {latestPost ? (
+        <section className="section" id="latest-blog">
+          <div className="section-head">
+            <h2>Blog</h2>
+            <i />
+          </div>
+          <ul className="blog-list home-blog">
+            <li>
+              <Link href={`/blog/${latestPost.slug}`} className="blog-card">
+                {latestPost.cover ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={latestPost.cover} alt="" loading="lazy" />
+                ) : null}
+                <span className="blog-card-body">
+                  <time dateTime={latestPost.date}>{latestPost.date.replaceAll("-", ".")}</time>
+                  <strong>{latestPost.title}</strong>
+                  {latestPost.summary ? <span>{latestPost.summary}</span> : null}
+                </span>
+              </Link>
+            </li>
+          </ul>
+          <p className="home-blog-more">
+            <Link href="/blog">{t("blogMore")} ›</Link>
+          </p>
+        </section>
+      ) : null}
 
       <section className="section" id="contact">
         <div className="section-head">
