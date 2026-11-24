@@ -98,9 +98,11 @@ function Stairs({ items, dateQuery, lang }) {
       </ol>
       {priv ? (
         <Link href={href(priv)} className="stair stair-solo">
-          <span className="stair-name">{priv.name}</span>
-          <span className="stair-sub">{priv.lead}</span>
-          <span className="stair-lead">{t("stairAskName")}</span>
+          <span className="stair-solo-text">
+            <span className="stair-name">{priv.name}</span>
+            <span className="stair-sub">{priv.lead}</span>
+          </span>
+          <span className="stair-ask">{t("stairAskName")} ›</span>
         </Link>
       ) : null}
     </div>

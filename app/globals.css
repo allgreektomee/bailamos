@@ -651,7 +651,25 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
     text-overflow: ellipsis;
   }
   .stair-note { margin-top: 2px; font-size: 12px; line-height: 1.4; color: var(--muted); }
-  .stair-solo { margin-top: 10px; }
+  /* 개인레슨: 같은 그룹이지만 한 칸 떨어진 별도 영역. 가로 한 줄로 얇게 */
+  .stair-solo {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 26px;
+    padding: 14px 14px 14px 16px;
+    background: var(--soft);
+    border-color: transparent;
+  }
+  .stair-solo-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .stair-ask {
+    flex: none;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
 }
 
 /* 모바일: 대표 이미지 한 장 + 강좌 목록을 한눈에 (PC 는 위의 카드 그리드 그대로) */
