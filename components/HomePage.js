@@ -191,7 +191,7 @@ function OpenNotice({ lang }) {
   return (
     <section className="open-notice" aria-label={t("noticeTitle")}>
       <p className="open-notice-title">
-        <span aria-hidden="true">📢</span> {t("noticeTitle")}
+        <span className="open-notice-emoji" aria-hidden="true">💜</span> {t("noticeTitle")}
       </p>
       <ul>
         {open.map((item) => {
