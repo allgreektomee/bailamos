@@ -20,6 +20,16 @@ function Inquire({ courseId }) {
   const { t } = useI18n();
   const { openContact } = useContactDialog();
   const href = applyHref(courseId);
+  // 개인레슨은 신청 폼 없이 문의만 받는다.
+  if (courseId === "private") {
+    return (
+      <div className="inquire">
+        <button type="button" className="inquire-btn inquire-line" onClick={openContact}>
+          {t("inquire")}
+        </button>
+      </div>
+    );
+  }
   const apply = href ? (
     <a className="inquire-btn inquire-line" href={href}>
       {t("apply")}
