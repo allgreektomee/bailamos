@@ -111,7 +111,14 @@ function Stairs({ items, dateQuery, lang }) {
 }
 
 /** 특강별 대표 이모지 (맨 위 줄) */
-const SPECIAL_ICON = { ocho: "⚖️", walk: "👣", milonga: "🥁", vals: "🎻", giro: "🌀" };
+const SPECIAL_ICON = { walk: "👣", ocho: "⚖️", "special-intermediate": "🔗", giro: "🌀", "special-advanced": "🔥" };
+
+/** 제목 속 괄호(스페인어 용어)는 모바일 박스에서 한 줄 아래 작게 보여 준다. */
+function splitName(name = "") {
+  const at = name.indexOf("(");
+  if (at < 0) return { base: name, terms: "" };
+  return { base: name.slice(0, at).trim(), terms: name.slice(at) };
+}
 
 /** 모바일 특강: 정규 수업처럼 2칸 박스. 맨 위 줄: 이모지(왼쪽) + 상태(진행중·모집중·준비중, 오른쪽). */
 function SpecialBoxes({ items, dateQuery, lang }) {
@@ -121,6 +128,7 @@ function SpecialBoxes({ items, dateQuery, lang }) {
       <ul className="stairs-steps">
         {items.map((item) => {
           const course = localizeCourse(item, lang);
+          const { base, terms } = splitName(course.name);
           return (
             <li key={course.id}>
               <Link href={`/classes/${course.id}${dateQuery}`} className="stair">
@@ -128,7 +136,10 @@ function SpecialBoxes({ items, dateQuery, lang }) {
                   <span className="stair-emoji" aria-hidden="true">{SPECIAL_ICON[course.id]}</span>
                   <StatusTag status={course.status} />
                 </span>
-                <span className="stair-name">{course.name}</span>
+                <span className="stair-name">
+                  {base}
+                  {terms ? <em className="stair-name-terms">{terms}</em> : null}
+                </span>
                 <span className="stair-sub">{t("specialSubs")[course.id]}</span>
                 <span className="stair-lead">{t("specialLeads")[course.id]}</span>
               </Link>
