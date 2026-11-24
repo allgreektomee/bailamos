@@ -18,12 +18,21 @@ var COURSE_LABELS_ = {
   "5 advanced": "상급",
   "6 intensive": "인텐시브",
   "7 private": "개인레슨",
-  "8 Axis · Pivot · Ocho": "Axis · Pivot · Ocho",
-  "9 walk": "걷기",
-  "10 milonga": "밀롱가",
-  "11 vals": "발스",
-  "12 giro": "히로 콤비네이션",
+  // 특강 (사이트 lib/apply.js 의 option 과 같아야 한다. 이름은 lib/curriculum.js 의 name)
+  "9 초급 트레이닝 특강(Caminata, Abrazo)": "초급 트레이닝 특강(Caminata, Abrazo)",
+  "8 초중급 트레이닝 특강(Eje, Pivot, Ocho)": "초중급 트레이닝 특강(Eje, Pivot, Ocho)",
+  "14 중급 특강": "중급 특강",
+  "12 중상급 특강(히로 콤비네이션)": "중상급 특강(히로 콤비네이션)",
+  "15 상급 특강": "상급 특강",
+  "10 밀롱가 특강": "밀롱가 특강",
+  "11 발스 특강": "발스 특강",
   "13 practica": "쁘락",
+  // 예전 신청 행(옛 표기)도 같은 이름으로 묶는다.
+  "8 Axis · Pivot · Ocho": "초중급 트레이닝 특강(Eje, Pivot, Ocho)",
+  "9 walk": "초급 트레이닝 특강(Caminata, Abrazo)",
+  "10 milonga": "밀롱가 특강",
+  "11 vals": "발스 특강",
+  "12 giro": "중상급 특강(히로 콤비네이션)",
 };
 
 function doGet(e) {
