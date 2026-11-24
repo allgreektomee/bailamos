@@ -9,7 +9,7 @@ import { applyBatches, applyCourses, applyCourseById, applyPrices, applyRoles, a
 import { contacts } from "@/lib/links";
 
 const roleKey = { 리더: "roleLeader", 팔로워: "roleFollower" };
-const batchKey = { "B.T 기수 신청": "batchTerm", "일반 신청": "batchOpen" };
+const batchKey = { "B.T 기수 신청": "batchTerm", 재수강: "batchRetake", "일반 신청": "batchOpen" };
 const sourceKey = {
   "지인 추천": "sourceFriend",
   페이스북: "sourceFacebook",
@@ -222,7 +222,7 @@ export default function ApplyForm({ initialCourse }) {
             <legend>
               {t("applyBatch")} <em className="apply-req">*</em>
             </legend>
-            <div className="apply-choices apply-split">
+            <div className="apply-choices apply-split apply-split-3">
               {applyBatches.map((value) => (
                 <label key={value} className={batch === value ? "apply-choice is-on" : "apply-choice"}>
                   <input type="radio" name="batch" value={value} required checked={batch === value} onChange={() => setBatch(value)} />

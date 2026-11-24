@@ -59,6 +59,7 @@ function AdminFilters({ draft, onChange, onSearch, onReset, filtering, searching
             <option value="">전체</option>
             <option value="일반">일반</option>
             <option value="기수">기수</option>
+            <option value="재수강">재수강</option>
           </select>
         </label>
       </div>

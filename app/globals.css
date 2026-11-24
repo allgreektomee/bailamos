@@ -1317,6 +1317,8 @@ fieldset.apply-field { display: block; }
 .apply-field textarea:focus { border-color: #231f1d; }
 .apply-choices { display: flex; flex-wrap: wrap; gap: 8px; }
 .apply-split { display: grid; grid-template-columns: 1fr 1fr; }
+.apply-split.apply-split-3 { grid-template-columns: repeat(3, 1fr); }
+.apply-split-3 .apply-choice { word-break: keep-all; text-align: center; justify-content: center; padding-left: 6px; padding-right: 6px; }
 .apply-choice {
   position: relative;
   display: flex;
