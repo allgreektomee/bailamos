@@ -596,6 +596,7 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
     justify-content: center;
     padding: 15px 12px 16px;
     border: 1px solid var(--line);
+    border-radius: 6px; /* 사각 느낌은 유지하면서 모서리만 살짝 */
     background: #fff;
     color: var(--ink);
     text-decoration: none;
@@ -657,8 +658,9 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin-top: 26px;
-    padding: 14px 14px 14px 16px;
+    width: 88%;
+    margin: 26px auto 0;
+    padding: 14px 16px;
     background: var(--soft);
     border-color: transparent;
   }
