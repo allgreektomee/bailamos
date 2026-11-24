@@ -68,60 +68,31 @@ export function LangSwitch({ variant = "compact" }) {
     );
   }
 
-  const others = LANGS.filter((item) => item.id !== "en" && item.id !== "ko");
-  const otherCurrent = others.find((item) => item.id === lang);
+  // 닫혀 있을 땐 EN · 한 만 보이고, 어느 쪽을 눌러도 전체 언어가 펼쳐진다. 펼쳐진 뒤엔 누른 언어로 바뀐다.
+  const shown = open ? LANGS : LANGS.filter((item) => item.id === "en" || item.id === "ko");
 
   return (
     <div className={`lang-switch${open ? " open" : ""}`} ref={rootRef}>
-      <button
-        type="button"
-        className={lang === "en" ? "lang-current" : ""}
-        aria-pressed={lang === "en"}
-        aria-label="English"
-        onClick={() => {
-          setLang("en");
-          setOpen(false);
-        }}
-      >
-        EN
-      </button>
-      <button
-        type="button"
-        className={lang === "ko" ? "lang-current" : ""}
-        aria-pressed={lang === "ko"}
-        aria-label="한국어"
-        onClick={() => {
-          setLang("ko");
-          setOpen(false);
-        }}
-      >
-        한
-      </button>
-      {open
-        ? others
-            .filter((item) => item.id !== lang)
-            .map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => {
-                  setLang(item.id);
-                  setOpen(false);
-                }}
-              >
-                {item.short}
-              </button>
-            ))
-        : null}
-      <button
-        type="button"
-        className={otherCurrent ? "lang-current" : ""}
-        aria-expanded={open}
-        aria-label={otherCurrent ? otherCurrent.label : "Language"}
-        onClick={() => setOpen((value) => !value)}
-      >
-        {otherCurrent ? otherCurrent.short : "···"}
-      </button>
+      {shown.map((item) => (
+        <button
+          key={item.id}
+          type="button"
+          className={lang === item.id ? "lang-current" : ""}
+          aria-pressed={lang === item.id}
+          aria-expanded={open}
+          aria-label={item.label}
+          onClick={() => {
+            if (!open) {
+              setOpen(true);
+              return;
+            }
+            setLang(item.id);
+            setOpen(false);
+          }}
+        >
+          {item.short}
+        </button>
+      ))}
     </div>
   );
 }
