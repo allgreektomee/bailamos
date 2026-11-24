@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { BrandIcon, ContactBoards, openOnPhone } from "@/components/ContactLinks";
+import { useContactDialog } from "@/components/ContactDialog";
 import EventPopup from "@/components/EventPopup";
 import { useI18n } from "@/components/Language";
 import ScheduleTabs from "@/components/ScheduleTabs";
@@ -186,38 +187,48 @@ function CourseList({ items, kicker, dateQuery, lang, columns, cover, boxes }) {
 /** 홈 상단 공지: 지금 모집중인 과정을 글로 보여주고, 누르면 그 과정의 신청 폼으로 바로 간다. */
 function OpenNotice({ lang }) {
   const { t } = useI18n();
+  const { openContact } = useContactDialog();
   const open = classes.filter((course) => course.status === "open" && applyHref(course.id));
-  if (!open.length) return null;
   return (
     <section className="open-notice" aria-label={t("noticeTitle")}>
       <p className="open-notice-title">
         <span className="open-notice-emoji" aria-hidden="true">💜</span> {t("noticeTitle")}
-        <span className="open-notice-kicker"> - {t("noticeKicker")}</span>
+        {open.length ? <span className="open-notice-kicker"> - {t("noticeKicker")}</span> : null}
       </p>
       <ul>
-        {open.map((item) => {
-          const course = localizeCourse(item, lang);
-          const sub =
-            course.track === "special"
-              ? t("specialSubs")[course.id]
-              : [
-                  course.day ? `${dayName(lang, course.day)} ${course.time}` : "",
-                  course.weeks?.length === 8 ? t("weeksOf")(8) : "",
-                ]
-                  .filter(Boolean)
-                  .join(" · ");
-          return (
-            <li key={course.id}>
-              <Link href={applyHref(course.id)} className="open-notice-row">
-                <span className="open-notice-text">
-                  <b>{course.name}</b>
-                  {sub ? <em>{sub}</em> : null}
-                </span>
-                <span className="open-notice-go">{t("noticeApply")} ›</span>
-              </Link>
-            </li>
-          );
-        })}
+        {open.length ? (
+          open.map((item) => {
+            const course = localizeCourse(item, lang);
+            const sub =
+              course.track === "special"
+                ? t("specialSubs")[course.id]
+                : [
+                    course.day ? `${dayName(lang, course.day)} ${course.time}` : "",
+                    course.weeks?.length === 8 ? t("weeksOf")(8) : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" · ");
+            return (
+              <li key={course.id}>
+                <Link href={applyHref(course.id)} className="open-notice-row">
+                  <span className="open-notice-text">
+                    <b>{course.name}</b>
+                    {sub ? <em>{sub}</em> : null}
+                  </span>
+                  <span className="open-notice-go">{t("noticeApply")} ›</span>
+                </Link>
+              </li>
+            );
+          })
+        ) : (
+          // 모집중인 과정이 없을 때: 진행중 과정은 문의로 참여할 수 있다고 안내
+          <li>
+            <button type="button" className="open-notice-row open-notice-none" onClick={openContact}>
+              <span className="open-notice-text">{t("noticeNone")}</span>
+              <span className="open-notice-go">{t("inquire")} ›</span>
+            </button>
+          </li>
+        )}
       </ul>
     </section>
   );
