@@ -1,4 +1,4 @@
-import { applyBatches, applyCourseById, applyRoles, applySources } from "@/lib/apply";
+import { applyBatches, applyCourseById, hasBatch, applyRoles, applySources } from "@/lib/apply";
 
 export async function POST(request) {
   const url = process.env.APPLY_WEBAPP_URL;
@@ -19,11 +19,11 @@ export async function POST(request) {
   const phone = clip(body.phone, 30);
   const note = clip(body.note, 2000);
   const sourceOther = clip(body.sourceOther, 80);
-  const batch = course?.id === "beginner" ? "" : body.batch;
+  const batch = course && hasBatch(course.id) ? body.batch : "";
   if (!course || !applyRoles.includes(body.role) || !applySources.includes(body.source)) {
     return Response.json({ ok: false, error: "invalid" }, { status: 400 });
   }
-  if (course.id !== "beginner" && !applyBatches.includes(batch)) {
+  if (hasBatch(course.id) && !applyBatches.includes(batch)) {
     return Response.json({ ok: false, error: "invalid" }, { status: 400 });
   }
   if (!name || !depositor || !phone) {

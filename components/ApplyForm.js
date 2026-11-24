@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useI18n } from "@/components/Language";
 import { classes, getCourse } from "@/lib/curriculum";
 import { dayName, localizeCourse } from "@/lib/i18n";
-import { applyBatches, applyCourses, applyCourseById, applyPrices, applyRoles, applySources, depositAccount } from "@/lib/apply";
+import { applyBatches, applyCourses, applyCourseById, applyPrices, hasBatch, applyRoles, applySources, depositAccount } from "@/lib/apply";
 import { contacts } from "@/lib/links";
 
 const roleKey = { 리더: "roleLeader", 팔로워: "roleFollower" };
@@ -106,7 +106,7 @@ export default function ApplyForm({ initialCourse }) {
         body: JSON.stringify({
           course,
           role,
-          batch: course === "beginner" ? "" : batch,
+          batch: hasBatch(course) ? batch : "",
           name,
           depositor,
           phone,
@@ -177,21 +177,32 @@ export default function ApplyForm({ initialCourse }) {
             </div>
           ) : null}
           {applyPrices[course] ? (
-            <p className="apply-price">
-              {course === "beginner" ? (
-                <span className="is-on">{applyPrices[course].once}</span>
-              ) : (
-                <>
-                  <span className={batch === "B.T 기수 신청" ? "is-on" : batch ? "is-dim" : ""}>
-                    {t("applyPriceCohort")} {applyPrices[course].cohort}
+            <>
+              <p className="apply-price">
+                {applyPrices[course].once ? (
+                  <span className="is-on">{applyPrices[course].once}</span>
+                ) : applyPrices[course].term ? (
+                  <span className="is-on">
+                    {t("applyPriceTerm")} {applyPrices[course].term}
                   </span>
-                  <span className="apply-price-mark" aria-hidden="true" />
-                  <span className={batch === "일반 신청" ? "is-on" : batch ? "is-dim" : ""}>
-                    {t("applyPriceOpen")} {applyPrices[course].open}
-                  </span>
-                </>
-              )}
-            </p>
+                ) : (
+                  <>
+                    <span className={batch === "B.T 기수 신청" ? "is-on" : batch ? "is-dim" : ""}>
+                      {t("applyPriceCohort")} {applyPrices[course].cohort}
+                    </span>
+                    <span className="apply-price-mark" aria-hidden="true" />
+                    <span className={batch === "재수강" ? "is-on" : batch ? "is-dim" : ""}>
+                      {t("applyPriceRetake")} {applyPrices[course].retake}
+                    </span>
+                    <span className="apply-price-mark" aria-hidden="true" />
+                    <span className={batch === "일반 신청" ? "is-on" : batch ? "is-dim" : ""}>
+                      {t("applyPriceOpen")} {applyPrices[course].open}
+                    </span>
+                  </>
+                )}
+              </p>
+              {course === "practica" ? <p className="apply-price-note">{t("applyPracticaNote")}</p> : null}
+            </>
           ) : null}
           <select name="course" value={course} required onChange={(event) => setCourse(event.target.value)}>
             <option value="">{t("applyPick")}</option>
@@ -217,7 +228,7 @@ export default function ApplyForm({ initialCourse }) {
           </div>
         </fieldset>
 
-        {course && course !== "beginner" ? (
+        {course && hasBatch(course) ? (
           <fieldset className="apply-field">
             <legend>
               {t("applyBatch")} <em className="apply-req">*</em>
