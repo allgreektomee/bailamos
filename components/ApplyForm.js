@@ -190,12 +190,8 @@ export default function ApplyForm({ initialCourse }) {
                   </span>
                 ) : (
                   <>
-                    <span className={batch === "B.T 기수 신청" ? "is-on" : batch ? "is-dim" : ""}>
-                      {t("applyPriceCohort")} {applyPrices[course].cohort}
-                    </span>
-                    <span className="apply-price-mark" aria-hidden="true" />
-                    <span className={batch === "재수강" ? "is-on" : batch ? "is-dim" : ""}>
-                      {t("applyPriceRetake")} {applyPrices[course].retake}
+                    <span className={batch === "B.T 기수 신청" || batch === "재수강" ? "is-on" : batch ? "is-dim" : ""}>
+                      {t("applyPriceCohort")} · {t("applyPriceRetake")} {applyPrices[course].cohort}
                     </span>
                     <span className="apply-price-mark" aria-hidden="true" />
                     <span className={batch === "일반 신청" ? "is-on" : batch ? "is-dim" : ""}>
