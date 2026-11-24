@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import CourseName from "@/components/CourseName";
 import { useContactDialog } from "@/components/ContactDialog";
 import PrivateLessons from "@/components/PrivateLessons";
 import { useI18n } from "@/components/Language";
@@ -108,7 +109,9 @@ export default function CourseDetail({ courseId, dateQuery }) {
       <Link href={`/${dateQuery}`} className="back">
         ← {t("backClasses")}
       </Link>
-      <h1>{course.name}</h1>
+      <h1>
+        <CourseName name={course.name} />
+      </h1>
       {course.image ? (
         <img
           className="detail-poster"
