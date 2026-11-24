@@ -604,9 +604,9 @@ html[lang="ko"] .hero-invite { word-break: keep-all; }
   padding: 11px 2px; border-bottom: 1px solid var(--line);
   color: var(--ink); text-decoration: none;
 }
-.open-notice-text { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; min-width: 0; font-size: 13px; }
+.open-notice-text { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px 12px; min-width: 0; font-size: 13px; }
 .open-notice-text b { font-weight: 400; }
-.open-notice-text .topic-tag { margin-left: 0; padding: 1px 8px 2px; font-size: 11px; letter-spacing: 0.02em; }
+.open-notice-text .topic-tag { margin-left: 7px; padding: 1px 8px 2px; font-size: 11px; letter-spacing: 0.02em; }
 .open-notice-emoji { filter: saturate(0.7) brightness(1.1); }
 .open-notice-text em { font-style: normal; font-size: 12.5px; color: var(--muted); }
 .open-notice-none { width: 100%; border: 0; border-bottom: 1px solid var(--line); background: none; font: inherit; text-align: left; cursor: pointer; }
