@@ -620,19 +620,23 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   .stair-status {
     flex: none;
     margin-left: auto;
-    font-size: 11.5px;
+    padding: 1px 9px;
+    border-radius: 999px;
+    border: 1px solid #e6e0f3;
+    background: #f7f4fc;
+    font-size: 11px;
     font-weight: 600;
-    line-height: 1.3;
+    line-height: 1.4;
     white-space: nowrap;
     color: #8f86b3;
   }
-  .stair-status-ongoing { color: #5f4fa3; }
-  .stair-status-open { color: #8b7bc4; }
-  .stair-status-soon { color: #a39e99; }
+  .stair-status-ongoing { background: #efe9fa; border-color: #e0d7f3; color: #7a68b8; }
+  .stair-status-open { color: #9a8cc6; }
+  .stair-status-soon { background: #f6f4f2; border-color: #e9e5e1; color: #a39e99; }
   /* 이모지 색은 못 바꾸니 색상환을 돌려서 대표색(보라)으로 만든다 */
   .stair-lv i {
     font-style: normal;
-    filter: hue-rotate(262deg) saturate(0.7) brightness(1.05);
+    filter: hue-rotate(262deg) saturate(0.45) brightness(1.12);
   }
   .stair-lv i:not(.on) { filter: grayscale(1); opacity: 0.2; }
   .stair-sub { font-size: 11.5px; color: var(--muted); line-height: 1.35; font-variant-numeric: tabular-nums; }
