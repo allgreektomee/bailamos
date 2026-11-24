@@ -245,6 +245,22 @@ function OpenNotice({ lang }) {
   );
 }
 
+function PostCard({ post }) {
+  return (
+    <>
+      {post.cover ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={post.cover} alt="" loading="lazy" />
+      ) : null}
+      <span className="blog-card-body">
+        <time dateTime={post.date}>{post.date.replaceAll("-", ".")}</time>
+        <strong>{post.title}</strong>
+        {post.summary ? <span>{post.summary}</span> : null}
+      </span>
+    </>
+  );
+}
+
 export default function HomePage({ dateQuery, latestPost }) {
   const { lang, t } = useI18n();
   const practicaApply = applyHref("practica");
@@ -402,17 +418,16 @@ export default function HomePage({ dateQuery, latestPost }) {
           <p className="section-lead">{t("homeBlogLead")}</p>
           <ul className="blog-list home-blog">
             <li>
-              <Link href={`/blog/${latestPost.slug}`} className="blog-card">
-                {latestPost.cover ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={latestPost.cover} alt="" loading="lazy" />
-                ) : null}
-                <span className="blog-card-body">
-                  <time dateTime={latestPost.date}>{latestPost.date.replaceAll("-", ".")}</time>
-                  <strong>{latestPost.title}</strong>
-                  {latestPost.summary ? <span>{latestPost.summary}</span> : null}
-                </span>
-              </Link>
+              {latestPost.href ? (
+                // 아직 홈페이지로 옮기지 않은 네이버 블로그 새 글은 원문으로 보낸다.
+                <a href={latestPost.href} className="blog-card" target="_blank" rel="noreferrer">
+                  <PostCard post={latestPost} />
+                </a>
+              ) : (
+                <Link href={`/blog/${latestPost.slug}`} className="blog-card">
+                  <PostCard post={latestPost} />
+                </Link>
+              )}
             </li>
           </ul>
           <p className="home-blog-more">
