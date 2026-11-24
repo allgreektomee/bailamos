@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { openOnPhone } from "@/components/ContactLinks";
 import { useContactDialog } from "@/components/ContactDialog";
 import { LangSwitch, useI18n } from "@/components/Language";
-import { blog } from "@/lib/links";
 
 export default function SiteNav() {
   const { t } = useI18n();
@@ -17,7 +16,7 @@ export default function SiteNav() {
     { href: "/#week", label: t("navWeek") },
     { href: "/classes/private", label: t("navPrivate") },
     { href: "/#visit", label: t("navVisit") },
-    { href: blog.href, phoneHref: blog.phoneHref, label: t("navBlog"), external: true },
+    { href: "/blog", label: t("navBlog") },
     { href: "/apply", label: t("apply") },
     { href: "/#contact", label: t("navContact") },
   ];
