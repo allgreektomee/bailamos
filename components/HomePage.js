@@ -245,7 +245,9 @@ export default function HomePage({ dateQuery, latestPost }) {
       <EventPopup />
       <section className="hero">
         <div className="hero-photo">
-          <img src="/hero-banner.jpg" alt={t("heroAlt")} />
+          <div className="hero-photo-frame">
+            <img src="/hero-banner.jpg" alt={t("heroAlt")} />
+          </div>
         </div>
         <div className="hero-copy">
           <p className="hero-kicker">Bailamos Tango · Studio Elly</p>
