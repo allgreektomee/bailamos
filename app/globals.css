@@ -647,6 +647,16 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   .stairs-specials { margin-bottom: 0; }
   .stairs-specials .stair { padding-top: 16px; }
   .stair-emoji { font-size: 14px; line-height: 1; filter: saturate(0.75) brightness(1.08); }
+  /* 긴 특강 제목은 괄호 부분(스페인어 용어)을 아래 줄에 작게 */
+  .stair-name-terms {
+    display: block;
+    margin-top: 1px;
+    font-style: normal;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--muted);
+  }
   .stairs-hint { margin: 22px 0 20px; text-align: center; white-space: pre-line; line-height: 1.55; font-size: 12.5px; color: var(--muted); }
   /* 두 칸씩: 초급 · 초중급 / 중급 · 중상급, 상급은 한 칸 전체 */
   .stairs-steps {
