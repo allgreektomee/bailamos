@@ -821,6 +821,7 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   gap: 10px;
   margin-top: 48px;
 }
+.inquire-note { flex: 0 0 100%; margin: 0 0 6px; text-align: center; white-space: pre-line; line-height: 1.6; font-size: 13.5px; color: var(--muted); }
 .inquire-btn {
   display: inline-flex;
   align-items: center;

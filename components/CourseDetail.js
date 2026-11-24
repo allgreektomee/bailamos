@@ -24,7 +24,8 @@ function Inquire({ courseId }) {
   if (courseId === "private") {
     return (
       <div className="inquire">
-        <button type="button" className="inquire-btn inquire-line" onClick={openContact}>
+        <p className="inquire-note">{t("privateNote")}</p>
+        <button type="button" className="inquire-btn" onClick={openContact}>
           {t("inquire")}
         </button>
       </div>
