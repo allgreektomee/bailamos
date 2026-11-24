@@ -282,6 +282,12 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
   display: block;
   height: 52px;
   width: auto;
+  visibility: hidden; /* 크기만 차지하고, 색은 아래 마스크로 대표색(보라)을 입힌다 */
+}
+.logo {
+  background-color: var(--accent);
+  -webkit-mask: url("/wordmark.png") left center / contain no-repeat;
+  mask: url("/wordmark.png") left center / contain no-repeat;
 }
 .top-end { display: flex; align-items: center; gap: 8px; margin-left: auto; }
 .topbar nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px 16px; }
