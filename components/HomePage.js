@@ -382,9 +382,11 @@ export default function HomePage({ dateQuery, latestPost }) {
       {latestPost ? (
         <section className="section" id="latest-blog">
           <div className="section-head">
-            <h2>Blog</h2>
+            <p>Blog</p>
+            <h2>{t("homeBlogTitle")}</h2>
             <i />
           </div>
+          <p className="section-lead">{t("homeBlogLead")}</p>
           <ul className="blog-list home-blog">
             <li>
               <Link href={`/blog/${latestPost.slug}`} className="blog-card">
