@@ -652,8 +652,9 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   max-width: 100%;
   white-space: normal;
   overflow-wrap: break-word;
+  text-wrap: balance;
 }
-.course-name .topic-tag { display: flex; margin: 7px 0 0; }
+.course-name .topic-tag { display: flex; margin: 7px 0 0; padding: 2px 9px 3px; font-size: 12px; font-weight: 700; }
 .course-when, .course-lead { margin: 4px 0 0; font-size: 13px; color: var(--muted); line-height: 1.45; }
 .course-lead {
   display: -webkit-box;
@@ -674,9 +675,9 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   .stair-name .topic-tag {
     display: flex;
     margin: 5px 0 0;
-    padding: 3px 9px 3px;
-    font-size: 11.5px;
-    letter-spacing: 0.01em;
+    padding: 3px 8px 3px;
+    font-size: 11px;
+    letter-spacing: 0;
   }
   .stairs-hint { margin: 22px 0 20px; text-align: center; white-space: pre-line; line-height: 1.55; font-size: 12.5px; color: var(--muted); }
   /* 두 칸씩: 초급 · 초중급 / 중급 · 중상급, 상급은 한 칸 전체 */
