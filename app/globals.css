@@ -487,7 +487,7 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   color: var(--muted);
 }
 /* 홈 상단 공지: 모집중인 과정 */
-.open-notice { max-width: 560px; margin: 0 auto; padding: 22px 20px 0; }
+.open-notice { max-width: 560px; margin: 0 auto; padding: 44px 20px 30px; }
 .open-notice-title { margin: 0 0 8px; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--muted); }
 .open-notice ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .open-notice-row {
