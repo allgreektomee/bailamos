@@ -109,7 +109,7 @@ function Stairs({ items, dateQuery, lang }) {
   );
 }
 
-/** 모바일 특강: 정규 수업처럼 2칸 박스. 상태(진행중·모집중·준비중)는 오른쪽 위. */
+/** 모바일 특강: 정규 수업처럼 2칸 박스. 레벨 아이콘이 없으니 상태(진행중·모집중·준비중)는 맨 아래 줄. */
 function SpecialBoxes({ items, dateQuery, lang }) {
   const { t } = useI18n();
   return (
@@ -120,12 +120,12 @@ function SpecialBoxes({ items, dateQuery, lang }) {
           return (
             <li key={course.id}>
               <Link href={`/classes/${course.id}${dateQuery}`} className="stair">
-                <span className="stair-head">
-                  <StatusTag status={course.status} />
-                </span>
                 <span className="stair-name">{course.name}</span>
                 <span className="stair-sub">{t("specialSubs")[course.id]}</span>
                 <span className="stair-lead">{t("specialLeads")[course.id]}</span>
+                <span className="stair-foot">
+                  <StatusTag status={course.status} />
+                </span>
               </Link>
             </li>
           );
