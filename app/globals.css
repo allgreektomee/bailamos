@@ -317,8 +317,9 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
 .nav-bars::before,
 .nav-bars::after {
   display: block;
-  width: 18px;
-  height: 1.5px;
+  width: 26px;
+  height: 2px;
+  border-radius: 1px;
   background: currentColor;
 }
 .nav-bars { position: relative; }
@@ -328,8 +329,8 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
   position: absolute;
   left: 0;
 }
-.nav-bars::before { top: -6px; }
-.nav-bars::after { top: 6px; }
+.nav-bars::before { top: -8px; }
+.nav-bars::after { top: 8px; }
 
 @media (max-width: 799px) {
   .nav-toggle {
@@ -338,8 +339,9 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
+    margin-right: -6px; /* 버튼을 키워도 막대 모양은 화면 오른쪽 끝에 그대로 */
     padding: 0;
     border: 0;
     background: none;
