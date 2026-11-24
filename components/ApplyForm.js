@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import CourseName from "@/components/CourseName";
 import { useI18n } from "@/components/Language";
 import { classes, getCourse } from "@/lib/curriculum";
 import { dayName, localizeCourse } from "@/lib/i18n";
@@ -171,7 +172,9 @@ export default function ApplyForm({ initialCourse }) {
                 )}
               </div>
               <p className="course-kicker">{preview.kicker}</p>
-              <p className="course-name">{preview.name}</p>
+              <p className="course-name">
+                <CourseName name={preview.name} />
+              </p>
               {preview.when ? <p className="course-when">{preview.when}</p> : null}
               <p className="course-lead">{preview.lead}</p>
             </div>
@@ -187,8 +190,12 @@ export default function ApplyForm({ initialCourse }) {
                   </span>
                 ) : (
                   <>
-                    <span className={batch === "B.T 기수 신청" || batch === "재수강" ? "is-on" : batch ? "is-dim" : ""}>
-                      {t("applyPriceCohort")} · {t("applyPriceRetake")} {applyPrices[course].cohort}
+                    <span className={batch === "B.T 기수 신청" ? "is-on" : batch ? "is-dim" : ""}>
+                      {t("applyPriceCohort")} {applyPrices[course].cohort}
+                    </span>
+                    <span className="apply-price-mark" aria-hidden="true" />
+                    <span className={batch === "재수강" ? "is-on" : batch ? "is-dim" : ""}>
+                      {t("applyPriceRetake")} {applyPrices[course].retake}
                     </span>
                     <span className="apply-price-mark" aria-hidden="true" />
                     <span className={batch === "일반 신청" ? "is-on" : batch ? "is-dim" : ""}>
