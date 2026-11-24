@@ -523,6 +523,10 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   align-items: center;
   margin-top: 16px;
 }
+/* 위 `.hero-copy h1 { margin: 0 }` 이 더 강해서 위 margin-top 이 먹지 않는다. 모바일에서는 BAILAMOS TANGO · STUDIO ELLY 줄 아래를 띄운다. */
+@media (max-width: 799px) {
+  .hero-copy h1.hero-message { margin-top: 22px; }
+}
 .hero-meaning {
   display: block;
   max-width: 15em;
