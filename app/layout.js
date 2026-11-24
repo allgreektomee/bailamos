@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
           <ContactProvider>
             <header className="topbar">
               <a className="logo" href="/" aria-label="BAILAMOS TANGO">
-                <img src="/wordmark.png" alt="" />
+                <img src="/wordmark-color.png" alt="" />
               </a>
               <SiteNav />
             </header>
