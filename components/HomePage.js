@@ -109,7 +109,10 @@ function Stairs({ items, dateQuery, lang }) {
   );
 }
 
-/** 모바일 특강: 정규 수업처럼 2칸 박스. 레벨 아이콘이 없으니 상태(진행중·모집중·준비중)는 맨 아래 줄. */
+/** 특강별 대표 이모지 (맨 위 줄) */
+const SPECIAL_ICON = { ocho: "⚖️", walk: "👣", milonga: "🥁", vals: "🎻", giro: "🌀" };
+
+/** 모바일 특강: 정규 수업처럼 2칸 박스. 맨 위 줄: 이모지(왼쪽) + 상태(진행중·모집중·준비중, 오른쪽). */
 function SpecialBoxes({ items, dateQuery, lang }) {
   const { t } = useI18n();
   return (
@@ -120,12 +123,13 @@ function SpecialBoxes({ items, dateQuery, lang }) {
           return (
             <li key={course.id}>
               <Link href={`/classes/${course.id}${dateQuery}`} className="stair">
+                <span className="stair-head">
+                  <span className="stair-emoji" aria-hidden="true">{SPECIAL_ICON[course.id]}</span>
+                  <StatusTag status={course.status} />
+                </span>
                 <span className="stair-name">{course.name}</span>
                 <span className="stair-sub">{t("specialSubs")[course.id]}</span>
                 <span className="stair-lead">{t("specialLeads")[course.id]}</span>
-                <span className="stair-foot">
-                  <StatusTag status={course.status} />
-                </span>
               </Link>
             </li>
           );
