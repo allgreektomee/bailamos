@@ -106,15 +106,20 @@ export { BrandIcon };
 
 export function ContactBoards() {
   const { t } = useI18n();
+  const contactLabel = (item) => {
+    if (item.labelKey) return t(item.labelKey);
+    if (item.icon === "chat") return t("openChat");
+    return item.name;
+  };
   return (
     <>
       <div className="contact-block">
         <p className="contact-label">{t("reach")}</p>
-        <div className="contact-grid three">
+        <div className="contact-grid two">
           {contacts.map((item) => (
             <a key={item.name} href={item.href} target="_blank" rel="noreferrer">
               <BrandIcon name={item.icon} />
-              {item.icon === "chat" ? t("openChat") : item.name}
+              {contactLabel(item)}
               {item.note ? <span>{item.note}</span> : null}
             </a>
           ))}
