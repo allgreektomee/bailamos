@@ -274,14 +274,11 @@ export default function HomePage({ dateQuery, latestPost }) {
         </div>
         <div className="hero-copy">
           <p className="hero-kicker">Bailamos Tango · Studio Elly</p>
-          <h1>
-            {t("hero1")}
-            <br />
-            {t("hero2")}
+          <h1 className="hero-message">
+            <span className="hero-meaning">{t("heroMeaning")}</span>
+            <span className="hero-guide">{t("heroGuide")}</span>
+            <span className="hero-invite">{t("heroInvite")}</span>
           </h1>
-          <p className="hero-honor">{t("honor")}</p>
-          <p className="sub">{t("sub")}</p>
-          <p className="sub-cta">{t("subCta")}</p>
         </div>
       </section>
 
