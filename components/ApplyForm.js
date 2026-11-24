@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useI18n } from "@/components/Language";
 import { classes, getCourse } from "@/lib/curriculum";
 import { dayName, localizeCourse } from "@/lib/i18n";
-import { applyBatches, applyCourses, applyCourseById, applyPrices, hasBatch, applyRoles, applySources, depositAccount } from "@/lib/apply";
+import { applyBatches, applyCourses, applyCourseById, applyPrices, fixedBatch, hasBatch, applyRoles, applySources, depositAccount } from "@/lib/apply";
 import { contacts } from "@/lib/links";
 
 const roleKey = { 리더: "roleLeader", 팔로워: "roleFollower" };
@@ -106,7 +106,7 @@ export default function ApplyForm({ initialCourse }) {
         body: JSON.stringify({
           course,
           role,
-          batch: hasBatch(course) ? batch : "",
+          batch: hasBatch(course) ? batch : fixedBatch(course),
           name,
           depositor,
           phone,
@@ -185,14 +185,14 @@ export default function ApplyForm({ initialCourse }) {
                   <span className="is-on">
                     {t("applyPriceTerm")} {applyPrices[course].term}
                   </span>
+                ) : !applyPrices[course].cohort ? (
+                  <span className="is-on">
+                    {t("applyPriceOpen")} {applyPrices[course].open}
+                  </span>
                 ) : (
                   <>
-                    <span className={batch === "B.T 기수 신청" ? "is-on" : batch ? "is-dim" : ""}>
-                      {t("applyPriceCohort")} {applyPrices[course].cohort}
-                    </span>
-                    <span className="apply-price-mark" aria-hidden="true" />
-                    <span className={batch === "재수강" ? "is-on" : batch ? "is-dim" : ""}>
-                      {t("applyPriceRetake")} {applyPrices[course].retake}
+                    <span className={batch === "B.T 기수 신청" || batch === "재수강" ? "is-on" : batch ? "is-dim" : ""}>
+                      {t("applyPriceCohort")} · {t("applyPriceRetake")} {applyPrices[course].cohort}
                     </span>
                     <span className="apply-price-mark" aria-hidden="true" />
                     <span className={batch === "일반 신청" ? "is-on" : batch ? "is-dim" : ""}>
