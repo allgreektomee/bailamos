@@ -24,6 +24,11 @@ export default function AboutTango() {
           ))}
         </section>
       ))}
+      <p className="about-blog">
+        <Link href="/blog">
+          {copy.blogLink} <span aria-hidden="true">›</span>
+        </Link>
+      </p>
       <section className="about-cta">
         <p className="about-cta-title">{copy.ctaTitle}</p>
         <div className="inquire">

@@ -544,7 +544,6 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   text-decoration: none;
   transition: background 0.15s ease, color 0.15s ease;
 }
-.hero-about-btn span { font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; font-weight: 600; }
 .hero-about-btn:hover, .hero-about-btn:active { background: var(--ink); color: #fff; }
 @media (min-width: 800px) { .hero-about-btn { margin-top: 38px; } }
 /* 첫 줄 맨 앞 브랜드명은 로고 글씨색(보라)으로 강조한다. */
@@ -1045,6 +1044,19 @@ a.inquire-btn { text-decoration: none; }
   color: var(--muted);
 }
 .about-section p { margin: 10px 0 0; font-size: calc(16.5px * var(--ts, 1)); line-height: 1.9; color: #3b3532; word-break: keep-all; }
+.about-blog { margin: 44px 0 0; text-align: center; }
+.about-blog a {
+  display: inline-block;
+  padding: 6px 2px 5px;
+  border-bottom: 1px solid var(--ink);
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: calc(17px * var(--ts, 1));
+  text-decoration: none;
+  word-break: keep-all;
+}
+.about-blog a span { font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; font-weight: 600; }
+.about-blog + .about-cta { margin-top: 28px; }
 .about-cta { margin-top: 52px; padding: 34px 20px 38px; background: var(--soft); text-align: center; }
 .about-cta-title { margin: 0; font-family: var(--display); font-size: calc(22px * var(--ts, 1)); color: var(--ink); }
 .about-cta .inquire { margin-top: 20px; }
