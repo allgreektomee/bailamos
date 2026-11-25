@@ -997,7 +997,7 @@ a.inquire-btn { text-decoration: none; }
   gap: 12px;
   margin: 0 0 12px;
   padding-top: 20px;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid #ddd5cd;
   font-family: var(--display);
   font-size: calc(21px * var(--ts, 1));
   font-weight: 700;
