@@ -508,10 +508,25 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   align-items: center;
   margin-top: 16px;
 }
-/* 위 `.hero-copy h1 { margin: 0 }` 이 더 강해서 위 margin-top 이 먹지 않는다. BAILAMOS TANGO · STUDIO ELLY 줄 아래를 모든 화면에서 띄운다. */
-.hero-copy h1.hero-message { margin-top: 26px; }
-@media (min-width: 800px) {
-  .hero-copy h1.hero-message { margin-top: 46px; }
+/* 히어로 아래 "아르헨티나 탱고란? ›" 링크(나중에 탱고 이야기 모음으로 이어짐). 색을 쓰지 않고 글자 + 밑줄만 */
+.hero-about {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 26px;
+  padding: 10px 2px 7px;
+  border-bottom: 1px solid var(--ink);
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: calc(17px * var(--ts, 1));
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.hero-about span { font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; font-size: 1.05em; font-weight: 600; transition: transform 0.15s ease; }
+.hero-about:hover span { transform: translateX(3px); }
+/* 위 `.hero-copy h1 { margin: 0 }` 이 더 강해서 위 margin-top 이 먹지 않는다. 모바일에서는 BAILAMOS TANGO · STUDIO ELLY 줄 아래를 띄운다. */
+@media (max-width: 799px) {
+  .hero-copy h1.hero-message { margin-top: 22px; }
 }
 .hero-meaning {
   display: block;
@@ -525,6 +540,14 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   overflow-wrap: break-word;
   text-wrap: balance;
 }
+/* 첫 줄 맨 앞 브랜드명은 로고 글씨색(보라)으로 강조한다. */
+.hero-brand {
+  color: var(--accent);
+  font-weight: 700;
+  white-space: nowrap;
+}
+/* 뜻풀이 속 인용구: 한국어는 어절이 줄 끝에서 끊기지 않게 한 줄로 묶는다. */
+html[lang="ko"] .hero-quote { white-space: nowrap; }
 .hero-guide {
   display: block;
   max-width: 26em;
@@ -997,7 +1020,7 @@ a.inquire-btn { text-decoration: none; }
   gap: 12px;
   margin: 0 0 12px;
   padding-top: 20px;
-  border-top: 1px solid #ddd5cd;
+  border-top: 1px solid var(--ink);
   font-family: var(--display);
   font-size: calc(21px * var(--ts, 1));
   font-weight: 700;
@@ -1361,6 +1384,7 @@ a.inquire-btn { text-decoration: none; }
     text-align: center;
     background: var(--soft);
   }
+  .hero-message { margin-top: 24px; }
   .hero-guide { margin-top: 16px; }
   .hero-invite { margin-top: 32px; padding-top: 28px; }
 }
