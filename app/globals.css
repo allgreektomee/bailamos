@@ -1,4 +1,6 @@
+/* 기기가 다크 모드여도 항상 라이트 모드로 보인다 */
 :root {
+  color-scheme: only light;
   --bg: #ffffff;
   --soft: #f6f1ec;
   --display: "Nanum Myeongjo", "Apple SD Gothic Neo", serif;
@@ -317,9 +319,9 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
 .nav-bars::before,
 .nav-bars::after {
   display: block;
-  width: 26px;
-  height: 2px;
-  border-radius: 1px;
+  width: 30px;
+  height: 3px;
+  border-radius: 2px;
   background: currentColor;
 }
 .nav-bars { position: relative; }
@@ -329,8 +331,8 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
   position: absolute;
   left: 0;
 }
-.nav-bars::before { top: -8px; }
-.nav-bars::after { top: 8px; }
+.nav-bars::before { top: -10px; }
+.nav-bars::after { top: 10px; }
 
 @media (max-width: 799px) {
   .nav-toggle {
@@ -339,13 +341,14 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
-    margin-right: -6px; /* 버튼을 키워도 막대 모양은 화면 오른쪽 끝에 그대로 */
+    width: 54px;
+    height: 54px;
+    margin-right: -4px;
     padding: 0;
     border: 0;
-    background: none;
-    color: inherit;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
     cursor: pointer;
   }
   .nav-toggle.open .nav-bars { background: transparent; }

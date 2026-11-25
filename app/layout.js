@@ -8,6 +8,11 @@ export const metadata = {
   description: "지운엘리 초급부터 인텐시브, 순환 특강의 주차별 진행.",
 };
 
+/** 어두운 화면 모드에서도 항상 밝은 화면으로 보이게 한다. */
+export const viewport = {
+  colorScheme: "only light",
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="ko">
