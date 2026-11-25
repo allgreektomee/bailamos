@@ -18,13 +18,13 @@ export const metadata = {
     locale: "ko_KR",
     title: siteTitle,
     description: siteDescription,
-    images: [{ url: "/logo.jpg", width: 480, height: 480, alt: "BAILAMOS TANGO" }],
+    images: [{ url: "/og-logo.jpg", width: 1200, height: 630, alt: "BAILAMOS TANGO" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: ["/logo.jpg"],
+    images: ["/og-logo.jpg"],
   },
 };
 
