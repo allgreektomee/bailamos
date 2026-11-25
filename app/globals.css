@@ -399,8 +399,6 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
   }
   .topbar nav a:hover,
   .topbar nav .nav-contact:hover { text-decoration: none; }
-  /* 7번째(블로그)는 짝이 없으니 한 줄 전체 */
-  .topbar nav a:nth-of-type(7) { grid-column: 1 / -1; }
   .topbar nav a[href="/apply"] { background: var(--accent); color: #fff; }
   .topbar nav .nav-contact { background: #fff; border: 1px solid var(--accent); color: var(--accent); }
   .nav-langs {
@@ -978,6 +976,16 @@ html[lang="ko"] .hero-invite { word-break: keep-all; }
 .inquire-line { background: #fff; color: var(--accent); }
 .inquire-line:hover { background: var(--accent-soft); }
 a.inquire-btn { text-decoration: none; }
+
+/* 아르헨티나 탱고란? 소개 페이지 */
+.about .hero-kicker { margin-top: 22px; }
+.about .about-lead { margin-top: 16px; font-size: calc(17px * var(--ts, 1)); line-height: 1.8; color: var(--ink); word-break: keep-all; }
+.about-section { margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+.about-section h2 { margin: 0 0 10px; font-size: calc(20px * var(--ts, 1)); font-weight: 700; color: var(--accent); word-break: keep-all; }
+.about-section p { margin: 10px 0 0; font-size: calc(16.5px * var(--ts, 1)); line-height: 1.85; color: var(--ink); word-break: keep-all; }
+.about-cta { margin-top: 44px; padding: 30px 18px 34px; border-radius: 10px; background: var(--accent-soft); text-align: center; }
+.about-cta-title { margin: 0; font-size: calc(20px * var(--ts, 1)); font-weight: 700; color: var(--accent); }
+.about-cta .inquire { margin-top: 18px; }
 .gather-card .gather-apply {
   display: inline-flex;
   align-items: center;

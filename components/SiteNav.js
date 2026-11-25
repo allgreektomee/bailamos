@@ -17,6 +17,7 @@ export default function SiteNav() {
     { href: "/classes/private", label: t("navPrivate") },
     { href: "/#visit", label: t("navVisit") },
     { href: "/blog", label: t("navBlog") },
+    { href: "/argentine-tango", label: t("navAbout") },
     { href: "/apply", label: t("apply") },
     { href: "/#contact", label: t("navContact") },
   ];
