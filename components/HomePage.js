@@ -285,6 +285,9 @@ export default function HomePage({ dateQuery, latestPost }) {
             <span className="hero-guide">{t("heroGuide")}</span>
             <span className="hero-invite">{t("heroInvite")}</span>
           </h1>
+          <Link href="/argentine-tango" className="hero-about">
+            {t("navAbout")} <span aria-hidden="true">›</span>
+          </Link>
         </div>
       </section>
 
