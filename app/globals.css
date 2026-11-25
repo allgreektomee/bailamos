@@ -308,12 +308,12 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
   background: none;
   color: var(--muted);
   font: inherit;
-  font-size: calc(13px * var(--ts, 1));
+  font-size: 17px; /* 상단 바는 공간이 정해져 있어 글자 크기 배율을 따르지 않고 처음부터 크게 */
   line-height: 1;
-  padding: 8px 6px;
+  padding: 12px 8px;
   cursor: pointer;
 }
-.lang-switch .lang-current { color: var(--ink); font-weight: 600; min-width: 28px; }
+.lang-switch .lang-current { color: var(--accent); font-weight: 700; min-width: 34px; }
 .nav-toggle, .nav-backdrop { display: none; }
 .nav-bars,
 .nav-bars::before,
@@ -416,7 +416,7 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
   .nav-langs span {
     margin-right: 4px;
     color: var(--muted);
-    font-size: calc(15px * var(--ts, 1));
+    font-size: calc(17px * var(--ts, 1));
     padding: 8px 0;
   }
   .nav-langs button {
@@ -424,11 +424,12 @@ code { background: #eee7df; padding: 1px 5px; border-radius: 4px; }
     background: none;
     color: var(--muted);
     font: inherit;
-    font-size: calc(15px * var(--ts, 1));
-    padding: 8px 4px;
+    font-size: calc(17px * var(--ts, 1));
+    padding: 10px 14px;
+    border-radius: 999px;
     cursor: pointer;
   }
-  .nav-langs button[aria-pressed="true"] { color: var(--ink); font-weight: 600; }
+  .nav-langs button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
 }
 
 /* 글자 크기 조절(기본·중간·크게): 모든 글자 크기가 --ts 배율을 곱해서 정해진다. */
