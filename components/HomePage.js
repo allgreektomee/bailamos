@@ -275,7 +275,13 @@ export default function HomePage({ dateQuery, latestPost }) {
         <div className="hero-copy">
           <p className="hero-kicker">Bailamos Tango · Studio Elly</p>
           <h1 className="hero-message">
-            <span className="hero-meaning">{t("heroMeaning")}</span>
+            <span className="hero-meaning">
+              <span className="hero-brand">{t("heroBrand")}</span>
+              {/* heroMeaning 의 |…| 안은 뜻풀이 속 인용구로, 한 줄 안에서 끊기지 않게 묶는다. */}
+              {(typeof t("heroMeaning") === "string" ? t("heroMeaning").split("|") : []).map((part, index) =>
+                index % 2 ? <span className="hero-quote" key={index}>{part}</span> : part,
+              )}
+            </span>
             <span className="hero-guide">{t("heroGuide")}</span>
             <span className="hero-invite">{t("heroInvite")}</span>
           </h1>
