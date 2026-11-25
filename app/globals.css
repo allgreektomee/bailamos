@@ -1063,19 +1063,6 @@ a.inquire-btn { text-decoration: none; }
 .about-readmore:hover .about-readmore-label, .about-readmore:active .about-readmore-label { color: #fff; }
 .about-readmore:hover .about-readmore-arrow, .about-readmore:active .about-readmore-arrow { color: #fff; transform: translateX(5px); }
 .about-readmore:hover .about-readmore-sub, .about-readmore:active .about-readmore-sub { color: rgba(255, 255, 255, 0.82); }
-.about-blog { margin: 22px 0 0; text-align: center; }
-.about-blog a {
-  display: inline-block;
-  padding: 6px 2px 5px;
-  border-bottom: 1px solid var(--ink);
-  color: var(--ink);
-  font-family: var(--display);
-  font-size: calc(17px * var(--ts, 1));
-  text-decoration: none;
-  word-break: keep-all;
-}
-.about-blog a span { font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; font-weight: 600; }
-.about-blog + .about-cta { margin-top: 30px; }
 .about-cta { margin-top: 52px; padding: 34px 20px 38px; background: var(--soft); text-align: center; }
 .about-cta-title { margin: 0; font-family: var(--display); font-size: calc(22px * var(--ts, 1)); color: var(--ink); }
 .about-cta .inquire { margin-top: 20px; }
