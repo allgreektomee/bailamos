@@ -1024,8 +1024,9 @@ a.inquire-btn { text-decoration: none; }
 .about-photo + .about-lead { margin-top: 34px; }
 /* 글 아래 '자세히 >>>' 카드: 이 페이지에서 유일하게 보라를 쓰는 자리 */
 .about-readmore {
-  display: grid;
-  gap: 6px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
   margin: 34px 0 0;
   padding: 20px 22px 21px;
   border: 1px solid var(--accent);
@@ -1034,6 +1035,7 @@ a.inquire-btn { text-decoration: none; }
   text-decoration: none;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
+.about-readmore-text { display: grid; gap: 6px; min-width: 0; }
 .about-readmore-label {
   font-family: var(--display);
   font-size: calc(19px * var(--ts, 1));
@@ -1042,11 +1044,14 @@ a.inquire-btn { text-decoration: none; }
   color: var(--accent);
 }
 .about-readmore-arrow {
-  margin-left: 6px;
+  flex: none;
+  margin-left: auto;
   font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-  font-size: calc(13px * var(--ts, 1));
+  font-size: calc(14px * var(--ts, 1));
   font-weight: 700;
   letter-spacing: 0.08em;
+  color: var(--accent);
+  transition: transform 0.15s ease;
 }
 .about-readmore-sub {
   font-size: calc(12.5px * var(--ts, 1));
@@ -1056,6 +1061,7 @@ a.inquire-btn { text-decoration: none; }
 }
 .about-readmore:hover, .about-readmore:active { border-color: var(--accent-hover); background: var(--accent); }
 .about-readmore:hover .about-readmore-label, .about-readmore:active .about-readmore-label { color: #fff; }
+.about-readmore:hover .about-readmore-arrow, .about-readmore:active .about-readmore-arrow { color: #fff; transform: translateX(5px); }
 .about-readmore:hover .about-readmore-sub, .about-readmore:active .about-readmore-sub { color: rgba(255, 255, 255, 0.82); }
 .about-blog { margin: 22px 0 0; text-align: center; }
 .about-blog a {
