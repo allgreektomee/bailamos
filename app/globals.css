@@ -508,23 +508,22 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   align-items: center;
   margin-top: 16px;
 }
-/* 히어로 아래 "아르헨티나 탱고란? ›" 링크(나중에 탱고 이야기 모음으로 이어짐) */
+/* 히어로 아래 "아르헨티나 탱고란? ›" 링크(나중에 탱고 이야기 모음으로 이어짐). 색을 쓰지 않고 글자 + 밑줄만 */
 .hero-about {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 22px;
-  min-height: 46px;
-  padding: 10px 24px;
-  border: 1px solid var(--accent);
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: calc(16px * var(--ts, 1));
-  font-weight: 700;
+  gap: 8px;
+  margin-top: 26px;
+  padding: 10px 2px 7px;
+  border-bottom: 1px solid var(--ink);
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: calc(17px * var(--ts, 1));
+  letter-spacing: -0.01em;
   text-decoration: none;
 }
-.hero-about:hover { background: #e3d8ff; }
+.hero-about span { font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; font-size: 1.05em; font-weight: 600; transition: transform 0.15s ease; }
+.hero-about:hover span { transform: translateX(3px); }
 /* 위 `.hero-copy h1 { margin: 0 }` 이 더 강해서 위 margin-top 이 먹지 않는다. 모바일에서는 BAILAMOS TANGO · STUDIO ELLY 줄 아래를 띄운다. */
 @media (max-width: 799px) {
   .hero-copy h1.hero-message { margin-top: 22px; }
@@ -994,15 +993,50 @@ html[lang="ko"] .hero-invite { word-break: keep-all; }
 .inquire-line:hover { background: var(--accent-soft); }
 a.inquire-btn { text-decoration: none; }
 
-/* 아르헨티나 탱고란? 소개 페이지 */
+/* 아르헨티나 탱고란? 소개 페이지: 색은 거의 쓰지 않고 명조 제목 + 얇은 선으로 */
+.about { counter-reset: about; }
 .about .hero-kicker { margin-top: 22px; }
-.about .about-lead { margin-top: 16px; font-size: calc(17px * var(--ts, 1)); line-height: 1.8; color: var(--ink); word-break: keep-all; }
-.about-section { margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
-.about-section h2 { margin: 0 0 10px; font-size: calc(20px * var(--ts, 1)); font-weight: 700; color: var(--accent); word-break: keep-all; }
-.about-section p { margin: 10px 0 0; font-size: calc(16.5px * var(--ts, 1)); line-height: 1.85; color: var(--ink); word-break: keep-all; }
-.about-cta { margin-top: 44px; padding: 30px 18px 34px; border-radius: 10px; background: var(--accent-soft); text-align: center; }
-.about-cta-title { margin: 0; font-size: calc(20px * var(--ts, 1)); font-weight: 700; color: var(--accent); }
-.about-cta .inquire { margin-top: 18px; }
+.about h1 { font-size: calc(34px * var(--ts, 1)); letter-spacing: -0.02em; }
+.about .about-lead {
+  margin-top: 20px;
+  font-family: var(--display);
+  font-size: calc(18px * var(--ts, 1));
+  line-height: 1.85;
+  color: var(--ink);
+  word-break: keep-all;
+}
+.about-section { margin-top: 40px; counter-increment: about; }
+.about-section h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ink);
+  font-family: var(--display);
+  font-size: calc(21px * var(--ts, 1));
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  word-break: keep-all;
+}
+.about-section h2::before {
+  content: counter(about, decimal-leading-zero);
+  flex: none;
+  font-family: inherit;
+  font-size: calc(13px * var(--ts, 1));
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.about-section p { margin: 10px 0 0; font-size: calc(16.5px * var(--ts, 1)); line-height: 1.9; color: #3b3532; word-break: keep-all; }
+.about-cta { margin-top: 52px; padding: 34px 20px 38px; background: var(--soft); text-align: center; }
+.about-cta-title { margin: 0; font-family: var(--display); font-size: calc(22px * var(--ts, 1)); color: var(--ink); }
+.about-cta .inquire { margin-top: 20px; }
+.about-cta .inquire-btn { border-color: var(--ink); background: var(--ink); color: #fff; }
+.about-cta .inquire-btn:hover { border-color: #000; background: #000; }
+.about-cta .inquire-line { background: #fff; color: var(--ink); }
+.about-cta .inquire-line:hover { background: var(--line); }
 .gather-card .gather-apply {
   display: inline-flex;
   align-items: center;
