@@ -3,8 +3,8 @@ import { ContactProvider } from "@/components/ContactDialog";
 import SiteNav from "@/components/SiteNav";
 import "./globals.css";
 
-const siteTitle = "BAILAMOS TANGO · 레벨별 커리큘럼";
-const siteDescription = "아르헨티나 탱고(땅고) - 홍대 탱고, 소셜 댄스, 커플 댄스, 직장인 취미, 홍대 취미.";
+const siteTitle = "BAILAMOS TANGO · 아르헨티나 탱고(땅고)";
+const siteDescription = "홍대 탱고, 소셜 댄스, 커플 댄스, 직장인 취미, 홍대 취미";
 
 /** 검색 결과 · 카카오톡 같은 링크 공유 미리보기에 나오는 제목, 설명, 사진 */
 export const metadata = {
