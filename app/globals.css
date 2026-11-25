@@ -525,6 +525,28 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   overflow-wrap: break-word;
   text-wrap: balance;
 }
+/* 히어로 맨 아래 "아르헨티나 탱고란?" 버튼: 보라 대신 먹색 테두리의 흰 버튼 */
+.hero-about-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 50px;
+  margin-top: 30px;
+  padding: 12px 30px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: calc(17px * var(--ts, 1));
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.hero-about-btn span { font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; font-weight: 600; }
+.hero-about-btn:hover, .hero-about-btn:active { background: var(--ink); color: #fff; }
+@media (min-width: 800px) { .hero-about-btn { margin-top: 38px; } }
 /* 첫 줄 맨 앞 브랜드명은 로고 글씨색(보라)으로 강조한다. */
 .hero-brand {
   color: var(--accent);
