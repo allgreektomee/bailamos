@@ -402,20 +402,6 @@ export default function HomePage({ dateQuery, latestPost }) {
         <ScheduleTabs dateQuery={dateQuery} />
       </section>
 
-      <section className="section" id="about-tango">
-        <div className="section-head">
-          <p>Argentine tango</p>
-          <h2>{t("navAbout")}</h2>
-          <i />
-        </div>
-        <p className="section-lead">{t("homeAboutLead")}</p>
-        <p className="about-more">
-          <Link href="/argentine-tango">
-            {t("homeAboutMore")} <span aria-hidden="true">›</span>
-          </Link>
-        </p>
-      </section>
-
       {latestPost ? (
         <section className="section" id="latest-blog">
           <div className="section-head">
