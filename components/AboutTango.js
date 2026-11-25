@@ -15,15 +15,24 @@ export default function AboutTango() {
       </Link>
       <p className="hero-kicker">{copy.kicker}</p>
       <h1>{copy.title}</h1>
+      <figure className="about-photo">
+        <img src="/about-tango.jpg" alt={copy.photoAlt} width="1066" height="1600" />
+      </figure>
       <p className="lead about-lead">{copy.lead}</p>
-      {copy.sections.map((section) => (
-        <section key={section.h} className="about-section">
-          <h2>{section.h}</h2>
-          {section.p.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </section>
-      ))}
+      <a
+        className="about-readmore"
+        href={copy.blogHref}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span className="about-readmore-label">
+          {copy.readMore}{" "}
+          <span className="about-readmore-arrow" aria-hidden="true">
+            &gt;&gt;&gt;
+          </span>
+        </span>
+        <span className="about-readmore-sub">{copy.readMoreSub}</span>
+      </a>
       <p className="about-blog">
         <Link href="/blog">
           {copy.blogLink} <span aria-hidden="true">›</span>
