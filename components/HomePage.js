@@ -279,9 +279,6 @@ export default function HomePage({ dateQuery, latestPost }) {
             <span className="hero-guide">{t("heroGuide")}</span>
             <span className="hero-invite">{t("heroInvite")}</span>
           </h1>
-          <Link href="/argentine-tango" className="hero-about">
-            {t("navAbout")} <span aria-hidden="true">›</span>
-          </Link>
         </div>
       </section>
 
@@ -403,6 +400,20 @@ export default function HomePage({ dateQuery, latestPost }) {
         </div>
         <p className="section-lead">{t("weekLead")}</p>
         <ScheduleTabs dateQuery={dateQuery} />
+      </section>
+
+      <section className="section" id="about-tango">
+        <div className="section-head">
+          <p>Argentine tango</p>
+          <h2>{t("navAbout")}</h2>
+          <i />
+        </div>
+        <p className="section-lead">{t("homeAboutLead")}</p>
+        <p className="about-more">
+          <Link href="/argentine-tango">
+            {t("homeAboutMore")} <span aria-hidden="true">›</span>
+          </Link>
+        </p>
       </section>
 
       {latestPost ? (
