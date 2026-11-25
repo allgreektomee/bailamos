@@ -25,13 +25,13 @@ export default function AboutTango() {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <span className="about-readmore-label">
-          {copy.readMore}{" "}
-          <span className="about-readmore-arrow" aria-hidden="true">
-            &gt;&gt;&gt;
-          </span>
+        <span className="about-readmore-text">
+          <span className="about-readmore-label">{copy.readMore}</span>
+          <span className="about-readmore-sub">{copy.readMoreSub}</span>
         </span>
-        <span className="about-readmore-sub">{copy.readMoreSub}</span>
+        <span className="about-readmore-arrow" aria-hidden="true">
+          &gt;&gt;&gt;
+        </span>
       </a>
       <p className="about-blog">
         <Link href="/blog">
