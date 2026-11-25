@@ -508,6 +508,23 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   align-items: center;
   margin-top: 16px;
 }
+/* 히어로 아래 "아르헨티나 탱고란? ›" 링크(나중에 탱고 이야기 모음으로 이어짐) */
+.hero-about {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 22px;
+  min-height: 46px;
+  padding: 10px 24px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: calc(16px * var(--ts, 1));
+  font-weight: 700;
+  text-decoration: none;
+}
+.hero-about:hover { background: #e3d8ff; }
 /* 위 `.hero-copy h1 { margin: 0 }` 이 더 강해서 위 margin-top 이 먹지 않는다. 모바일에서는 BAILAMOS TANGO · STUDIO ELLY 줄 아래를 띄운다. */
 @media (max-width: 799px) {
   .hero-copy h1.hero-message { margin-top: 22px; }
