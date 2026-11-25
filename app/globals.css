@@ -1008,9 +1008,11 @@ html[lang="ko"] .hero-invite { word-break: keep-all; }
 a.inquire-btn { text-decoration: none; }
 
 /* 아르헨티나 탱고란? 소개 페이지: 색은 거의 쓰지 않고 명조 제목 + 얇은 선으로 */
-.about { counter-reset: about; }
 .about .hero-kicker { margin-top: 22px; }
 .about h1 { font-size: calc(34px * var(--ts, 1)); letter-spacing: -0.02em; }
+/* 사진: 세로 원본 비율 그대로. 폭만 묶고 가운데 두어 데스크톱·모바일 모두 얼굴이 잘리지 않는다. */
+.about-photo { margin: 30px auto 0; width: min(100%, 480px); }
+.about-photo img { display: block; width: 100%; height: auto; }
 .about .about-lead {
   margin-top: 20px;
   font-family: var(--display);
@@ -1019,32 +1021,43 @@ a.inquire-btn { text-decoration: none; }
   color: var(--ink);
   word-break: keep-all;
 }
-.about-section { margin-top: 40px; counter-increment: about; }
-.about-section h2 {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  margin: 0 0 12px;
-  padding-top: 20px;
-  border-top: 1px solid #ddd5cd;
+.about-photo + .about-lead { margin-top: 34px; }
+/* 글 아래 '자세히 >>>' 카드: 이 페이지에서 유일하게 보라를 쓰는 자리 */
+.about-readmore {
+  display: grid;
+  gap: 6px;
+  margin: 34px 0 0;
+  padding: 20px 22px 21px;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.about-readmore-label {
   font-family: var(--display);
-  font-size: calc(21px * var(--ts, 1));
+  font-size: calc(19px * var(--ts, 1));
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--ink);
+  color: var(--accent);
+}
+.about-readmore-arrow {
+  margin-left: 6px;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-size: calc(13px * var(--ts, 1));
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.about-readmore-sub {
+  font-size: calc(12.5px * var(--ts, 1));
+  line-height: 1.5;
+  color: var(--muted);
   word-break: keep-all;
 }
-.about-section h2::before {
-  content: counter(about, decimal-leading-zero);
-  flex: none;
-  font-family: inherit;
-  font-size: calc(13px * var(--ts, 1));
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-}
-.about-section p { margin: 10px 0 0; font-size: calc(16.5px * var(--ts, 1)); line-height: 1.9; color: #3b3532; word-break: keep-all; }
-.about-blog { margin: 44px 0 0; text-align: center; }
+.about-readmore:hover, .about-readmore:active { border-color: var(--accent-hover); background: var(--accent); }
+.about-readmore:hover .about-readmore-label, .about-readmore:active .about-readmore-label { color: #fff; }
+.about-readmore:hover .about-readmore-sub, .about-readmore:active .about-readmore-sub { color: rgba(255, 255, 255, 0.82); }
+.about-blog { margin: 22px 0 0; text-align: center; }
 .about-blog a {
   display: inline-block;
   padding: 6px 2px 5px;
@@ -1056,7 +1069,7 @@ a.inquire-btn { text-decoration: none; }
   word-break: keep-all;
 }
 .about-blog a span { font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; font-weight: 600; }
-.about-blog + .about-cta { margin-top: 28px; }
+.about-blog + .about-cta { margin-top: 30px; }
 .about-cta { margin-top: 52px; padding: 34px 20px 38px; background: var(--soft); text-align: center; }
 .about-cta-title { margin: 0; font-family: var(--display); font-size: calc(22px * var(--ts, 1)); color: var(--ink); }
 .about-cta .inquire { margin-top: 20px; }
