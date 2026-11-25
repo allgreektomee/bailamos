@@ -527,7 +527,7 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
 /* 위 `.hero-copy h1 { margin: 0 }` 이 더 강해서 위 margin-top 이 먹지 않는다. BAILAMOS TANGO · STUDIO ELLY 줄 아래를 모든 화면에서 띄운다. */
 .hero-copy h1.hero-message { margin-top: 26px; }
 @media (min-width: 800px) {
-  .hero-copy h1.hero-message { margin-top: 34px; }
+  .hero-copy h1.hero-message { margin-top: 46px; }
   .hero-about { margin-top: 36px; }
 }
 .hero-meaning {
