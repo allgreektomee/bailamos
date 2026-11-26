@@ -525,31 +525,48 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   overflow-wrap: break-word;
   text-wrap: balance;
 }
-/* 히어로 맨 아래 "아르헨티나 탱고란?" 버튼: 보라 대신 먹색 테두리의 흰 버튼 */
+/* 히어로 맨 아래 "아르헨티나 탱고란?" 버튼: 흰 바탕 + 보라 테두리·글씨에 은은한 그림자로 '눌러 보는' 느낌. 오른쪽 화살표 */
 .hero-about-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 50px;
+  gap: 10px;
+  min-height: 52px;
   margin-top: 30px;
-  padding: 12px 30px;
-  border: 1px solid var(--ink);
+  padding: 13px 28px 13px 32px;
+  border: 1px solid rgba(103, 52, 255, 0.26);
   border-radius: 999px;
-  background: #fff;
-  color: var(--ink);
+  background: linear-gradient(180deg, #ffffff 0%, var(--accent-soft) 100%);
+  color: var(--accent);
   font-family: var(--display);
   font-size: calc(17px * var(--ts, 1));
+  font-weight: 700;
   letter-spacing: -0.01em;
   text-decoration: none;
-  transition: background 0.15s ease, color 0.15s ease;
+  box-shadow: 0 1px 0 rgba(35, 31, 29, 0.04), 0 10px 22px -12px rgba(103, 52, 255, 0.55);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
-.hero-about-btn:hover, .hero-about-btn:active { background: var(--ink); color: #fff; }
+.hero-about-btn:hover, .hero-about-btn:active {
+  background: var(--accent);
+  border-color: var(--accent-hover);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px -12px rgba(103, 52, 255, 0.6);
+}
+.hero-about-arrow {
+  display: inline-block;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-size: calc(15px * var(--ts, 1));
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+.hero-about-btn:hover .hero-about-arrow, .hero-about-btn:active .hero-about-arrow { transform: translateX(4px); }
 @media (min-width: 800px) { .hero-about-btn { margin-top: 38px; } }
-/* 첫 줄 맨 앞 브랜드명은 로고 글씨색(보라)으로 강조한다. */
+/* 첫 줄 맨 앞 브랜드명은 로고 글씨색(보라)으로, 가장 진하게 강조한다. */
 .hero-brand {
   color: var(--accent);
-  font-weight: 700;
+  font-weight: 800;
   white-space: nowrap;
 }
 /* 뜻풀이 속 인용구: 한국어는 어절이 줄 끝에서 끊기지 않게 한 줄로 묶는다. */
@@ -743,6 +760,8 @@ html[lang="ko"] .hero-invite { word-break: keep-all; }
   .stairs-specials { margin-bottom: 0; }
   .stairs-specials .stair { padding-top: 16px; }
   .stair-emoji { font-size: calc(14px * var(--ts, 1)); line-height: 1; filter: saturate(0.75) brightness(1.08); }
+  /* 특강 박스 맨 위 줄: 주제 이모지 + 단계 장미를 한 덩어리로 (상태 배지는 오른쪽) */
+  .stair-marks { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; min-width: 0; }
   /* 특강 제목의 괄호 안 주제는 제목 아래 보라 알약 태그로 크게 */
   .stair-name .topic-tag {
     display: flex;
@@ -793,6 +812,17 @@ html[lang="ko"] .hero-invite { word-break: keep-all; }
     gap: 1px;
     font-size: calc(12.5px * var(--ts, 1));
     line-height: 1;
+  }
+  /* 장미 대신 '올레벨' (인텐시브 · 밀롱가 특강): 장미 자리에 놓이는 작은 보라 글씨 */
+  .stair-lv-all {
+    display: inline-flex;
+    align-items: center;
+    font-size: calc(11.5px * var(--ts, 1));
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.35;
+    color: #7a68b8;
+    white-space: nowrap;
   }
   /* 상태는 배경 · 테두리 없이 글자색만 살짝 */
   .stair-status {
