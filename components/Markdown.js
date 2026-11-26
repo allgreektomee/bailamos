@@ -62,6 +62,28 @@ export default function Markdown({ source }) {
         if (block.split("\n").every((line) => /^>\s?/.test(line))) {
           return <blockquote key={key}>{lines(block.replace(/^>\s?/gm, ""), key)}</blockquote>;
         }
+        // "**네이버 클립 영상** · [주소](주소)" 한 줄은 링크 대신 클립 화면을 그 자리에서 보여 준다.
+        const clip = block.match(/^\*\*네이버 클립 영상\*\*\s*·\s*\[[^\]]*\]\((https:\/\/(?:naver\.me\/[\w-]+|clip\.naver\.com\/[^)\s]+))\)$/);
+        if (clip) {
+          return (
+            <figure key={key} className="md-clip">
+              <div className="md-clip-frame">
+                <iframe
+                  src={clip[1]}
+                  title="네이버 클립 영상"
+                  loading="lazy"
+                  allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <figcaption>
+                <a href={clip[1]} target="_blank" rel="noreferrer">
+                  네이버 클립에서 보기 ›
+                </a>
+              </figcaption>
+            </figure>
+          );
+        }
         // 사진 한 장만 있는 문단은 figure 로
         const image = block.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/);
         if (image) {

@@ -1868,6 +1868,12 @@ fieldset.apply-field { display: block; }
 .md img { display: block; width: 100%; height: auto; border-radius: 6px; }
 .md blockquote { margin: -8px 0 22px; padding: 0; text-align: center; font-size: calc(13px * var(--ts, 1)); color: var(--muted); }
 .md a { color: var(--accent); }
+/* 네이버 클립: 클립 화면을 그대로 넣되, 맨 위 네이버 머리줄(뒤로가기 · 프로필)은 잘라 낸다. */
+.md-clip { max-width: 380px; margin: 26px auto; }
+.md-clip-frame { position: relative; height: 520px; overflow: hidden; border-radius: 10px; background: #111; }
+.md-clip-frame iframe { position: absolute; top: -54px; left: 0; width: calc(100% + 18px); height: 700px; border: 0; }
+.md-clip figcaption { margin-top: 10px; text-align: center; font-size: calc(14px * var(--ts, 1)); }
+.md-clip figcaption a { text-decoration: none; color: var(--muted); }
 .md ul { margin: 0 0 20px; padding-left: 20px; }
 .md hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
 .blog-tags { display: flex; flex-wrap: wrap; gap: 6px 10px; margin: 36px 0 0; padding: 18px 0 0; border-top: 1px solid var(--line); list-style: none; }
