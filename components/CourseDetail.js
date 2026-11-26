@@ -21,8 +21,8 @@ function Inquire({ courseId, boxed }) {
   const { t } = useI18n();
   const { openContact } = useContactDialog();
   const href = applyHref(courseId);
-  // 소개 박스 위에 바로 놓는 자리(초급)는 신청·문의 두 버튼을 한 박스에 담는다.
-  const wrapClass = boxed ? "card inquire inquire-box" : "inquire";
+  // 초급은 신청·문의 두 버튼을 정규수업 라벨 박스 안쪽 맨 아래에 넣는다(버튼 크기는 그대로).
+  const wrapClass = boxed ? "inquire inquire-in-card" : "inquire";
   // 개인레슨은 신청 폼 없이 문의만 받는다.
   if (courseId === "private") {
     return (
@@ -161,8 +161,8 @@ export default function CourseDetail({ courseId, dateQuery }) {
             </div>
             {meta}
             {course.warn ? <div className="warn">{course.warn}</div> : null}
+            <Inquire courseId={course.id} boxed />
           </div>
-          <Inquire courseId={course.id} boxed />
           {course.story?.length ? (
             <section className="card detail-story">
               {course.story.map((paragraph, index) => (
