@@ -306,10 +306,12 @@ export default function HomePage({ dateQuery, latestPost }) {
           <div className="hero-about-row">
             <Link href="/argentine-tango" className="hero-about-link">
               <span className="hero-about-text">{t("navAbout")}</span>
-              <span className="hero-about-arrow" aria-hidden="true">
-                →
+              <span className="hero-about-cta">
+                {t("navAboutCta")}
+                <span className="hero-about-arrow" aria-hidden="true">
+                  →
+                </span>
               </span>
-              <span className="hero-about-cta">{t("navAboutCta")}</span>
             </Link>
           </div>
         </div>

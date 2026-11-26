@@ -525,57 +525,55 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   overflow-wrap: break-word;
   text-wrap: balance;
 }
-/* 히어로 맨 아래: "아르헨티나 탱고란?"은 박스 없이 글자만, 오른쪽에 화살표, 그 옆에 누르는 버튼. 셋은 한 줄에 놓는다. */
+/* 히어로 맨 아래: 위 큰 문장과 간격을 넉넉히 띄우고, 가운데 정렬로 "아르헨티나 탱고란?" 글자 → 그 아래 누르는 버튼 순서로 쌓는다. */
 .hero-about-row {
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 40px;
 }
 .hero-about-link {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: clamp(6px, 1.5vw, 11px);
+  gap: 14px;
   max-width: 100%;
-  padding: 4px 2px;
   color: var(--ink);
   text-decoration: none;
-  white-space: nowrap;
 }
 .hero-about-text {
   font-family: var(--display);
-  font-size: calc(clamp(15px, 4.2vw, 21px) * var(--ts, 1));
+  font-size: calc(clamp(16px, 4.4vw, 21px) * var(--ts, 1));
   font-weight: 600;
   letter-spacing: -0.01em;
-  line-height: 1.2;
+  line-height: 1.35;
   color: var(--ink);
+  text-align: center;
+  word-break: keep-all;
 }
-.hero-about-arrow {
-  display: inline-block;
-  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-  font-size: calc(clamp(13px, 3.6vw, 17px) * var(--ts, 1));
-  font-weight: 700;
-  line-height: 1;
-  color: var(--ink);
-  transition: transform 0.15s ease;
-}
-/* 누르는 버튼: 색을 늘리지 않으려고 보라 대신 글자색(먹색) 한 가지로, 그림자 없이 납작하게. */
+/* 누르는 버튼: 색을 늘리지 않으려고 보라 대신 글자색(먹색) 한 가지로 납작하게. 화살표는 버튼 안 글자 뒤에 붙는다. */
 .hero-about-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
-  padding: 9px 18px;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 26px;
   border: 1px solid var(--ink);
   border-radius: 999px;
   background: var(--ink);
   color: #fff;
   font-family: var(--display);
-  font-size: calc(clamp(13px, 3.4vw, 16px) * var(--ts, 1));
+  font-size: calc(15px * var(--ts, 1));
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.1;
   transition: background 0.15s ease, color 0.15s ease;
+}
+.hero-about-arrow {
+  display: inline-block;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-weight: 700;
+  transition: transform 0.15s ease;
 }
 .hero-about-link:hover .hero-about-cta,
 .hero-about-link:focus-visible .hero-about-cta {
@@ -584,18 +582,7 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
 }
 .hero-about-link:hover .hero-about-arrow,
 .hero-about-link:focus-visible .hero-about-arrow { transform: translateX(4px); }
-@media (min-width: 800px) { .hero-about-row { margin-top: 38px; } }
-/* 좁은 화면에서도 글자·화살표·버튼이 한 줄에 남도록 크기를 고정한다(글자 크기 설정과 무관하게). */
-@media (max-width: 430px) {
-  .hero-about-text { font-size: 15px; }
-  .hero-about-arrow { font-size: 14px; }
-  .hero-about-cta { min-height: 38px; padding: 8px 15px; font-size: 13px; }
-}
-@media (max-width: 365px) {
-  .hero-about-text { font-size: 13.5px; }
-  .hero-about-arrow { font-size: 13px; }
-  .hero-about-cta { min-height: 36px; padding: 7px 12px; font-size: 12px; }
-}
+@media (min-width: 800px) { .hero-about-row { margin-top: 52px; } }
 /* 첫 줄 맨 앞 브랜드명은 로고 글씨색(보라)으로, 이름 부분만 진하게. 앞뒤 물음표는 보통 굵기로 둔다. */
 .hero-brand {
   color: var(--ink);
