@@ -17,14 +17,16 @@ function periodText(course, t) {
   return t("openBatch");
 }
 
-function Inquire({ courseId }) {
+function Inquire({ courseId, boxed }) {
   const { t } = useI18n();
   const { openContact } = useContactDialog();
   const href = applyHref(courseId);
+  // 소개 박스 위에 바로 놓는 자리(초급)는 신청·문의 두 버튼을 한 박스에 담는다.
+  const wrapClass = boxed ? "card inquire inquire-box" : "inquire";
   // 개인레슨은 신청 폼 없이 문의만 받는다.
   if (courseId === "private") {
     return (
-      <div className="inquire">
+      <div className={wrapClass}>
         <p className="inquire-note">{t("privateNote")}</p>
         <button type="button" className="inquire-btn" onClick={openContact}>
           {t("inquire")}
@@ -42,7 +44,7 @@ function Inquire({ courseId }) {
     </button>
   );
   return (
-    <div className="inquire">
+    <div className={wrapClass}>
       {apply}
       <button type="button" className="inquire-btn" onClick={openContact}>
         {t("inquire")}
@@ -103,6 +105,37 @@ export default function CourseDetail({ courseId, dateQuery }) {
   const when = course.day ? t("every")(dayName(lang, course.day), course.time, course.timeNote) : "";
   const intro = course.intro?.length ? course.intro : [course.lead];
   const weekUnit = t("weekUnit");
+  // 초급은 사진 → 라벨 박스 → 신청·문의 → 소개 박스 → 커리큘럼 박스 순서로 보여 준다.
+  const isBeginner = course.id === "beginner";
+  const label = course.track === "special" ? t("specials") : isBeginner ? t("regularBeginner") : t("regular");
+  const curriculum = course.private ? (
+    <PrivateLessons lessons={privateLessons} />
+  ) : course.groups || course.weeks.length ? (
+    <WeekList course={course} weekUnit={weekUnit} />
+  ) : (
+    <p className="note">{t("weeksLater")}</p>
+  );
+
+  const meta = (
+    <dl className="meta">
+      {course.day && course.track !== "special" ? (
+        <>
+          <dt>{t("when")}</dt>
+          <dd>{when}</dd>
+        </>
+      ) : null}
+      <dt>{t("period")}</dt>
+      <dd>{periodText(course, t)}</dd>
+      {course.place ? (
+        <>
+          <dt>{t("place")}</dt>
+          <dd>{course.place}</dd>
+        </>
+      ) : null}
+      <dt>{t("who")}</dt>
+      <dd>{course.target}</dd>
+    </dl>
+  );
 
   return (
     <article className="detail">
@@ -120,48 +153,55 @@ export default function CourseDetail({ courseId, dateQuery }) {
           style={{ objectPosition: course.imagePosition || "center" }}
         />
       ) : null}
-      <div className="card" style={{ marginTop: 18 }}>
-        <div className="top">
-          <h3>{course.track === "special" ? t("specials") : t("regular")}</h3>
-        </div>
-        {intro.map((paragraph) => (
-          <p key={paragraph} className="lead">
-            {paragraph}
-          </p>
-        ))}
-        {course.points?.length ? (
-          <ul className="intro-points">
-            {course.points.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
-        ) : null}
-        <dl className="meta">
-          {course.day && course.track !== "special" ? (
-            <>
-              <dt>{t("when")}</dt>
-              <dd>{when}</dd>
-            </>
+      {isBeginner ? (
+        <>
+          <div className="card" style={{ marginTop: 18 }}>
+            <div className="top">
+              <h3>{label}</h3>
+            </div>
+            {meta}
+            {course.warn ? <div className="warn">{course.warn}</div> : null}
+          </div>
+          <Inquire courseId={course.id} boxed />
+          {course.story?.length ? (
+            <section className="card detail-story">
+              {course.story.map((paragraph, index) => (
+                <p key={paragraph} className={index === 0 ? "story-quote" : "story-line"}>
+                  {paragraph}
+                </p>
+              ))}
+            </section>
           ) : null}
-          <dt>{t("period")}</dt>
-          <dd>{periodText(course, t)}</dd>
-          {course.place ? (
-            <>
-              <dt>{t("place")}</dt>
-              <dd>{course.place}</dd>
-            </>
-          ) : null}
-          <dt>{t("who")}</dt>
-          <dd>{course.target}</dd>
-        </dl>
-        {course.warn ? <div className="warn">{course.warn}</div> : null}
-      </div>
-      {course.private ? <PrivateLessons lessons={privateLessons} /> : course.groups || course.weeks.length ? (
-        <WeekList course={course} weekUnit={weekUnit} />
+          <section className="card detail-curriculum">
+            <h3>{t("curriculum")}</h3>
+            {curriculum}
+          </section>
+        </>
       ) : (
-        <p className="note">{t("weeksLater")}</p>
+        <>
+          <div className="card" style={{ marginTop: 18 }}>
+            <div className="top">
+              <h3>{label}</h3>
+            </div>
+            {intro.map((paragraph) => (
+              <p key={paragraph} className="lead">
+                {paragraph}
+              </p>
+            ))}
+            {course.points?.length ? (
+              <ul className="intro-points">
+                {course.points.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
+            ) : null}
+            {meta}
+            {course.warn ? <div className="warn">{course.warn}</div> : null}
+          </div>
+          {curriculum}
+          <Inquire courseId={course.id} />
+        </>
       )}
-      <Inquire courseId={course.id} />
     </article>
   );
 }

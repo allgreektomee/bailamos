@@ -9,7 +9,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { id } = await params;
   const teacher = getTeacher(id);
-  if (!teacher) return { title: "전문강사" };
+  if (!teacher) return { title: "대표강사 소개" };
   return { title: `${teacher.name} · BAILAMOS TANGO` };
 }
 

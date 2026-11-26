@@ -1088,6 +1088,35 @@ html[lang="ko"] .hero-invite { word-break: keep-all; }
 .inquire-line:hover { background: var(--accent-soft); }
 a.inquire-btn { text-decoration: none; }
 
+/* 초급 상세: 사진 → 라벨 박스 → 신청·문의 박스 → 소개 박스 → 커리큘럼 박스 */
+.inquire.inquire-box {
+  margin-top: 14px;
+  padding: 16px 18px;
+  border-color: transparent;
+  background: var(--soft);
+}
+.detail .detail-story,
+.detail .detail-curriculum {
+  margin-top: 14px;
+  border-color: transparent;
+  background: var(--soft);
+}
+.detail-story p {
+  margin: 0;
+  white-space: pre-line;
+  font-size: calc(15.5px * var(--ts, 1));
+  line-height: 1.95;
+}
+.detail-story p + p { margin-top: 20px; }
+.detail-story .story-quote {
+  font-family: var(--display);
+  font-size: calc(17px * var(--ts, 1));
+  line-height: 1.85;
+  color: var(--ink);
+}
+.detail-curriculum h3 { margin: 0; font-size: calc(18px * var(--ts, 1)); letter-spacing: -0.02em; }
+.detail-curriculum .weeks { margin-top: 12px; }
+
 /* 아르헨티나 탱고란? 소개 페이지: 색은 거의 쓰지 않고 명조 제목 + 얇은 선으로 */
 .about .hero-kicker { margin-top: 22px; }
 .about h1 { font-size: calc(34px * var(--ts, 1)); letter-spacing: -0.02em; }
