@@ -368,7 +368,7 @@ export default function HomePage({ dateQuery, latestPost }) {
             <div className="gather-title">
               <h3>{t("practicaName")}</h3>
               <a className="gather-apply" href={practicaApply}>
-                {t("apply")}
+                {t("gatherApply")}
               </a>
             </div>
             <p className="gather-hours">
