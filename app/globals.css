@@ -540,30 +540,20 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   color: var(--ink);
   text-decoration: none;
 }
-.hero-about-text {
-  font-family: var(--display);
-  font-size: calc(clamp(16px, 4.4vw, 21px) * var(--ts, 1));
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.35;
-  color: var(--ink);
-  text-align: center;
-  word-break: keep-all;
-}
 /* 누르는 버튼: 색을 늘리지 않으려고 보라 대신 글자색(먹색) 한 가지로 납작하게. 화살표는 버튼 안 글자 뒤에 붙는다. */
 .hero-about-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 44px;
-  padding: 10px 26px;
+  min-height: 48px;
+  padding: 11px 28px;
   border: 1px solid var(--ink);
   border-radius: 999px;
   background: var(--ink);
   color: #fff;
   font-family: var(--display);
-  font-size: calc(15px * var(--ts, 1));
+  font-size: calc(16px * var(--ts, 1));
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.1;
