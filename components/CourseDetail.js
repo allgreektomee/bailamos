@@ -105,7 +105,6 @@ export default function CourseDetail({ courseId, dateQuery }) {
   const when = course.day ? t("every")(dayName(lang, course.day), course.time, course.timeNote) : "";
   const intro = course.intro?.length ? course.intro : [course.lead];
   const weekUnit = t("weekUnit");
-  // 초급은 사진 → 라벨 박스 → 신청·문의 → 소개 박스 → 커리큘럼 박스 순서로 보여 준다.
   const isBeginner = course.id === "beginner";
   const label = course.track === "special" ? t("specials") : isBeginner ? t("regularBeginner") : t("regular");
   const curriculum = course.private ? (
@@ -153,55 +152,45 @@ export default function CourseDetail({ courseId, dateQuery }) {
           style={{ objectPosition: course.imagePosition || "center" }}
         />
       ) : null}
+      {/* 모든 수업 공통: 라벨 박스(신청·문의 버튼 포함) → 소개 박스 → 커리큘럼 박스 */}
+      <div className="card" style={{ marginTop: 18 }}>
+        <div className="top">
+          <h3>{label}</h3>
+        </div>
+        {meta}
+        {course.warn ? <div className="warn">{course.warn}</div> : null}
+        <Inquire courseId={course.id} boxed />
+      </div>
       {isBeginner ? (
-        <>
-          <div className="card" style={{ marginTop: 18 }}>
-            <div className="top">
-              <h3>{label}</h3>
-            </div>
-            {meta}
-            {course.warn ? <div className="warn">{course.warn}</div> : null}
-            <Inquire courseId={course.id} boxed />
-          </div>
-          {course.story?.length ? (
-            <section className="card detail-story">
-              {course.story.map((paragraph, index) => (
-                <p key={paragraph} className={index === 0 ? "story-quote" : "story-line"}>
-                  {paragraph}
-                </p>
-              ))}
-            </section>
-          ) : null}
-          <section className="card detail-curriculum">
-            <h3>{t("curriculum")}</h3>
-            {curriculum}
-          </section>
-        </>
-      ) : (
-        <>
-          <div className="card" style={{ marginTop: 18 }}>
-            <div className="top">
-              <h3>{label}</h3>
-            </div>
-            {intro.map((paragraph) => (
-              <p key={paragraph} className="lead">
+        course.story?.length ? (
+          <section className="card detail-story">
+            {course.story.map((paragraph, index) => (
+              <p key={paragraph} className={index === 0 ? "story-quote" : "story-line"}>
                 {paragraph}
               </p>
             ))}
-            {course.points?.length ? (
-              <ul className="intro-points">
-                {course.points.map((point) => (
-                  <li key={point}>{point}</li>
-                ))}
-              </ul>
-            ) : null}
-            {meta}
-            {course.warn ? <div className="warn">{course.warn}</div> : null}
-          </div>
-          {curriculum}
-          <Inquire courseId={course.id} />
-        </>
-      )}
+          </section>
+        ) : null
+      ) : intro.some(Boolean) || course.points?.length ? (
+        <section className="card detail-story">
+          {intro.filter(Boolean).map((paragraph) => (
+            <p key={paragraph} className="story-line">
+              {paragraph}
+            </p>
+          ))}
+          {course.points?.length ? (
+            <ul className="intro-points">
+              {course.points.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+          ) : null}
+        </section>
+      ) : null}
+      <section className="card detail-curriculum">
+        {course.private ? null : <h3>{t("curriculum")}</h3>}
+        {curriculum}
+      </section>
     </article>
   );
 }
