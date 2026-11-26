@@ -1869,7 +1869,8 @@ fieldset.apply-field { display: block; }
 .md blockquote { margin: -8px 0 22px; padding: 0; text-align: center; font-size: calc(13px * var(--ts, 1)); color: var(--muted); }
 .md a { color: var(--accent); }
 /* 네이버 클립: 클립 화면을 그대로 넣되, 맨 위 네이버 머리줄(뒤로가기 · 프로필)은 잘라 낸다. */
-.md-clip { max-width: 380px; margin: 26px auto; }
+/* `.md figure { margin: 22px 0 }` 가 더 강해서 가운데 정렬(auto)이 먹지 않으므로 `.md .md-clip` 로 올린다. */
+.md .md-clip { width: min(100%, 360px); max-width: none; margin: 28px auto; }
 .md-clip-frame { position: relative; height: 520px; overflow: hidden; border-radius: 10px; background: #111; }
 .md-clip-frame iframe { position: absolute; top: -54px; left: 0; width: calc(100% + 18px); height: 700px; border: 0; }
 .md-clip figcaption { margin-top: 10px; text-align: center; font-size: calc(14px * var(--ts, 1)); }
