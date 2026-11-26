@@ -14,10 +14,12 @@ const roleKey = { 리더: "roleLeader", 팔로워: "roleFollower" };
 const batchKey = { "B.T 기수 신청": "batchTerm", 재수강: "batchRetake", "일반 신청": "batchOpen" };
 const sourceKey = {
   "지인 추천": "sourceFriend",
+  "네이버 블로그": "sourceBlog",
+  유튜브: "sourceYoutube",
+  인스타그램: "sourceInstagram",
   페이스북: "sourceFacebook",
   "네이버 카페": "sourceNaver",
-  인스타그램: "sourceInstagram",
-  "다음 카페": "sourceDaum",
+  "네이버 클립": "sourceClip",
   기타: "sourceOther",
 };
 
