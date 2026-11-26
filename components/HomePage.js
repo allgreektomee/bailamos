@@ -129,10 +129,7 @@ function Stairs({ items, dateQuery, lang }) {
   );
 }
 
-/** 특강별 대표 이모지 (맨 위 줄) */
-const SPECIAL_ICON = { walk: "👣", ocho: "⚖️", "special-intermediate": "🔗", giro: "🌀", "special-advanced": "🔥", milonga: "🥁", vals: "🎻" };
-
-/** 모바일 특강: 정규 수업처럼 2칸 박스. 맨 위 줄: 이모지(왼쪽) + 상태(진행중·모집중·준비중, 오른쪽). */
+/** 모바일 특강: 정규 수업처럼 2칸 박스. 맨 위 줄: 단계(장미 · 올레벨, 왼쪽) + 상태(진행중·모집중·준비중, 오른쪽). */
 function SpecialBoxes({ items, dateQuery, lang }) {
   const { t } = useI18n();
   return (
@@ -145,7 +142,6 @@ function SpecialBoxes({ items, dateQuery, lang }) {
               <Link href={`/classes/${course.id}${dateQuery}`} className="stair">
                 <span className="stair-head">
                   <span className="stair-marks">
-                    <span className="stair-emoji" aria-hidden="true">{SPECIAL_ICON[course.id]}</span>
                     <StepMark level={course.level} />
                   </span>
                   <StatusTag status={course.status} />
