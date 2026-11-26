@@ -123,8 +123,8 @@ export default function CourseDetail({ courseId, dateQuery }) {
   const when = course.day ? t("every")(dayName(lang, course.day), course.time, "") : "";
   const intro = course.intro?.length ? course.intro : [course.lead];
   const weekUnit = t("weekUnit");
-  // 정규 수업 라벨: 초급·초중급은 어느 반인지까지 붙여 보여 준다.
-  const regularLabel = { beginner: "regularBeginner", "beginner-intermediate": "regularBeginnerIntermediate" };
+  // 정규 수업 라벨: 초급·초중급·중급은 어느 반인지까지 붙여 보여 준다.
+  const regularLabel = { beginner: "regularBeginner", "beginner-intermediate": "regularBeginnerIntermediate", intermediate: "regularIntermediate" };
   const label = course.track === "special" ? t("specials") : t(regularLabel[course.id] || "regular");
   const curriculum = course.private ? (
     <PrivateLessons lessons={privateLessons} />
