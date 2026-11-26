@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import CourseName from "@/components/CourseName";
 import { useI18n } from "@/components/Language";
 import StudioLocation from "@/components/StudioLocation";
@@ -190,7 +190,7 @@ export default function ApplyForm({ initialCourse }) {
           ) : null}
           {applyPrices[course] ? (
             <>
-              <p className={applyPrices[course].retake ? "apply-price apply-price-list" : "apply-price"}>
+              <p className="apply-price">
                 {applyPrices[course].once ? (
                   <span className="is-on">{price(applyPrices[course].once)}</span>
                 ) : applyPrices[course].term ? (
@@ -198,19 +198,19 @@ export default function ApplyForm({ initialCourse }) {
                     {t("applyPriceTerm")} {price(applyPrices[course].term)}
                   </span>
                 ) : applyPrices[course].retake ? (
-                  // 초중급처럼 일반·기수·재수강 금액이 모두 다른 과정은 한 줄에 하나씩 쌓아 보여 준다.
+                  // 초중급·중급처럼 일반·기수·재수강 금액이 모두 다른 과정: 박스 없이 글씨로 나란히 두고,
+                  // 아래 신청구분을 고르면 그 금액만 진해지고 나머지는 흐려진다.
                   [
+                    { key: "cohort", kind: t("applyPriceCohort"), amount: applyPrices[course].cohort, batch: "B.T 기수 신청" },
+                    { key: "retake", kind: t("applyPriceRetake"), amount: applyPrices[course].retake, batch: "재수강" },
                     { key: "open", kind: t("applyPriceOpen"), amount: applyPrices[course].open, batch: "일반 신청" },
-                    { key: "cohort", kind: t("applyPriceCohort"), off: t("applyPriceOff10"), amount: applyPrices[course].cohort, batch: "B.T 기수 신청" },
-                    { key: "retake", kind: t("applyPriceRetake"), off: t("applyPriceOff20"), amount: applyPrices[course].retake, batch: "재수강" },
-                  ].map((row) => (
-                    <span key={row.key} className={batch === row.batch ? "is-on" : batch ? "is-dim" : ""}>
-                      <span className="price-kind">
-                        {row.kind}
-                        {row.off ? <em className="price-off">{row.off}</em> : null}
+                  ].map((row, index) => (
+                    <Fragment key={row.key}>
+                      {index > 0 ? <span className="apply-price-mark" aria-hidden="true" /> : null}
+                      <span className={batch === row.batch ? "is-on" : batch ? "is-dim" : ""}>
+                        {row.kind} {price(row.amount)}
                       </span>
-                      <span className="price-amount">{price(row.amount)}</span>
-                    </span>
+                    </Fragment>
                   ))
                 ) : (
                   <>
