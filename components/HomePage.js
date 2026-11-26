@@ -302,15 +302,10 @@ export default function HomePage({ dateQuery, latestPost }) {
             <span className="hero-guide">{t("heroGuide")}</span>
             <span className="hero-invite">{t("heroInvite")}</span>
           </h1>
-          {/* 대문 맨 아래: "아르헨티나 탱고란? →" 글자 자체가 누르는 버튼 하나. */}
+          {/* 대문 맨 아래: "아르헨티나 탱고란?" 글자 자체가 누르는 버튼 하나. */}
           <div className="hero-about-row">
             <Link href="/argentine-tango" className="hero-about-link">
-              <span className="hero-about-cta">
-                {t("navAbout")}
-                <span className="hero-about-arrow" aria-hidden="true">
-                  →
-                </span>
-              </span>
+              <span className="hero-about-cta">{t("navAbout")}</span>
             </Link>
           </div>
         </div>

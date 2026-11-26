@@ -529,7 +529,7 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
 .hero-about-row {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 34px;
 }
 .hero-about-link {
   display: inline-flex;
@@ -572,7 +572,7 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
 }
 .hero-about-link:hover .hero-about-arrow,
 .hero-about-link:focus-visible .hero-about-arrow { transform: translateX(4px); }
-@media (min-width: 800px) { .hero-about-row { margin-top: 52px; } }
+@media (min-width: 800px) { .hero-about-row { margin-top: 46px; } }
 /* 첫 줄 맨 앞 브랜드명은 로고 글씨색(보라)으로, 이름 부분만 진하게. 앞뒤 물음표는 보통 굵기로 둔다. */
 .hero-brand {
   color: var(--ink);
@@ -598,7 +598,7 @@ html[lang="ko"] .hero-quote { white-space: nowrap; }
   display: block;
   max-width: 15em;
   margin-top: 22px;
-  padding-top: 20px;
+  padding-bottom: 24px;
   font-family: var(--display);
   font-size: calc(clamp(26px, 3.2vw, 50px) * var(--ts, 1));
   font-weight: 400;
@@ -619,10 +619,11 @@ html[lang="ko"] .hero-invite { word-break: keep-all; }
 :lang(zh) .hero-meaning,
 :lang(zh) .hero-guide,
 :lang(zh) .hero-invite { word-break: auto-phrase; line-break: strict; }
+/* 짧은 가로줄은 "우리 함께 탱고 출까요?" 바로 아래에 둔다. */
 .hero-invite::before {
   content: "";
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 50%;
   width: 34px;
   height: 1px;
@@ -1522,7 +1523,7 @@ a.inquire-btn { text-decoration: none; }
     background: var(--soft);
   }
   .hero-guide { margin-top: 16px; }
-  .hero-invite { margin-top: 32px; padding-top: 28px; }
+  .hero-invite { margin-top: 32px; padding-bottom: 32px; }
 }
 
 .apply { max-width: 640px; }
