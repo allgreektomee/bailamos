@@ -226,6 +226,51 @@ dl.meta dd { margin: 0; word-break: keep-all; }
   padding: 14px;
 }
 
+/* 초급 라벨 박스 안, 요일·시간 위의 안내 블록: 간격을 촘촘하게 */
+.class-flash {
+  margin: 14px 0 0;
+  padding: 13px 16px 14px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  font-size: calc(15.5px * var(--ts, 1));
+  line-height: 1.6;
+}
+.class-flash .flash-head {
+  margin: 0;
+  color: var(--accent);
+  font-size: calc(16px * var(--ts, 1));
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.class-flash .flash-list {
+  margin: 5px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 1px;
+}
+.class-flash .flash-list li {
+  position: relative;
+  padding-left: 13px;
+  color: var(--ink);
+}
+.class-flash .flash-list li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.7em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.45;
+}
+.class-flash .flash-tail {
+  margin: 3px 0 0;
+  padding-left: 13px;
+  color: var(--ink);
+}
+
 .intro-points {
   margin: 14px 0 0;
   padding-left: 18px;

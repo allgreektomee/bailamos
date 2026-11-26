@@ -53,6 +53,21 @@ function Inquire({ courseId, boxed }) {
   );
 }
 
+// 초급 라벨 박스 안, 요일·시간 위에 놓는 안내 블록(머리줄 · 목록 · 맺음줄).
+function ClassFlash({ flash }) {
+  return (
+    <div className="class-flash">
+      <p className="flash-head">{flash.head}</p>
+      <ul className="flash-list">
+        {flash.items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+      {flash.tail ? <p className="flash-tail">{flash.tail}</p> : null}
+    </div>
+  );
+}
+
 function WeekRows({ weeks, id, weekUnit }) {
   return (
     <ol className="weeks">
@@ -165,6 +180,7 @@ export default function CourseDetail({ courseId, dateQuery }) {
         <div className="top">
           <h3>{label}</h3>
         </div>
+        {course.flash ? <ClassFlash flash={course.flash} /> : null}
         {meta}
         {course.warn ? <div className="warn">{course.warn}</div> : null}
         <Inquire courseId={course.id} boxed />
