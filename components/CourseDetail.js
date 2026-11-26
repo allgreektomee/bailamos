@@ -102,7 +102,8 @@ function WeekList({ course, weekUnit }) {
 export default function CourseDetail({ courseId, dateQuery }) {
   const { lang, t } = useI18n();
   const course = localizeCourse(getCourse(courseId), lang);
-  const when = course.day ? t("every")(dayName(lang, course.day), course.time, course.timeNote) : "";
+  // 요일·시간은 두 줄로: 첫 줄 "매주 토요일 18:10–19:10", 둘째 줄 "(수업 후 …)" 보충 설명.
+  const when = course.day ? t("every")(dayName(lang, course.day), course.time, "") : "";
   const intro = course.intro?.length ? course.intro : [course.lead];
   const weekUnit = t("weekUnit");
   const isBeginner = course.id === "beginner";
@@ -120,7 +121,14 @@ export default function CourseDetail({ courseId, dateQuery }) {
       {course.day && course.track !== "special" ? (
         <>
           <dt>{t("when")}</dt>
-          <dd>{when}</dd>
+          <dd>
+            {when}
+            {course.timeNote ? (
+              <>
+                <br />({course.timeNote})
+              </>
+            ) : null}
+          </dd>
         </>
       ) : null}
       <dt>{t("period")}</dt>

@@ -159,7 +159,7 @@ h2 { font-size: calc(16px * var(--ts, 1)); margin: 32px 0 10px; letter-spacing: 
   flex-wrap: wrap;
 }
 
-.card h3 { margin: 0; font-size: calc(20px * var(--ts, 1)); letter-spacing: -0.02em; }
+.card h3 { margin: 0; font-size: calc(23px * var(--ts, 1)); letter-spacing: -0.02em; }
 
 .status { font-size: calc(12px * var(--ts, 1)); font-weight: 700; padding: 3px 10px; border-radius: 999px; }
 .status.ongoing { background: var(--now-soft); color: var(--now); }
@@ -170,21 +170,23 @@ h2 { font-size: calc(16px * var(--ts, 1)); margin: 32px 0 10px; letter-spacing: 
 
 dl.meta {
   display: grid;
-  grid-template-columns: 76px 1fr;
-  gap: 6px 12px;
-  margin: 14px 0 0;
-  font-size: calc(14px * var(--ts, 1));
+  grid-template-columns: 94px 1fr;
+  gap: 10px 14px;
+  margin: 18px 0 0;
+  font-size: calc(17px * var(--ts, 1));
+  line-height: 1.55;
 }
 
-dl.meta dt { color: var(--muted); }
-dl.meta dd { margin: 0; }
+dl.meta dt { color: #6f655e; }
+dl.meta dd { margin: 0; word-break: keep-all; }
 
 .warn {
-  margin-top: 12px;
-  padding: 10px 12px;
+  margin-top: 14px;
+  padding: 12px 14px;
   border-radius: 10px;
   background: var(--now-soft);
-  font-size: calc(13px * var(--ts, 1));
+  font-size: calc(15px * var(--ts, 1));
+  line-height: 1.6;
   color: #6a3d05;
 }
 
@@ -228,15 +230,15 @@ dl.meta dd { margin: 0; }
   margin: 14px 0 0;
   padding-left: 18px;
   color: var(--muted);
-  font-size: calc(14px * var(--ts, 1));
-  line-height: 1.6;
+  font-size: calc(16px * var(--ts, 1));
+  line-height: 1.7;
 }
 
-.week .wk { font-weight: 800; color: var(--muted); font-size: calc(14px * var(--ts, 1)); }
-.week .tp { font-size: calc(16.5px * var(--ts, 1)); font-weight: 600; letter-spacing: -0.01em; }
+.week .wk { font-weight: 800; color: var(--muted); font-size: calc(16px * var(--ts, 1)); }
+.week .tp { font-size: calc(18px * var(--ts, 1)); font-weight: 600; letter-spacing: -0.01em; }
 .week .dt { font-size: calc(13.5px * var(--ts, 1)); color: var(--muted); display: block; font-weight: 400; margin-top: 2px; }
 .week .tag { font-size: calc(12.5px * var(--ts, 1)); font-weight: 800; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
-.week .body { padding: 0 14px 14px 78px; font-size: calc(15.5px * var(--ts, 1)); color: var(--muted); }
+.week .body { padding: 0 14px 14px 78px; font-size: calc(16.5px * var(--ts, 1)); color: var(--muted); }
 
 .week.past { background: #f5f1ed; }
 .week.past .tp { color: #8a817b; }
@@ -1052,26 +1054,32 @@ a.inquire-btn { text-decoration: none; }
 
 /* 초급 상세: 사진 → 라벨 박스(신청·문의 버튼이 박스 안 맨 아래) → 소개 박스 → 커리큘럼 박스 */
 .inquire.inquire-in-card { margin-top: 22px; }
-.detail .detail-story,
-.detail .detail-curriculum {
+.detail .detail-story {
   margin-top: 14px;
   border-color: transparent;
   background: var(--soft);
 }
+/* 커리큘럼은 색 박스 없이 흰 바탕에 주차 카드만 놓는다(박스가 너무 진해 보여서). */
+.detail .detail-curriculum {
+  margin-top: 26px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
 .detail-story p {
   margin: 0;
   white-space: pre-line;
-  font-size: calc(15.5px * var(--ts, 1));
+  font-size: calc(17px * var(--ts, 1));
   line-height: 1.95;
 }
 .detail-story p + p { margin-top: 20px; }
 .detail-story .story-quote {
   font-family: var(--display);
-  font-size: calc(17px * var(--ts, 1));
+  font-size: calc(19px * var(--ts, 1));
   line-height: 1.85;
   color: var(--ink);
 }
-.detail-curriculum h3 { margin: 0; font-size: calc(18px * var(--ts, 1)); letter-spacing: -0.02em; }
+.detail-curriculum h3 { margin: 0; font-size: calc(21px * var(--ts, 1)); letter-spacing: -0.02em; }
 .detail-curriculum .weeks { margin-top: 12px; }
 
 /* 수업 신청 페이지 맨 아래 오시는 길: 주소 + 지도 + 바로가기 */
