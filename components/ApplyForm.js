@@ -190,13 +190,28 @@ export default function ApplyForm({ initialCourse }) {
           ) : null}
           {applyPrices[course] ? (
             <>
-              <p className="apply-price">
+              <p className={applyPrices[course].retake ? "apply-price apply-price-list" : "apply-price"}>
                 {applyPrices[course].once ? (
                   <span className="is-on">{price(applyPrices[course].once)}</span>
                 ) : applyPrices[course].term ? (
                   <span className="is-on">
                     {t("applyPriceTerm")} {price(applyPrices[course].term)}
                   </span>
+                ) : applyPrices[course].retake ? (
+                  // 초중급처럼 일반·기수·재수강 금액이 모두 다른 과정은 한 줄에 하나씩 쌓아 보여 준다.
+                  [
+                    { key: "open", kind: t("applyPriceOpen"), amount: applyPrices[course].open, batch: "일반 신청" },
+                    { key: "cohort", kind: t("applyPriceCohort"), off: t("applyPriceOff10"), amount: applyPrices[course].cohort, batch: "B.T 기수 신청" },
+                    { key: "retake", kind: t("applyPriceRetake"), off: t("applyPriceOff20"), amount: applyPrices[course].retake, batch: "재수강" },
+                  ].map((row) => (
+                    <span key={row.key} className={batch === row.batch ? "is-on" : batch ? "is-dim" : ""}>
+                      <span className="price-kind">
+                        {row.kind}
+                        {row.off ? <em className="price-off">{row.off}</em> : null}
+                      </span>
+                      <span className="price-amount">{price(row.amount)}</span>
+                    </span>
+                  ))
                 ) : (
                   <>
                     <span className={batch === "B.T 기수 신청" || batch === "재수강" ? "is-on" : batch ? "is-dim" : ""}>
