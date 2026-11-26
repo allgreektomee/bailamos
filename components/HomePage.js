@@ -23,6 +23,20 @@ const STAIR_LEVEL = {
   intensive: 5,
 };
 
+/** 대문 첫 줄 브랜드명: 앞뒤 물음표(¿ · ?)는 그대로 두고, 가운데 이름만 진하게 보여 준다. */
+function HeroBrand({ text }) {
+  const lead = (String(text).match(/^[¿¡]+/) || [""])[0];
+  const tail = (String(text).match(/[?!]+$/) || [""])[0];
+  const name = String(text).slice(lead.length, String(text).length - tail.length);
+  return (
+    <span className="hero-brand">
+      {lead ? <span className="hero-brand-mark">{lead}</span> : null}
+      <b>{name}</b>
+      {tail ? <span className="hero-brand-mark">{tail}</span> : null}
+    </span>
+  );
+}
+
 function StatusTag({ status }) {
   const { t } = useI18n();
   if (!status) return null;
@@ -283,7 +297,7 @@ export default function HomePage({ dateQuery, latestPost }) {
           <p className="hero-kicker">Bailamos Tango · Studio Elly</p>
           <h1 className="hero-message">
             <span className="hero-meaning">
-              <span className="hero-brand">{t("heroBrand")}</span>
+              <HeroBrand text={t("heroBrand")} />
               {/* heroMeaning 의 |…| 안은 뜻풀이 속 인용구로, 한 줄 안에서 끊기지 않게 묶는다. */}
               {(typeof t("heroMeaning") === "string" ? t("heroMeaning").split("|") : []).map((part, index) =>
                 index % 2 ? <span className="hero-quote" key={index}>{part}</span> : part,

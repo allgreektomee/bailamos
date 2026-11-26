@@ -563,12 +563,13 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
 }
 .hero-about-btn:hover .hero-about-arrow, .hero-about-btn:active .hero-about-arrow { transform: translateX(4px); }
 @media (min-width: 800px) { .hero-about-btn { margin-top: 38px; } }
-/* 첫 줄 맨 앞 브랜드명은 로고 글씨색(보라)으로, 가장 진하게 강조한다. */
+/* 첫 줄 맨 앞 브랜드명은 로고 글씨색(보라)으로, 이름 부분만 진하게. 앞뒤 물음표는 보통 굵기로 둔다. */
 .hero-brand {
   color: var(--accent);
-  font-weight: 800;
   white-space: nowrap;
 }
+.hero-brand b { font-weight: 800; }
+.hero-brand-mark { font-weight: 400; }
 /* 뜻풀이 속 인용구: 한국어는 어절이 줄 끝에서 끊기지 않게 한 줄로 묶는다. */
 html[lang="ko"] .hero-quote { white-space: nowrap; }
 .hero-guide {
