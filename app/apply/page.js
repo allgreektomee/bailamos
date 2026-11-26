@@ -1,7 +1,7 @@
 import ApplyForm from "@/components/ApplyForm";
 
 export const metadata = {
-  title: "수강 신청 · BAILAMOS TANGO",
+  title: "수업 신청 · BAILAMOS TANGO",
 };
 
 export default async function Page({ searchParams }) {

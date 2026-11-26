@@ -12,7 +12,7 @@ import { dayName, localizeCourse } from "@/lib/i18n";
 import { maps, applyHref, inmuFacebook, inmuFacebookPhone } from "@/lib/links";
 
 /** 모바일 전용 계단 (테크트리): 초급 → 상급을 한 칸씩 오른쪽 아래로 올라가고, 인텐시브는 전 단계를 아우르는 긴 막대. */
-/** 단계 표시: 탱고의 장미 🌹 5송이 중 몇 송이가 피었는지(색은 CSS 에서 보라색으로). 인텐시브는 전 단계라 5개 모두. */
+/** 단계 표시: 탱고의 장미 🌹 5송이 중 몇 송이가 피었는지(색은 CSS 에서 보라색으로). `allLevel`(인텐시브 · 밀롱가 특강)은 장미 대신 '올레벨' 글자. */
 const STEP_ICON = "🌹";
 const STAIR_LEVEL = {
   beginner: 1,
@@ -23,18 +23,35 @@ const STAIR_LEVEL = {
   intensive: 5,
 };
 
+/** 대문 첫 줄 브랜드명: 앞뒤 물음표(¿ · ?)는 그대로 두고, 가운데 이름만 진하게 보여 준다. */
+function HeroBrand({ text }) {
+  const lead = (String(text).match(/^[¿¡]+/) || [""])[0];
+  const tail = (String(text).match(/[?!]+$/) || [""])[0];
+  const name = String(text).slice(lead.length, String(text).length - tail.length);
+  return (
+    <span className="hero-brand">
+      {lead ? <span className="hero-brand-mark">{lead}</span> : null}
+      <b>{name}</b>
+      {tail ? <span className="hero-brand-mark">{tail}</span> : null}
+    </span>
+  );
+}
+
 function StatusTag({ status }) {
   const { t } = useI18n();
   if (!status) return null;
   return <span className={`stair-status stair-status-${status}`}>{t("statusLabels")[status]}</span>;
 }
 
-function StepMark({ id }) {
-  const level = STAIR_LEVEL[id] || 0;
+function StepMark({ id, level }) {
+  const { t } = useI18n();
+  if (level === "all") return <span className="stair-lv stair-lv-all">{t("allLevels")}</span>;
+  const filled = Number(level) || STAIR_LEVEL[id] || 0;
+  if (!filled) return null;
   return (
-    <span className="stair-lv" role="img" aria-label={`${level}/5`}>
+    <span className="stair-lv" role="img" aria-label={`${filled}/5`}>
       {[1, 2, 3, 4, 5].map((n) => (
-        <i key={n} className={n <= level ? "on" : ""}>
+        <i key={n} className={n <= filled ? "on" : ""}>
           {STEP_ICON}
         </i>
       ))}
@@ -87,6 +104,7 @@ function Stairs({ items, dateQuery, lang }) {
           <li>
             <Link href={href(intensive)} className="stair stair-wide">
               <span className="stair-head">
+                <StepMark level="all" />
                 <StatusTag status={intensive.status} />
               </span>
               <span className="stair-name">{intensive.name}</span>
@@ -126,7 +144,10 @@ function SpecialBoxes({ items, dateQuery, lang }) {
             <li key={course.id}>
               <Link href={`/classes/${course.id}${dateQuery}`} className="stair">
                 <span className="stair-head">
-                  <span className="stair-emoji" aria-hidden="true">{SPECIAL_ICON[course.id]}</span>
+                  <span className="stair-marks">
+                    <span className="stair-emoji" aria-hidden="true">{SPECIAL_ICON[course.id]}</span>
+                    <StepMark level={course.level} />
+                  </span>
                   <StatusTag status={course.status} />
                 </span>
                 <span className="stair-name">
@@ -276,7 +297,7 @@ export default function HomePage({ dateQuery, latestPost }) {
           <p className="hero-kicker">Bailamos Tango · Studio Elly</p>
           <h1 className="hero-message">
             <span className="hero-meaning">
-              <span className="hero-brand">{t("heroBrand")}</span>
+              <HeroBrand text={t("heroBrand")} />
               {/* heroMeaning 의 |…| 안은 뜻풀이 속 인용구로, 한 줄 안에서 끊기지 않게 묶는다. */}
               {(typeof t("heroMeaning") === "string" ? t("heroMeaning").split("|") : []).map((part, index) =>
                 index % 2 ? <span className="hero-quote" key={index}>{part}</span> : part,
@@ -285,9 +306,16 @@ export default function HomePage({ dateQuery, latestPost }) {
             <span className="hero-guide">{t("heroGuide")}</span>
             <span className="hero-invite">{t("heroInvite")}</span>
           </h1>
-          <Link href="/argentine-tango" className="hero-about-btn">
-            {t("navAbout")}
-          </Link>
+          {/* 대문 맨 아래: "아르헨티나 탱고란?"은 박스 없이 글자만, 그 오른쪽에 화살표와 누르는 버튼. */}
+          <div className="hero-about-row">
+            <Link href="/argentine-tango" className="hero-about-link">
+              <span className="hero-about-text">{t("navAbout")}</span>
+              <span className="hero-about-arrow" aria-hidden="true">
+                →
+              </span>
+              <span className="hero-about-cta">{t("navAboutCta")}</span>
+            </Link>
+          </div>
         </div>
       </section>
 

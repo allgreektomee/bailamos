@@ -9,15 +9,17 @@ export default function SiteNav() {
   const { t } = useI18n();
   const { openContact } = useContactDialog();
   const [open, setOpen] = useState(false);
+  // 데스크톱 상단 바와 모바일 3선 메뉴가 같은 배열을 쓴다. 앞 8개가 지운 님이 정한 순서이고,
+  // 신청하기·문의는 그 뒤에 강조 버튼으로 이어진다.
   const links = [
-    { href: "/#teachers", label: t("navTeachers") },
+    { href: "/argentine-tango", label: t("navAbout") },
+    { href: "/blog", label: t("navBlog") },
     { href: "/#courses", label: t("navCourses") },
     { href: "/#specials", label: t("navSpecials") },
-    { href: "/#week", label: t("navWeek") },
     { href: "/classes/private", label: t("navPrivate") },
+    { href: "/#week", label: t("navWeek") },
+    { href: "/#teachers", label: t("navTeachers") },
     { href: "/#visit", label: t("navVisit") },
-    { href: "/blog", label: t("navBlog") },
-    { href: "/argentine-tango", label: t("navAbout") },
     { href: "/apply", label: t("apply") },
     { href: "/#contact", label: t("navContact") },
   ];

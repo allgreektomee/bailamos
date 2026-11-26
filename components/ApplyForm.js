@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 import CourseName from "@/components/CourseName";
 import { useI18n } from "@/components/Language";
+import StudioLocation from "@/components/StudioLocation";
 import { classes, getCourse } from "@/lib/curriculum";
-import { dayName, localizeCourse } from "@/lib/i18n";
+import { dayName, localizeCourse, won } from "@/lib/i18n";
 import { applyBatches, applyCourses, applyCourseById, applyPrices, hasBatch, applyRoles, applySources, depositAccount } from "@/lib/apply";
 import { contacts } from "@/lib/links";
 
@@ -22,7 +23,8 @@ const sourceKey = {
 
 export default function ApplyForm({ initialCourse }) {
   const { lang, t } = useI18n();
-  const preset = applyCourseById(initialCourse) ? initialCourse : "intensive";
+  // 기본은 '과정을 선택하세요'. 수업 상세에서 ?course=... 로 들어올 때만 그 과정이 미리 선택된다.
+  const preset = applyCourseById(initialCourse) ? initialCourse : "";
   const [course, setCourse] = useState(preset);
   const [role, setRole] = useState("");
   const [batch, setBatch] = useState("");
@@ -43,7 +45,12 @@ export default function ApplyForm({ initialCourse }) {
   }
 
   function courseLabel(id) {
-    return `BAILAMOS tango ${courseName(id)}`;
+    return `BAILAMOS Tango ${courseName(id)}`;
+  }
+
+  /** 금액은 한국어 값으로 두고 화면에서 언어별 표기로 바꾼다. "00만원" 자리표시자는 그대로 둔다. */
+  function price(value) {
+    return value && !/^0+만원$/.test(value) ? won(lang, value) : value;
   }
 
   function coursePreview(id) {
@@ -183,19 +190,19 @@ export default function ApplyForm({ initialCourse }) {
             <>
               <p className="apply-price">
                 {applyPrices[course].once ? (
-                  <span className="is-on">{applyPrices[course].once}</span>
+                  <span className="is-on">{price(applyPrices[course].once)}</span>
                 ) : applyPrices[course].term ? (
                   <span className="is-on">
-                    {t("applyPriceTerm")} {applyPrices[course].term}
+                    {t("applyPriceTerm")} {price(applyPrices[course].term)}
                   </span>
                 ) : (
                   <>
                     <span className={batch === "B.T 기수 신청" || batch === "재수강" ? "is-on" : batch ? "is-dim" : ""}>
-                      {t("applyPriceCohort")} · {t("applyPriceRetake")} {applyPrices[course].cohort}
+                      {t("applyPriceCohort")} · {t("applyPriceRetake")} {price(applyPrices[course].cohort)}
                     </span>
                     <span className="apply-price-mark" aria-hidden="true" />
                     <span className={batch === "일반 신청" ? "is-on" : batch ? "is-dim" : ""}>
-                      {t("applyPriceOpen")} {applyPrices[course].open}
+                      {t("applyPriceOpen")} {price(applyPrices[course].open)}
                     </span>
                   </>
                 )}
@@ -304,6 +311,7 @@ export default function ApplyForm({ initialCourse }) {
           {status === "sending" ? t("applySending") : t("applySend")}
         </button>
       </form>
+      <StudioLocation />
     </article>
   );
 }
