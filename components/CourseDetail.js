@@ -4,7 +4,6 @@ import Link from "next/link";
 import CourseName from "@/components/CourseName";
 import { useContactDialog } from "@/components/ContactDialog";
 import PrivateLessons from "@/components/PrivateLessons";
-import StudioLocation from "@/components/StudioLocation";
 import { useI18n } from "@/components/Language";
 import { getCourse } from "@/lib/curriculum";
 import { dayName, localizeCourse } from "@/lib/i18n";
@@ -203,7 +202,6 @@ export default function CourseDetail({ courseId, dateQuery }) {
           <Inquire courseId={course.id} />
         </>
       )}
-      <StudioLocation />
     </article>
   );
 }

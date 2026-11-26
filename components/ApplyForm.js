@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import CourseName from "@/components/CourseName";
 import { useI18n } from "@/components/Language";
+import StudioLocation from "@/components/StudioLocation";
 import { classes, getCourse } from "@/lib/curriculum";
 import { dayName, localizeCourse, won } from "@/lib/i18n";
 import { applyBatches, applyCourses, applyCourseById, applyPrices, hasBatch, applyRoles, applySources, depositAccount } from "@/lib/apply";
@@ -310,6 +311,7 @@ export default function ApplyForm({ initialCourse }) {
           {status === "sending" ? t("applySending") : t("applySend")}
         </button>
       </form>
+      <StudioLocation />
     </article>
   );
 }
