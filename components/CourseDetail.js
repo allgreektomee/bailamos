@@ -53,11 +53,13 @@ function Inquire({ courseId, boxed }) {
   );
 }
 
-// 초급 라벨 박스 안, 요일·시간 위에 놓는 안내 블록(머리줄 · 목록 · 맺음줄).
+// 라벨 박스 안, 요일·시간 위에 놓는 안내 블록(머리줄 · 목록 · 맺음줄).
+// 목록 항목이 모두 👉 로 시작하면 점 불릿 대신 그 화살표만 쓴다.
 function ClassFlash({ flash }) {
+  const arrows = flash.items.every((item) => item.trim().startsWith("👉"));
   return (
-    <div className="class-flash">
-      <p className="flash-head">{flash.head}</p>
+    <div className={arrows ? "class-flash flash-arrows" : "class-flash"}>
+      {flash.head ? <p className="flash-head">{flash.head}</p> : null}
       <ul className="flash-list">
         {flash.items.map((item) => (
           <li key={item}>{item}</li>
@@ -121,8 +123,9 @@ export default function CourseDetail({ courseId, dateQuery }) {
   const when = course.day ? t("every")(dayName(lang, course.day), course.time, "") : "";
   const intro = course.intro?.length ? course.intro : [course.lead];
   const weekUnit = t("weekUnit");
-  const isBeginner = course.id === "beginner";
-  const label = course.track === "special" ? t("specials") : isBeginner ? t("regularBeginner") : t("regular");
+  // 정규 수업 라벨: 초급·초중급은 어느 반인지까지 붙여 보여 준다.
+  const regularLabel = { beginner: "regularBeginner", "beginner-intermediate": "regularBeginnerIntermediate" };
+  const label = course.track === "special" ? t("specials") : t(regularLabel[course.id] || "regular");
   const curriculum = course.private ? (
     <PrivateLessons lessons={privateLessons} />
   ) : course.groups || course.weeks.length ? (
@@ -185,16 +188,14 @@ export default function CourseDetail({ courseId, dateQuery }) {
         {course.warn ? <div className="warn">{course.warn}</div> : null}
         <Inquire courseId={course.id} boxed />
       </div>
-      {isBeginner ? (
-        course.story?.length ? (
-          <section className="card detail-story">
-            {course.story.map((paragraph, index) => (
-              <p key={paragraph} className={index === 0 ? "story-quote" : "story-line"}>
-                {paragraph}
-              </p>
-            ))}
-          </section>
-        ) : null
+      {course.story?.length ? (
+        <section className="card detail-story">
+          {course.story.map((paragraph, index) => (
+            <p key={paragraph} className={index === 0 ? "story-quote" : "story-line"}>
+              {paragraph}
+            </p>
+          ))}
+        </section>
       ) : intro.some(Boolean) || course.points?.length ? (
         <section className="card detail-story">
           {intro.filter(Boolean).map((paragraph) => (
