@@ -380,23 +380,7 @@ export default function HomePage({ dateQuery, latestPost }) {
               <span>{t("inmuHours")}</span>
               {t("inmuDay")} · 20:00–00:00 · {t("inmuPlace")}
             </p>
-            <p>{t("inmuWhen")}</p>
-            <p className="gather-copy">{t("inmuNov")}</p>
-            <p className="gather-copy">{t("inmuGuests")}</p>
-            <ul className="gather-lineup">
-              <li>
-                <span>11/11</span>
-                <strong>Stefan Pan · Napoli</strong>
-              </li>
-              <li>
-                <span>11/18</span>
-                <strong>Cecilia Acosta · Tbilisi</strong>
-              </li>
-              <li>
-                <span>11/25</span>
-                <strong>Mikael Kim Taewan</strong>
-              </li>
-            </ul>
+            <p className="gather-copy">{t("inmuWhen")}</p>
           </li>
         </ul>
       </section>
