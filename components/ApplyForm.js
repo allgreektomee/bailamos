@@ -22,7 +22,8 @@ const sourceKey = {
 
 export default function ApplyForm({ initialCourse }) {
   const { lang, t } = useI18n();
-  const preset = applyCourseById(initialCourse) ? initialCourse : "intensive";
+  // 기본은 '과정을 선택하세요'. 수업 상세에서 ?course=... 로 들어올 때만 그 과정이 미리 선택된다.
+  const preset = applyCourseById(initialCourse) ? initialCourse : "";
   const [course, setCourse] = useState(preset);
   const [role, setRole] = useState("");
   const [batch, setBatch] = useState("");
