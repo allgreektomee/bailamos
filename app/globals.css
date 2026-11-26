@@ -540,7 +540,7 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   color: var(--ink);
   text-decoration: none;
 }
-/* 누르는 버튼: 색을 늘리지 않으려고 보라 대신 글자색(먹색) 한 가지로 납작하게. 화살표는 버튼 안 글자 뒤에 붙는다. */
+/* 누르는 버튼: 브랜드명과 같은 보라 한 가지로 납작하게(그림자·그라데이션 없음). */
 .hero-about-cta {
   display: inline-flex;
   align-items: center;
@@ -548,9 +548,9 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
   gap: 8px;
   min-height: 48px;
   padding: 11px 28px;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--accent);
   border-radius: 999px;
-  background: var(--ink);
+  background: var(--accent);
   color: #fff;
   font-family: var(--display);
   font-size: calc(16px * var(--ts, 1));
@@ -567,15 +567,16 @@ html[data-text="big"] dl.meta { grid-template-columns: max-content 1fr; }
 }
 .hero-about-link:hover .hero-about-cta,
 .hero-about-link:focus-visible .hero-about-cta {
-  background: #fff;
-  color: var(--ink);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #fff;
 }
 .hero-about-link:hover .hero-about-arrow,
 .hero-about-link:focus-visible .hero-about-arrow { transform: translateX(4px); }
 @media (min-width: 800px) { .hero-about-row { margin-top: 46px; } }
 /* 첫 줄 맨 앞 브랜드명은 로고 글씨색(보라)으로, 이름 부분만 진하게. 앞뒤 물음표는 보통 굵기로 둔다. */
 .hero-brand {
-  color: var(--ink);
+  color: var(--accent);
   white-space: nowrap;
 }
 .hero-brand b { font-weight: 800; }
