@@ -1117,7 +1117,7 @@ a.inquire-btn { text-decoration: none; }
 .detail-curriculum h3 { margin: 0; font-size: calc(18px * var(--ts, 1)); letter-spacing: -0.02em; }
 .detail-curriculum .weeks { margin-top: 12px; }
 
-/* 수업 상세 맨 아래 오시는 길: 주소 + 지도 + 바로가기 */
+/* 수업 신청 페이지 맨 아래 오시는 길: 주소 + 지도 + 바로가기 */
 .detail-location { margin-top: 14px; }
 .detail-location h3 { margin: 0; font-size: calc(18px * var(--ts, 1)); letter-spacing: -0.02em; }
 .detail-location .loc-name {
