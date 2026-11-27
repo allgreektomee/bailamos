@@ -287,7 +287,7 @@ dl.meta dd { margin: 0; word-break: keep-all; }
 .week .tp { font-size: calc(18px * var(--ts, 1)); font-weight: 600; letter-spacing: -0.01em; }
 .week .dt { font-size: calc(13.5px * var(--ts, 1)); color: var(--muted); display: block; font-weight: 400; margin-top: 2px; }
 .week .tag { font-size: calc(12.5px * var(--ts, 1)); font-weight: 800; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
-.week .body { padding: 0 14px 14px 78px; font-size: calc(16.5px * var(--ts, 1)); color: var(--muted); }
+.week .body { white-space: pre-line; line-height: 1.7; padding: 0 14px 14px 78px; font-size: calc(16.5px * var(--ts, 1)); color: var(--muted); }
 
 .week.past { background: #f5f1ed; }
 .week.past .tp { color: #8a817b; }
