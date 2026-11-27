@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import CourseName from "@/components/CourseName";
 import { useI18n } from "@/components/Language";
 import StudioLocation from "@/components/StudioLocation";
@@ -158,17 +158,15 @@ export default function ApplyForm({ initialCourse }) {
   }
 
   const preview = coursePreview(course);
-  // 일반·기수·재수강 금액이 모두 다른 과정의 가격 줄.
-  const priceRows = applyPrices[course]?.retake
-    ? [
-        { key: "cohort", kind: t("applyPriceCohort"), amount: applyPrices[course].cohort, batch: "B.T 기수 신청" },
-        { key: "retake", kind: t("applyPriceRetake"), amount: applyPrices[course].retake, batch: "재수강" },
-        { key: "open", kind: t("applyPriceOpen"), amount: applyPrices[course].open, batch: "일반 신청" },
-      ]
-    : [];
-  const pickedRow = priceRows.find((row) => row.batch === batch);
-  // 초중급은 신청구분을 고르기 전에는 '수업료'만 두고, 고르면 그 구분의 금액 하나만 보여 준다.
-  const pickPriceOnly = course === "beginner-intermediate";
+  // 신청구분이 있는 과정은 고른 구분의 금액 하나만 보여 준다.
+  // 재수강 금액이 따로 있는 과정(초중급·중급)은 그 금액을, 없는 과정은 기수 금액을 재수강에 쓴다.
+  const batchPrice = (() => {
+    const row = applyPrices[course];
+    if (!row?.cohort || !hasBatch(course)) return "";
+    if (batch === "재수강" && row.retake) return row.retake;
+    if (batch === "일반 신청") return row.open;
+    return row.cohort;
+  })();
 
   return (
     <article className="detail apply">
@@ -208,26 +206,14 @@ export default function ApplyForm({ initialCourse }) {
                   <span className="is-on">
                     {t("applyPriceTerm")} {price(applyPrices[course].term)}
                   </span>
-                ) : applyPrices[course].retake ? (
-                  // 초중급·중급처럼 일반·기수·재수강 금액이 모두 다른 과정: 박스 없이 글씨로 나란히 두고,
-                  // 아래 신청구분을 고르면 그 금액만 진해지고 나머지는 흐려진다.
-                  pickPriceOnly ? (
-                    pickedRow ? (
-                      <span className="is-on">
-                        {t(batchKey[pickedRow.batch])} {price(pickedRow.amount)}
-                      </span>
-                    ) : (
-                      <span className="is-on">{t("applyPriceTuition")}</span>
-                    )
+                ) : batchPrice ? (
+                  // 신청구분이 있는 모든 과정: 고르기 전에는 '수업료'만, 고르면 그 구분의 라벨과 금액만 보여 준다.
+                  batch ? (
+                    <span className="is-on">
+                      {t(batchKey[batch])} {price(batchPrice)}
+                    </span>
                   ) : (
-                    priceRows.map((row, index) => (
-                      <Fragment key={row.key}>
-                        {index > 0 ? <span className="apply-price-mark" aria-hidden="true" /> : null}
-                        <span className={batch === row.batch ? "is-on" : batch ? "is-dim" : ""}>
-                          {row.kind} {price(row.amount)}
-                        </span>
-                      </Fragment>
-                    ))
+                    <span className="is-on">{t("applyPriceTuition")}</span>
                   )
                 ) : (
                   <>
