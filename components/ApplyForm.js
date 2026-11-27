@@ -234,7 +234,7 @@ export default function ApplyForm({ initialCourse }) {
               {course === "practica" ? <p className="apply-price-note">{t("applyPracticaNote")}</p> : null}
             </>
           ) : null}
-          {course === "intensive" ? (
+          {course === "intensive" && batch ? (
             <div className="apply-fee">
               <ul className="apply-fee-notes">
                 {t("feeNotes").map((note) => (
@@ -242,10 +242,14 @@ export default function ApplyForm({ initialCourse }) {
                 ))}
               </ul>
               <p className="apply-fee-head">{t("feeHead")}</p>
+              {/* 안내 전체가 신청구분을 고른 뒤에야 나온다. 일반 → 기수 없는 신청자, 기수 → 기수 신청자,
+                  재수강 → 기수 있음·없음을 알 수 없으므로 두 묶음 모두. */}
               {[
-                { key: "open", fee: intensiveFees.open, head: "feeOpenHead", total: "feeOpenTotal", split: "feeOpenSplit", retakeSplit: "feeOpenRetakeSplit" },
                 { key: "cohort", fee: intensiveFees.cohort, head: "feeCohortHead", total: "feeCohortTotal", split: "feeCohortSplit", retakeSplit: "feeCohortRetakeSplit" },
-              ].map(({ key, fee, head, total, split, retakeSplit }) => (
+                { key: "open", fee: intensiveFees.open, head: "feeOpenHead", total: "feeOpenTotal", split: "feeOpenSplit", retakeSplit: "feeOpenRetakeSplit" },
+              ]
+                .filter(({ key }) => (batch === "재수강" ? true : batch === "B.T 기수 신청" ? key === "cohort" : batch === "일반 신청" ? key === "open" : false))
+                .map(({ key, fee, head, total, split, retakeSplit }) => (
                 <section key={key} className="apply-fee-group">
                   <h3>{t(head)}</h3>
                   <p className="apply-fee-total">{t(total)(price(fee.total), price(fee.retakeTotal))}</p>
