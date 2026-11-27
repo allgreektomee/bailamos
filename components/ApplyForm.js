@@ -201,7 +201,11 @@ export default function ApplyForm({ initialCourse }) {
             <>
               <p className="apply-price">
                 {applyPrices[course].once ? (
-                  <span className="is-on">{price(applyPrices[course].once)}</span>
+                  // 초급은 금액 앞에 '수업료'를 붙인다(인텐시브는 금액만).
+                  <span className="is-on">
+                    {course === "beginner" ? `${t("applyPriceTuition")} ` : null}
+                    {price(applyPrices[course].once)}
+                  </span>
                 ) : applyPrices[course].term ? (
                   <span className="is-on">
                     {t("applyPriceTerm")} {price(applyPrices[course].term)}
