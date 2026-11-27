@@ -242,25 +242,42 @@ export default function ApplyForm({ initialCourse }) {
                 ))}
               </ul>
               <p className="apply-fee-head">{t("feeHead")}</p>
-              {/* 안내 전체가 신청구분을 고른 뒤에야 나온다. 일반 → 기수 없는 신청자,
-                  B.T 기수 신청·B.T 기수 재수강 → 기수 신청자(재 수강자). */}
-              {[
-                { key: "cohort", fee: intensiveFees.cohort, head: "feeCohortHead", total: "feeCohortTotal", split: "feeCohortSplit", retakeSplit: "feeCohortRetakeSplit" },
-                { key: "open", fee: intensiveFees.open, head: "feeOpenHead", total: "feeOpenTotal", split: "feeOpenSplit", retakeSplit: "feeOpenRetakeSplit" },
-              ]
-                .filter(({ key }) => (batch === "일반 신청" ? key === "open" : key === "cohort"))
-                .map(({ key, fee, head, total, split, retakeSplit }) => (
-                <section key={key} className="apply-fee-group">
-                  <h3>{t(head)}</h3>
-                  <p className="apply-fee-total">{t(total)(price(fee.total), price(fee.retakeTotal))}</p>
-                  <dl>
-                    <dt>{t(split)}</dt>
-                    <dd>{t("feeSplit")(...fee.split.map(price))}</dd>
-                    <dt>{t(retakeSplit)}</dt>
-                    <dd>{t("feeSplit")(...fee.retakeSplit.map(price))}</dd>
-                  </dl>
-                </section>
-              ))}
+              {/* 안내 전체가 신청구분을 고른 뒤에야 나온다. 구분마다 해당하는 금액 하나만 보여 준다.
+                  일반 신청 → 기수 없는 신청자(90만원 / 재수강 81만원),
+                  B.T 기수 신청 → 기수 10% 할인가 81만원, B.T 기수 재수강 → 재수강 20% 할인가 72만원. */}
+              {(() => {
+                const { open, cohort } = intensiveFees;
+                const rows =
+                  batch === "일반 신청"
+                    ? [
+                        [t("feeOpenSplit"), open.split],
+                        [t("feeOpenRetakeSplit"), open.retakeSplit],
+                      ]
+                    : batch === "재수강"
+                      ? [[t("feeCohortRetakeSplit"), cohort.retakeSplit]]
+                      : [[t("feeCohortSplit"), cohort.split]];
+                const head = batch === "일반 신청" ? t("feeOpenHead") : batch === "재수강" ? t("feeCohortRetakeHead") : t("feeCohortHead");
+                const total =
+                  batch === "일반 신청"
+                    ? t("feeOpenTotal")(price(open.total), price(open.retakeTotal))
+                    : batch === "재수강"
+                      ? t("feeCohortRetakeTotal")(price(cohort.retakeTotal))
+                      : t("feeCohortTotal")(price(cohort.total));
+                return (
+                  <section className="apply-fee-group">
+                    <h3>{head}</h3>
+                    <p className="apply-fee-total">{total}</p>
+                    <dl>
+                      {rows.map(([label, split]) => (
+                        <div key={label}>
+                          <dt>{label}</dt>
+                          <dd>{t("feeSplit")(...split.map(price))}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </section>
+                );
+              })()}
               <p className="apply-fee-deposit">{t("feeDeposit")}</p>
             </div>
           ) : null}
