@@ -92,23 +92,11 @@ function WeekRows({ weeks, id, weekUnit }) {
 
 function WeekList({ course, weekUnit }) {
   if (course.groups) {
-    let number = 0;
-    return course.groups.map((group) => (
+    return course.groups.map((group, index) => (
       <section key={group.title}>
         <h2 className="group-title">{group.title}</h2>
-        <ol className="weeks">
-          {group.weeks.map((topic) => {
-            number += 1;
-            return (
-              <li key={`${course.id}-${number}`} className="week">
-                <div className="week-row">
-                  <span className="wk">{weekUnit(number)}</span>
-                  <span className="tp">{topic}</span>
-                </div>
-              </li>
-            );
-          })}
-        </ol>
+        {group.desc ? <p className="group-desc">{group.desc}</p> : null}
+        <WeekRows weeks={group.weeks} id={`${course.id}-${index}`} weekUnit={weekUnit} />
       </section>
     ));
   }

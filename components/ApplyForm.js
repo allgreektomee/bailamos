@@ -7,7 +7,7 @@ import { useI18n } from "@/components/Language";
 import StudioLocation from "@/components/StudioLocation";
 import { classes, getCourse } from "@/lib/curriculum";
 import { dayName, localizeCourse, won } from "@/lib/i18n";
-import { applyBatches, applyCourses, applyCourseById, applyPrices, hasBatch, applyRoles, applySources, depositAccount } from "@/lib/apply";
+import { applyBatches, applyCourses, applyCourseById, applyPrices, intensiveFees, hasBatch, applyRoles, applySources, depositAccount } from "@/lib/apply";
 import { contacts } from "@/lib/links";
 
 const roleKey = { 리더: "roleLeader", 팔로워: "roleFollower" };
@@ -233,6 +233,32 @@ export default function ApplyForm({ initialCourse }) {
               </p>
               {course === "practica" ? <p className="apply-price-note">{t("applyPracticaNote")}</p> : null}
             </>
+          ) : null}
+          {course === "intensive" ? (
+            <div className="apply-fee">
+              <ul className="apply-fee-notes">
+                {t("feeNotes").map((note) => (
+                  <li key={note}>{note}</li>
+                ))}
+              </ul>
+              <p className="apply-fee-head">{t("feeHead")}</p>
+              {[
+                { key: "open", fee: intensiveFees.open, head: "feeOpenHead", total: "feeOpenTotal", split: "feeOpenSplit", retakeSplit: "feeOpenRetakeSplit" },
+                { key: "cohort", fee: intensiveFees.cohort, head: "feeCohortHead", total: "feeCohortTotal", split: "feeCohortSplit", retakeSplit: "feeCohortRetakeSplit" },
+              ].map(({ key, fee, head, total, split, retakeSplit }) => (
+                <section key={key} className="apply-fee-group">
+                  <h3>{t(head)}</h3>
+                  <p className="apply-fee-total">{t(total)(price(fee.total), price(fee.retakeTotal))}</p>
+                  <dl>
+                    <dt>{t(split)}</dt>
+                    <dd>{t("feeSplit")(...fee.split.map(price))}</dd>
+                    <dt>{t(retakeSplit)}</dt>
+                    <dd>{t("feeSplit")(...fee.retakeSplit.map(price))}</dd>
+                  </dl>
+                </section>
+              ))}
+              <p className="apply-fee-deposit">{t("feeDeposit")}</p>
+            </div>
           ) : null}
           <select name="course" value={course} required onChange={(event) => setCourse(event.target.value)}>
             <option value="">{t("applyPick")}</option>
