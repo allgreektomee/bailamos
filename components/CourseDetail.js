@@ -70,6 +70,20 @@ function ClassFlash({ flash }) {
   );
 }
 
+/** 사진 아래 이어지는 안내 블록: 머리줄은 줄바꿈을 그대로 살리고(white-space: pre-line), 아래에 점 불릿. */
+function ClassNotice({ notice }) {
+  return (
+    <div className="class-flash flash-notice">
+      <p className="flash-head">{notice.head}</p>
+      <ul className="flash-list">
+        {notice.items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function WeekRows({ weeks, id, weekUnit }) {
   return (
     <ol className="weeks">
@@ -172,6 +186,7 @@ export default function CourseDetail({ courseId, dateQuery }) {
           <h3>{label}</h3>
         </div>
         {course.flash ? <ClassFlash flash={course.flash} /> : null}
+        {course.notice ? <ClassNotice notice={course.notice} /> : null}
         {meta}
         {course.warn ? <div className="warn">{course.warn}</div> : null}
         <Inquire courseId={course.id} boxed />

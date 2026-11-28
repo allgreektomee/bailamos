@@ -241,6 +241,7 @@ dl.meta dd { margin: 0; word-break: keep-all; }
   font-size: calc(16px * var(--ts, 1));
   font-weight: 800;
   letter-spacing: -0.01em;
+  white-space: pre-line;
 }
 .class-flash .flash-list {
   margin: 5px 0 0;
@@ -275,6 +276,12 @@ dl.meta dd { margin: 0; word-break: keep-all; }
 .class-flash.flash-arrows .flash-list li { padding-left: 0; }
 .class-flash.flash-arrows .flash-list li::before { content: none; }
 
+/* 추천 안내 아래에 이어 붙는 안내 블록: 같은 모양에 테두리만 두어 구분한다. */
+.class-flash.flash-notice {
+  margin-top: 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
 .intro-points {
   margin: 14px 0 0;
   padding-left: 18px;
