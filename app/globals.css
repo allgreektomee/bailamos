@@ -276,11 +276,15 @@ dl.meta dd { margin: 0; word-break: keep-all; }
 .class-flash.flash-arrows .flash-list li { padding-left: 0; }
 .class-flash.flash-arrows .flash-list li::before { content: none; }
 
-/* 추천 안내 아래에 이어 붙는 안내 블록: 같은 모양에 테두리만 두어 구분한다. */
-.class-flash.flash-notice {
-  margin-top: 10px;
-  background: #fff;
-  border: 1px solid var(--line);
+/* 추천 안내 아래에 이어 붙는 필독 안내: 별도 박스가 아니라 같은 연보라 박스 안에서
+   여백과 은은한 구분선으로만 나눈다(바탕색은 하나). */
+.class-flash .flash-notice {
+  margin-top: 13px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(75, 52, 163, 0.25);
+}
+.class-flash .flash-notice-head {
+  color: var(--accent);
 }
 .intro-points {
   margin: 14px 0 0;

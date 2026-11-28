@@ -55,31 +55,32 @@ function Inquire({ courseId, boxed }) {
 
 // 라벨 박스 안, 요일·시간 위에 놓는 안내 블록(머리줄 · 목록 · 맺음줄).
 // 목록 항목이 모두 👉 로 시작하면 점 불릿 대신 그 화살표만 쓴다.
-function ClassFlash({ flash }) {
-  const arrows = flash.items.every((item) => item.trim().startsWith("👉"));
+// notice(필독 안내)가 있으면 별도 박스로 두지 않고 같은 연보라 박스 안에 구분선으로 이어 붙인다.
+function ClassFlash({ flash, notice }) {
+  const arrows = flash?.items.every((item) => item.trim().startsWith("👉"));
   return (
     <div className={arrows ? "class-flash flash-arrows" : "class-flash"}>
-      {flash.head ? <p className="flash-head">{flash.head}</p> : null}
-      <ul className="flash-list">
-        {flash.items.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-      {flash.tail ? <p className="flash-tail">{flash.tail}</p> : null}
-    </div>
-  );
-}
-
-/** 사진 아래 이어지는 안내 블록: 머리줄은 줄바꿈을 그대로 살리고(white-space: pre-line), 아래에 점 불릿. */
-function ClassNotice({ notice }) {
-  return (
-    <div className="class-flash flash-notice">
-      <p className="flash-head">{notice.head}</p>
-      <ul className="flash-list">
-        {notice.items.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
+      {flash ? (
+        <>
+          {flash.head ? <p className="flash-head">{flash.head}</p> : null}
+          <ul className="flash-list">
+            {flash.items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          {flash.tail ? <p className="flash-tail">{flash.tail}</p> : null}
+        </>
+      ) : null}
+      {notice ? (
+        <div className="flash-notice">
+          <p className="flash-head flash-notice-head">📌 {notice.head}</p>
+          <ul className="flash-list">
+            {notice.items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -185,8 +186,9 @@ export default function CourseDetail({ courseId, dateQuery }) {
         <div className="top">
           <h3>{label}</h3>
         </div>
-        {course.flash ? <ClassFlash flash={course.flash} /> : null}
-        {course.notice ? <ClassNotice notice={course.notice} /> : null}
+        {course.flash || course.notice ? (
+          <ClassFlash flash={course.flash} notice={course.notice} />
+        ) : null}
         {meta}
         {course.warn ? <div className="warn">{course.warn}</div> : null}
         <Inquire courseId={course.id} boxed />
