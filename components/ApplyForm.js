@@ -7,11 +7,11 @@ import { useI18n } from "@/components/Language";
 import StudioLocation from "@/components/StudioLocation";
 import { classes, getCourse } from "@/lib/curriculum";
 import { dayName, localizeCourse, won } from "@/lib/i18n";
-import { applyBatches, applyCourses, applyCourseById, applyPrices, intensiveFees, hasBatch, applyRoles, applySources, depositAccount } from "@/lib/apply";
+import { applyBatchesFor, applyCourses, applyCourseById, applyPrices, intensiveFees, hasBatch, applyRoles, applySources, depositAccount } from "@/lib/apply";
 import { contacts } from "@/lib/links";
 
 const roleKey = { 리더: "roleLeader", 팔로워: "roleFollower" };
-const batchKey = { "B.T 기수 신청": "batchTerm", 재수강: "batchRetake", "일반 신청": "batchOpen" };
+const batchKey = { "B.T 기수 신청": "batchTerm", 재수강: "batchRetake", "일반 신청": "batchOpen", "일반 재수강": "batchOpenRetake" };
 const sourceKey = {
   "지인 추천": "sourceFriend",
   "네이버 블로그": "sourceBlog",
@@ -159,11 +159,13 @@ export default function ApplyForm({ initialCourse }) {
 
   const preview = coursePreview(course);
   // 신청구분이 있는 과정은 고른 구분의 금액 하나만 보여 준다.
-  // 재수강 금액이 따로 있는 과정(초중급·중급)은 그 금액을, 없는 과정은 기수 금액을 재수강에 쓴다.
+  // 재수강 금액이 따로 있는 과정(초중급·중급·인텐시브)은 그 금액을, 없는 과정은 기수 금액을 재수강에 쓴다.
+  // 인텐시브는 일반 재수강 금액(openRetake)까지 따로 있다.
   const batchPrice = (() => {
     const row = applyPrices[course];
     if (!row?.cohort || !hasBatch(course)) return "";
-    if (batch === "재수강" && row.retake) return row.retake;
+    if (batch === "재수강") return row.retake || row.cohort;
+    if (batch === "일반 재수강") return row.openRetake || row.cohort;
     if (batch === "일반 신청") return row.open;
     return row.cohort;
   })();
@@ -201,7 +203,7 @@ export default function ApplyForm({ initialCourse }) {
             <>
               <p className="apply-price">
                 {applyPrices[course].once ? (
-                  // 초급은 금액 앞에 '수업료'를 붙인다(인텐시브는 금액만).
+                  // 초급은 금액 앞에 '수업료'를 붙인다.
                   <span className="is-on">
                     {course === "beginner" ? `${t("applyPriceTuition")} ` : null}
                     {price(applyPrices[course].once)}
@@ -234,54 +236,17 @@ export default function ApplyForm({ initialCourse }) {
               {course === "practica" ? <p className="apply-price-note">{t("applyPracticaNote")}</p> : null}
             </>
           ) : null}
-          {course === "intensive" && batch ? (
-            <div className="apply-fee">
-              <ul className="apply-fee-notes">
-                {t("feeNotes").map((note) => (
-                  <li key={note}>{note}</li>
-                ))}
-              </ul>
-              <p className="apply-fee-head">{t("feeHead")}</p>
-              {/* 안내 전체가 신청구분을 고른 뒤에야 나온다. 구분마다 해당하는 금액 하나만 보여 준다.
-                  일반 신청 → 기수 없는 신청자(90만원 / 재수강 81만원),
-                  B.T 기수 신청 → 기수 10% 할인가 81만원, B.T 기수 재수강 → 재수강 20% 할인가 72만원. */}
-              {(() => {
-                const { open, cohort } = intensiveFees;
-                const rows =
-                  batch === "일반 신청"
-                    ? [
-                        [t("feeOpenSplit"), open.split],
-                        [t("feeOpenRetakeSplit"), open.retakeSplit],
-                      ]
-                    : batch === "재수강"
-                      ? [[t("feeCohortRetakeSplit"), cohort.retakeSplit]]
-                      : [[t("feeCohortSplit"), cohort.split]];
-                const head = batch === "일반 신청" ? t("feeOpenHead") : batch === "재수강" ? t("feeCohortRetakeHead") : t("feeCohortHead");
-                const total =
-                  batch === "일반 신청"
-                    ? t("feeOpenTotal")(price(open.total), price(open.retakeTotal))
-                    : batch === "재수강"
-                      ? t("feeCohortRetakeTotal")(price(cohort.retakeTotal))
-                      : t("feeCohortTotal")(price(cohort.total));
-                return (
-                  <section className="apply-fee-group">
-                    <h3>{head}</h3>
-                    <p className="apply-fee-total">{total}</p>
-                    <dl>
-                      {rows.map(([label, split]) => (
-                        <div key={label}>
-                          <dt>{label}</dt>
-                          <dd>{t("feeSplit")(...split.map(price))}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </section>
-                );
-              })()}
-              <p className="apply-fee-deposit">{t("feeDeposit")}</p>
-            </div>
-          ) : null}
-          <select name="course" value={course} required onChange={(event) => setCourse(event.target.value)}>
+          <select
+            name="course"
+            value={course}
+            required
+            onChange={(event) => {
+              const next = event.target.value;
+              setCourse(next);
+              // 과정을 바꿔 그 과정에 없는 신청구분(인텐시브의 '일반 재수강')이 남지 않게 한다.
+              if (!applyBatchesFor(next).includes(batch)) setBatch("");
+            }}
+          >
             <option value="">{t("applyPick")}</option>
             {applyCourses.map((item) => (
               <option key={item.id} value={item.id}>
@@ -308,10 +273,10 @@ export default function ApplyForm({ initialCourse }) {
         {course && hasBatch(course) ? (
           <fieldset className="apply-field">
             <legend>
-              {t("applyBatch")} <em className="apply-req">*</em>
+              {course === "intensive" ? t("applyBatchPick") : t("applyBatch")} <em className="apply-req">*</em>
             </legend>
-            <div className="apply-choices apply-split apply-split-3">
-              {applyBatches.map((value) => (
+            <div className={course === "intensive" ? "apply-choices apply-split" : "apply-choices apply-split apply-split-3"}>
+              {applyBatchesFor(course).map((value) => (
                 <label key={value} className={batch === value ? "apply-choice is-on" : "apply-choice"}>
                   <input type="radio" name="batch" value={value} required checked={batch === value} onChange={() => setBatch(value)} />
                   {t(batchKey[value])}
@@ -336,15 +301,38 @@ export default function ApplyForm({ initialCourse }) {
           </label>
         </div>
 
-        <div className="apply-field">
-          <span>
-            {t("applyDepositor")} <em className="apply-req">*</em> <em className="apply-hint">{t("applyDepositHint")}</em>
-          </span>
-          <input name="depositor" aria-label={t("applyDepositor")} value={depositor} required maxLength={80} onChange={(event) => setDepositor(event.target.value)} />
-          <button type="button" className="apply-copy" onClick={copyAccount}>
-            {copied ? t("applyCopied") : t("applyCopy")}
-          </button>
-        </div>
+        {course === "intensive" ? (
+          // 인텐시브는 입금자명 대신 수업료 설명란을 둔다(단톡방 개설 후 안내와 함께 입금).
+          <div className="apply-field">
+            <div className="apply-fee">
+              <p className="apply-fee-head">{t("feeGuideHead")}</p>
+              <ul className="apply-fee-list">
+                {intensiveFees.map((row) => (
+                  <li key={row.batch} className="apply-fee-item">
+                    <p className="apply-fee-name">
+                      <b>{t(batchKey[row.batch])}</b>
+                      {row.discount ? ` (${t(row.discount)})` : ""}
+                      {`: ${t("feeGuideTotal")(price(row.total))}`}
+                    </p>
+                    <p className="apply-fee-split">{t("feeGuideSplit")(...row.split.map(price))}</p>
+                  </li>
+                ))}
+              </ul>
+              <p className="apply-fee-note">{t("feeGuideNote1")}</p>
+              <p className="apply-fee-note">{t("feeGuideNote2")}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="apply-field">
+            <span>
+              {t("applyDepositor")} <em className="apply-req">*</em> <em className="apply-hint">{t("applyDepositHint")}</em>
+            </span>
+            <input name="depositor" aria-label={t("applyDepositor")} value={depositor} required maxLength={80} onChange={(event) => setDepositor(event.target.value)} />
+            <button type="button" className="apply-copy" onClick={copyAccount}>
+              {copied ? t("applyCopied") : t("applyCopy")}
+            </button>
+          </div>
+        )}
 
         <fieldset className="apply-field">
           <legend>

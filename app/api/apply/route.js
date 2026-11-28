@@ -1,4 +1,4 @@
-import { applyBatches, applyCourseById, hasBatch, applyRoles, applySources } from "@/lib/apply";
+import { applyBatchesFor, applyCourseById, hasBatch, applyRoles, applySources } from "@/lib/apply";
 
 export async function POST(request) {
   const url = process.env.APPLY_WEBAPP_URL;
@@ -23,10 +23,11 @@ export async function POST(request) {
   if (!course || !applyRoles.includes(body.role) || !applySources.includes(body.source)) {
     return Response.json({ ok: false, error: "invalid" }, { status: 400 });
   }
-  if (hasBatch(course.id) && !applyBatches.includes(batch)) {
+  if (hasBatch(course.id) && !applyBatchesFor(course.id).includes(batch)) {
     return Response.json({ ok: false, error: "invalid" }, { status: 400 });
   }
-  if (!name || !depositor || !phone) {
+  // 인텐시브는 입금자명 칸 대신 수업료 안내가 있어 비워 두고 보낸다.
+  if (!name || (!depositor && course.id !== "intensive") || !phone) {
     return Response.json({ ok: false, error: "invalid" }, { status: 400 });
   }
   if (body.source === "기타" && !sourceOther) {
