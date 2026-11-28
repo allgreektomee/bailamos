@@ -130,7 +130,7 @@ export default function CourseDetail({ courseId, dateQuery }) {
   const weekUnit = t("weekUnit");
   // 정규 수업 라벨: 초급·초중급·중급·중상급은 어느 반인지까지 붙여 보여 준다.
   const regularLabel = { beginner: "regularBeginner", "beginner-intermediate": "regularBeginnerIntermediate", intermediate: "regularIntermediate", "upper-intermediate": "regularUpperIntermediate" };
-  const label = course.track === "special" ? t("specials") : t(regularLabel[course.id] || "regular");
+  const label = course.label || (course.track === "special" ? t("specials") : t(regularLabel[course.id] || "regular"));
   const curriculum = course.private ? (
     <PrivateLessons lessons={privateLessons} />
   ) : course.groups || course.weeks.length ? (
@@ -160,6 +160,12 @@ export default function CourseDetail({ courseId, dateQuery }) {
         <>
           <dt>{t("place")}</dt>
           <dd>{course.place}</dd>
+        </>
+      ) : null}
+      {course.fee ? (
+        <>
+          <dt>{t("tuition")}</dt>
+          <dd>{course.fee}</dd>
         </>
       ) : null}
       <dt>{t("who")}</dt>

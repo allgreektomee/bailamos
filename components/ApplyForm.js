@@ -11,7 +11,7 @@ import { applyBatchesFor, applyCourses, applyCourseById, applyPrices, intensiveF
 import { contacts } from "@/lib/links";
 
 const roleKey = { 리더: "roleLeader", 팔로워: "roleFollower" };
-const batchKey = { "B.T 기수 신청": "batchTerm", 재수강: "batchRetake", "일반 신청": "batchOpen", "일반 재수강": "batchOpenRetake" };
+const batchKey = { "B.T 기수 신청": "batchTerm", 재수강: "batchRetake", "일반 신청": "batchOpen", "일반 재수강": "batchOpenRetake", "일일 참여": "batchPracticaDay", "쁘락띠까 패키지": "batchPracticaPack", "연속 패키지": "batchPracticaRenew" };
 const sourceKey = {
   "지인 추천": "sourceFriend",
   "네이버 블로그": "sourceBlog",
@@ -163,7 +163,15 @@ export default function ApplyForm({ initialCourse }) {
   // 인텐시브는 일반 재수강 금액(openRetake)까지 따로 있다.
   const batchPrice = (() => {
     const row = applyPrices[course];
-    if (!row?.cohort || !hasBatch(course)) return "";
+    if (!row || !hasBatch(course)) return "";
+    // 쁘락띠까는 고른 참여 방식의 금액 하나만 보여 준다.
+    if (course === "practica") {
+      if (batch === "일일 참여") return row.day;
+      if (batch === "쁘락띠까 패키지") return row.pack;
+      if (batch === "연속 패키지") return row.renew;
+      return "";
+    }
+    if (!row.cohort) return "";
     if (batch === "재수강") return row.retake || row.cohort;
     if (batch === "일반 재수강") return row.openRetake || row.cohort;
     if (batch === "일반 신청") return row.open;
@@ -212,7 +220,7 @@ export default function ApplyForm({ initialCourse }) {
                   <span className="is-on">
                     {t("applyPriceTerm")} {price(applyPrices[course].term)}
                   </span>
-                ) : batchPrice ? (
+                ) : batchPrice || course === "practica" ? (
                   // 신청구분이 있는 모든 과정: 고르기 전에는 '수업료'만, 고르면 그 구분의 라벨과 금액만 보여 준다.
                   batch ? (
                     <span className="is-on">
@@ -273,7 +281,7 @@ export default function ApplyForm({ initialCourse }) {
         {course && hasBatch(course) ? (
           <fieldset className="apply-field">
             <legend>
-              {course === "intensive" ? t("applyBatchPick") : t("applyBatch")} <em className="apply-req">*</em>
+              {course === "intensive" || course === "practica" ? t("applyBatchPick") : t("applyBatch")} <em className="apply-req">*</em>
             </legend>
             <div className={course === "intensive" ? "apply-choices apply-split" : "apply-choices apply-split apply-split-3"}>
               {applyBatchesFor(course).map((value) => (

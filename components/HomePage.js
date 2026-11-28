@@ -276,7 +276,6 @@ function PostCard({ post }) {
 
 export default function HomePage({ dateQuery, latestPost }) {
   const { lang, t } = useI18n();
-  const practicaApply = applyHref("practica");
   const regular = classes.filter((course) => course.track !== "special");
   const specials = classes.filter((course) => course.track === "special");
 
@@ -367,8 +366,8 @@ export default function HomePage({ dateQuery, latestPost }) {
           <li className="gather-card" id="practica">
             <div className="gather-title">
               <h3>{t("practicaName")}</h3>
-              <a className="gather-apply" href={practicaApply}>
-                {t("gatherApply")}
+              <a className="gather-apply" href={`/classes/practica${dateQuery}`}>
+                {t("practicaGuide")}
               </a>
             </div>
             <p className="gather-hours">
