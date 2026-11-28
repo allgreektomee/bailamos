@@ -56,10 +56,12 @@ function Inquire({ courseId, boxed }) {
 // 라벨 박스 안, 요일·시간 위에 놓는 안내 블록(머리줄 · 목록 · 맺음줄).
 // 목록 항목이 모두 👉 로 시작하면 점 불릿 대신 그 화살표만 쓴다.
 // notice(필독 안내)가 있으면 별도 박스로 두지 않고 같은 연보라 박스 안에 구분선으로 이어 붙인다.
-function ClassFlash({ flash, notice }) {
+// leadNote 는 반대로 안내 블록보다 위에 먼저 오는 필독 안내다(지금은 중상급만 쓴다).
+function ClassFlash({ flash, notice, leadNote }) {
   const arrows = flash?.items.every((item) => item.trim().startsWith("👉"));
   return (
     <div className={arrows ? "class-flash flash-arrows" : "class-flash"}>
+      {leadNote ? <p className="flash-lead">📌 {leadNote}</p> : null}
       {flash ? (
         <>
           {flash.head ? <p className="flash-head">{flash.head}</p> : null}
@@ -186,8 +188,8 @@ export default function CourseDetail({ courseId, dateQuery }) {
         <div className="top">
           <h3>{label}</h3>
         </div>
-        {course.flash || course.notice ? (
-          <ClassFlash flash={course.flash} notice={course.notice} />
+        {course.flash || course.notice || course.leadNote ? (
+          <ClassFlash flash={course.flash} notice={course.notice} leadNote={course.leadNote} />
         ) : null}
         {meta}
         {course.warn ? <div className="warn">{course.warn}</div> : null}
